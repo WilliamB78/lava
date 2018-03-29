@@ -135,4 +135,9 @@ class Room
     {
         $this->reservations = $reservations;
     }
+
+    public function addReservation(Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
+    }
 }
