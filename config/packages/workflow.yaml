@@ -14,6 +14,7 @@ framework:
           - demand_accepted
           - validation_refused
           - validation_accepted
+          - annulation
         transitions:
           # Validation de la demande pour la secretaire
           demand_validation:
@@ -31,3 +32,6 @@ framework:
           validation_refused:
             from: demand_accepted
             to: validation_refused
+          annulation:
+            from: validation_accepted
+            to: annulation
