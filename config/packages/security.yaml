@@ -1,13 +1,35 @@
 security:
+    encoders:
+      App\Entity\User: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+        user_provider:
+          entity:
+            class: App\Entity\User
+            property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            form_login:
+              # Login route
+              login_path: security_connexion
+              # Checking ROute use by Symfony
+              check_path: security_connexion
+            # Tell firewall to authenticate user via user_provider
+            http_basic: ~
+            provider: user_provider
+
+            # Logout user
+            logout_on_user_change: true
+            logout:
+              # Logout route
+              path: /logout
+              #Target after logout
+              target: /
 
             # activate different ways to authenticate
 
