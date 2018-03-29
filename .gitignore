@@ -24,6 +24,7 @@ yarn-error.log
 
 ###> docker-compose ###
 /docker-compose.yml
+/Docker/
 ###> docker-compose ###
 
 ###> database volume persistence ###
