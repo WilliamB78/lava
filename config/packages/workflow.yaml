@@ -1,0 +1,33 @@
+framework:
+    workflows:
+      reservation:
+        type: "workflow"
+        marking_store:
+          type: "single_state"
+          arguments:
+            - "state"
+        supports:
+          - App\Entity\Reservation
+        places:
+          - created
+          - demand_refused
+          - demand_accepted
+          - validation_refused
+          - validation_accepted
+        transitions:
+          # Validation de la demande pour la secretaire
+          demand_validation:
+            from: created
+            to: demand_accepted
+          # Rejet de la demande par la secretaire
+          demand_refused:
+            from: created
+            to: demand_refused
+          # Validation de l'acceptation de la secretation par l'utilisateur
+          validation_accepted:
+            from: demand_accepted
+            to: validation_accepted
+          # Rejet de l'acceptation de la secretaire par l'utilisateur
+          validation_refused:
+            from: demand_accepted
+            to: validation_refused
