@@ -55,7 +55,7 @@ class User implements AdvancedUserInterface
      * User constructor.
      * @param $reservations
      */
-    public function __construct($reservations)
+    public function __construct()
     {
         $this->reservations = new ArrayCollection();
     }
