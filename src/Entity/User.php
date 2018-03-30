@@ -53,7 +53,6 @@ class User implements AdvancedUserInterface
 
     /**
      * User constructor.
-     * @param $reservations
      */
     public function __construct()
     {
