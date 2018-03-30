@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37083b0d-d3c1-4e91-9b78-5a868114e15b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/css/bootstrap-minty.css" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../technews/.idea/cake_config_setting_v0_6.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../technews/.idea/markdown-navigator.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../technews/.idea/markdown-navigator/profiles_settings.xml" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../technews/src/Command/CreateUserCommand.php" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/../../technews/public/.htaccess" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/lava.iml" afterPath="$PROJECT_DIR$/.idea/lava.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Docker/nginx/nginx.conf" afterPath="$PROJECT_DIR$/Docker/nginx/nginx.conf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docker-compose.yml" afterPath="$PROJECT_DIR$/docker-compose.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../technews/.idea/TechNews.iml" afterPath="$PROJECT_DIR$/../../technews/.idea/TechNews.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../technews/.idea/php.xml" afterPath="$PROJECT_DIR$/../../technews/.idea/php.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../technews/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../../technews/.idea/workspace.xml" />
@@ -67,8 +63,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="8" lean-forward="false" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+            <state relative-caret-position="30">
+              <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -288,12 +284,12 @@
       <workItem from="1522307129222" duration="2332000" />
       <workItem from="1522320971829" duration="5328000" />
       <workItem from="1522334707492" duration="925000" />
-      <workItem from="1522396716991" duration="90000" />
+      <workItem from="1522396716991" duration="459000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12573000" />
+    <option name="totallyTimeSpent" value="12942000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="693" extended-state="6" />
@@ -668,8 +664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="8" lean-forward="false" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+        <state relative-caret-position="30">
+          <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
           <folding />
         </state>
       </provider>
