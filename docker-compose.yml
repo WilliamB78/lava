@@ -4,11 +4,12 @@ services:
     image: mariadb
     restart: always
     ports:
-      - "3307:3306"
+      - "3307:3307"
     volumes:
       - ./.db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: lava
   php:
     build: Docker
     image: webforce/php:7.2-fpm
@@ -16,12 +17,11 @@ services:
       - "81:81"
     volumes:
       - .:/var/www/lava
-    command: php -S 0.0.0.0:81 -t /var/www/lava/public
   nginx:
     image: nginx
     volumes:
-      - ./Docker/nginx/nginx.conf:/etc/nginx/conf.d/local.dev.conf
-      - .:/var/www/laval
+      - ./Docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www/lava
     ports:
       - "80:80"
     environment:
