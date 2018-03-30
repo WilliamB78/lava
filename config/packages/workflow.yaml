@@ -10,28 +10,26 @@ framework:
           - App\Entity\Reservation
         places:
           - created
-          - demand_refused
-          - demand_accepted
-          - validation_refused
-          - validation_accepted
-          - annulation
+          - accepted
+          - refused
+          - cancelled
+          - cancelled_ok
         transitions:
           # Validation de la demande pour la secretaire
           demand_validation:
             from: created
-            to: demand_accepted
+            to: accepted
           # Rejet de la demande par la secretaire
           demand_refused:
             from: created
-            to: demand_refused
-          # Validation de l'acceptation de la secretation par l'utilisateur
-          validation_accepted:
-            from: demand_accepted
-            to: validation_accepted
-          # Rejet de l'acceptation de la secretaire par l'utilisateur
-          validation_refused:
-            from: demand_accepted
-            to: validation_refused
-          annulation:
-            from: validation_accepted
-            to: annulation
+            to: refused
+          # Annulation de l'utilisateur qui a créer la demande car il s'est trompé
+          cancel_demand:
+            from: created
+            to: cancelled
+          cancel_after:
+            from: accepted
+            to: cancelled
+          cancel_booking:
+            from: cancelled
+            to: cancelled_ok
