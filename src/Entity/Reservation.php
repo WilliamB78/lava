@@ -16,14 +16,17 @@ class Reservation
      */
     private $id;
 
-    // TODO: Liens vers user
-    private $user;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Room", inversedBy="reservations")
      * @ORM\JoinColumn(name="room_id", referencedColumnName="id", nullable=false)
      */
     private $room;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -35,6 +38,10 @@ class Reservation
      */
     private $state;
 
+
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
@@ -88,4 +95,19 @@ class Reservation
         $this->room = $room;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
 }
