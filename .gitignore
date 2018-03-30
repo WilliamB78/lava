@@ -1,5 +1,7 @@
 /.db/
 /.idea/
+/docker-compose.yml
+/Docker/
 ###> symfony/framework-bundle ###
 /.env
 /public/bundles/
