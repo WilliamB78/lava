@@ -28,22 +28,16 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $user = new User();
-        $user->setFirstname($faker->firstName);
-        $user->setLastname($faker->lastName);
-        $user->setEmail($faker->companyEmail);
-        $user->setPassword($faker->password);
-        $manager->persist($user);
-        $manager->flush();
-        #$users = $manager->getRepository(User::class)->findAll();
+        $users = $manager->getRepository(User::class)->findAll();
         $rooms = $manager->getRepository(Room::class)->findAll();
+
         for($i = 0; $i < 10; $i++) {
             $reservation = new Reservation();
             $reservation->setState('created');
             $reservation->setSlot($faker->dateTime());
             # Permet de selectionner aléatoirement une room et user
             $reservation->setRoom($rooms[array_rand($rooms,1)]);
-            $reservation->setUser($user);
+            $reservation->setUser($users[array_rand($users,1)]);
             $manager->persist($reservation);
         }
         $manager->flush();
@@ -58,7 +52,8 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
     function getDependencies()
     {
         return [
-            RoomFixtures::class
+            RoomFixtures::class,
+            UserFixtures::class
         ];
     }
 }
