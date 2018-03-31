@@ -38,7 +38,7 @@ class UserFixtures extends Fixture
             $password = $this->encoder->encodePassword($user, 'test');
             $user->setPassword($password);
             $randRole = array_rand($roles, 1);
-            $user->setRole($roles[$randRole]);
+            $user->addRole($roles[$randRole]);
             $manager->persist($user);
         }
 
