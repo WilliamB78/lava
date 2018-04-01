@@ -9,6 +9,7 @@
 namespace App\EvenSuscriber;
 
 
+use App\Event\NewUserEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LoginSuscriber implements EventSubscriberInterface
@@ -34,6 +35,12 @@ class LoginSuscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        // TODO: Implement getSubscribedEvents() method.
+        return array(
+            NewUserEvent::NAME => 'onNewUser'
+        );
+    }
+
+    public function onNewUser(NewUserEvent $event){
+        dump($event);
     }
 }
