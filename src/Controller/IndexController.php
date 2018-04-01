@@ -25,7 +25,7 @@ class IndexController extends Controller
      */
     public function mailtest(MailNotifier $mailNotifier, User $user)
     {
-        $mailNotifier->sendContactMessage($user);
+        $mailNotifier->sendWelcomeMessage($user);
         return $this->render('index/index.html.twig', [
             'controller_name' => 'IndexController',
         ]);

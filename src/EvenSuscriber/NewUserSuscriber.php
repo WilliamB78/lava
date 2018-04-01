@@ -10,11 +10,17 @@ namespace App\EvenSuscriber;
 
 
 use App\Event\NewUserEvent;
+use App\Service\MailNotifier;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class LoginSuscriber implements EventSubscriberInterface
+class NewUserSuscriber implements EventSubscriberInterface
 {
+    protected $mailer;
 
+    public function __construct(MailNotifier $mailer)
+    {
+        $this->mailer = $mailer;
+    }
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -41,6 +47,9 @@ class LoginSuscriber implements EventSubscriberInterface
     }
 
     public function onNewUser(NewUserEvent $event){
-        dump($event);
+        /**
+         * Using MailerNotifier Service to send Welcome Email to new User
+         */
+        $this->mailer->sendWelcomeMessage($event->getUser(), $event->getPassword());
     }
 }

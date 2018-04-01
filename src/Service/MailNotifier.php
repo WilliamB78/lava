@@ -28,18 +28,19 @@ class MailNotifier
         $this->templating = $templating;
     }
 
-    public function sendWelcomeMessage($user)
+    public function sendWelcomeMessage($user, $password)
     {
         $template = 'email/testTemplate.html.twig';
 
-        $from = $user->getEmail();
+        $from = 'admin@lava.com';
 
-        $to = 'admin@example.com';
+        $to = $user->getEmail();
 
         $subject = "[$from] Lava Booking System Account is Active";
 
         $body = $this->templating->render($template, array(
             'user' => $user,
+            'password' => $password,
             'adminEmail' => 'admin@example.com'
         ));
 
