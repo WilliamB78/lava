@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-4 offset-4 login-container">
+        <div class="col-4 offset-4 lava-container">
             <h2>Login</h2>
             <form action="{{ url('security_connexion') }}" method="post">
                 <div class="form-group">
@@ -21,7 +21,9 @@
                 <input type="hidden" name="_target_path" value="/" />
                 <div class="form-group">
                     <input type="submit" class="col-4 btn btn-secondary" value="Connexion">
-                    <p class="col-8">Mot de passe oublié ?</p>
+                    <p class="col-8">
+                        <a href="{{ path('security_forgot_password') }}">Mot de passe oublié ?</a>
+                    </p>
                 </div>
 
             </form>
