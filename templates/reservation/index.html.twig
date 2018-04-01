@@ -1,11 +1,26 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Reservation index{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
-
-    <table class="table">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="d-flex justify-content-sm-center">
+                    <h1>Reservation List</h1>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-primary" href="{{ path('reservation_new') }}">Create new</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -21,8 +36,8 @@
                 <td>{{ reservation.slot ? reservation.slot|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ reservation.state ? reservation.state|join(', ') : '' }}</td>
                 <td>
-                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
+                    <a class="btn btn-info" href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
+                    <a class="btn btn-warning" href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -32,6 +47,8 @@
         {% endfor %}
         </tbody>
     </table>
+            </div>
+        </div>
+    </div>
 
-    <a href="{{ path('reservation_new') }}">Create new</a>
 {% endblock %}

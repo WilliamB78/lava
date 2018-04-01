@@ -1,11 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
-
-    {{ include('user/_form.html.twig') }}
-
-    <a href="{{ path('user_index') }}">back to list</a>
+    <div class="container">
+        <h1>Create new User</h1>
+        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+        {{ include('user/_form.html.twig') }}
+        <br>
+        <a class="btn btn-primary" href="{{ path('user_index') }}">back to list</a>
+    </div>
 {% endblock %}

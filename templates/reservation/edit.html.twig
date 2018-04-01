@@ -1,13 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Edit Reservation{% endblock %}
 
 {% block body %}
-    <h1>Edit Reservation</h1>
+    <div class="container">
+        <h1>Edit Reservation</h1>
+        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+        {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
+        <br>
+        <a class="btn btn-primary" href="{{ path('reservation_index') }}">back to list</a>
 
-    {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('reservation_index') }}">back to list</a>
-
-    {{ include('reservation/_delete_form.html.twig') }}
+        <p>
+            {{ include('reservation/_delete_form.html.twig') }}
+        </p>
+    </div>
 {% endblock %}
