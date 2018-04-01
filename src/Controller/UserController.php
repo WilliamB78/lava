@@ -29,6 +29,7 @@ class UserController extends Controller
      * @Route("/new", name="user_new", methods="GET|POST")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
+     * @Security("has_role('ROLE_ADMIN')")
      * @return Response
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response

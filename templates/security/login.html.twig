@@ -51,32 +51,6 @@
             border-top-right-radius: 0;
         }
     </style>
-    {# <div class="row">
-        <div class="col-4 offset-4 login-container">
-            <h2>Login</h2>
-            <form action="{{ url('security_connexion') }}" method="post">
-                <div class="form-group">
-                    <input name="_username"
-                           value="{{ last_email }}"
-                           class="form-control" required type="email"
-                           placeholder="Saisissez votre Email"
-                    >
-                </div>
-                <div class="form-group">
-                    <input name="_password"
-                           class="form-control" required type="password"
-                           placeholder="*******"
-                    >
-                </div>
-                <input type="hidden" name="_target_path" value="/" />
-                <div class="form-group">
-                    <input type="submit" class="col-4 btn btn-secondary" value="Connexion">
-                    <p class="col-8">Mot de passe oublié ?</p>
-                </div>
-
-            </form>
-        </div>
-    </div> #}
     <div class="body">
         <form action="{{ url('security_connexion') }}" method="post" class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
