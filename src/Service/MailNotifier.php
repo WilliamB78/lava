@@ -41,7 +41,7 @@ class MailNotifier
         $body = $this->templating->render($template, array(
             'user' => $user,
             'password' => $password,
-            'adminEmail' => 'admin@example.com'
+            'adminEmail' => $from
         ));
 
         $this->sendMessage($from, $to, $subject, $body);
