@@ -1,16 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}User Profile{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <div class="container">
+        <h1>Profile</h1>
 
-    <table class="table">
-        <tbody>
+        <table class="table">
+            <tbody>
+            {% if is_granted('ROLE_ADMIN') -%}
             <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
             </tr>
+            {%- endif %}
             <tr>
                 <th>Firstname</th>
                 <td>{{ user.firstname }}</td>
@@ -23,20 +26,27 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-            <tr>
+            {#<tr>
                 <th>Password</th>
                 <td>{{ user.password }}</td>
-            </tr>
+            </tr>#}
+            {% if is_granted('ROLE_ADMIN') -%}
             <tr>
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
             </tr>
-        </tbody>
-    </table>
+            {%- endif %}
+            </tbody>
+        </table>
+        <a class="btn btn-info" href="{{ path('user_index') }}">Reset Password</a>
+        {% if is_granted('ROLE_ADMIN') -%}
+        <a class="btn btn-primary" href="{{ path('user_index') }}">back to list</a>
 
-    <a href="{{ path('user_index') }}">back to list</a>
+        <a class="btn btn-warning" href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+        <p>
+            {{ include('user/_delete_form.html.twig') }}
+        </p>
+        {%- endif %}
+    </div>
 {% endblock %}

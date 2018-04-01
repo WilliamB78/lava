@@ -17,6 +17,8 @@ class ReservationController extends Controller
 {
     /**
      * @Route("/", name="reservation_index", methods="GET")
+     * @param ReservationRepository $reservationRepository
+     * @return Response
      */
     public function index(ReservationRepository $reservationRepository): Response
     {
@@ -48,6 +50,8 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}", name="reservation_show", methods="GET")
+     * @param Reservation $reservation
+     * @return Response
      */
     public function show(Reservation $reservation): Response
     {
@@ -56,10 +60,14 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/edit", name="reservation_edit", methods="GET|POST")
+     * @param Request $request
+     * @param Reservation $reservation
+     * @return Response
      */
     public function edit(Request $request, Reservation $reservation): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

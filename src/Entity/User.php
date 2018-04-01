@@ -221,6 +221,15 @@ class User implements AdvancedUserInterface
     }
 
     /**
+     * @param mixed $roles
+     */
+    public function setRoles($roles): void
+    {
+        $this->addRole($roles);
+    }
+
+
+    /**
      * @param $role
      * @return User
      */

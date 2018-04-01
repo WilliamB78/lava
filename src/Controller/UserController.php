@@ -6,9 +6,11 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
@@ -25,14 +27,29 @@ class UserController extends Controller
 
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
+        $form->add('roles', ChoiceType::class, array(
+            'choices' => array(
+                'USER' => 'ROLE_USER',
+                'SECRETARY' => 'ROLE_SECRETARY',
+                'ADMIN' => 'ROLE_ADMIN',
+            )
+        ));
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // gestion du mot de passe
+            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -79,7 +96,7 @@ class UserController extends Controller
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();

@@ -21,7 +21,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/login", name="security_connexion")
+     * @Route("/", name="security_connexion")
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
      */

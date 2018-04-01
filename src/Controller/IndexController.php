@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class IndexController extends Controller
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/index", name="index")
      */
     public function index()
     {
