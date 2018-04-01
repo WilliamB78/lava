@@ -224,6 +224,7 @@ class User implements AdvancedUserInterface
      * @param $role
      * @return User
      */
+
     public function addRole($role): self
     {
         $this->roles[] = $role;
