@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoomController extends Controller
 {
     /**
+     * Liste des salles pour la secretaire et l'administrateur
      * @Route("/", name="room_index", methods="GET")
+     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     *
+     * @param RoomRepository $roomRepository
+     * @return Response
      */
     public function index(RoomRepository $roomRepository): Response
     {
