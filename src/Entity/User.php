@@ -53,9 +53,14 @@ class User implements AdvancedUserInterface
 
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $tokenResetPassword;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $tokenExpire;
 
     /**
      * User constructor.
@@ -315,6 +320,22 @@ class User implements AdvancedUserInterface
     public function setTokenResetPassword($tokenResetPassword): void
     {
         $this->tokenResetPassword = $tokenResetPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTokenExpire()
+    {
+        return $this->tokenExpire;
+    }
+
+    /**
+     * @param mixed $tokenExpire
+     */
+    public function setTokenExpire($tokenExpire): void
+    {
+        $this->tokenExpire = $tokenExpire;
     }
 
 }
