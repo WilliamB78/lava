@@ -1,82 +1,38 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-    <style>
-        html,
-        .body {
-            height: 100%;
-        }
-
-        .body {
-            display: -ms-flexbox;
-            display: -webkit-box;
-            display: flex;
-            -ms-flex-align: center;
-            -ms-flex-pack: center;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            padding-top: 200px;
-            padding-bottom: 200px;
-        }
-
-        .form-signin {
-            width: 100%;
-            max-width: 330px;
-            padding: 15px;
-            margin: 0 auto;
-        }
-        .form-signin .checkbox {
-            font-weight: 400;
-        }
-        .form-signin .form-control {
-            position: relative;
-            box-sizing: border-box;
-            height: auto;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .form-signin .form-control:focus {
-            z-index: 2;
-        }
-        .form-signin input[type="email"] {
-            margin-bottom: -1px;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-        }
-        .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-    </style>
-    <div class="body">
-        <form action="{{ url('security_connexion') }}" method="post" class="form-signin">
-            <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+    <div class="row">
+        <div class="col-4 offset-4 login-container">
+            <h2>Login</h2>
             {% if error %}
                 <div class="alert alert-danger">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                     {{ error.messageKey|trans(error.messageData, 'security') }}
                 </div>
             {% endif %}
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input name="_username"
-                   value="{{ last_email }}"
-                   class="form-control" required type="email"
-                   placeholder="Saisissez votre Email">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input name="_password"
-                   type="password"
-                   id="inputPassword"
-                   class="form-control"
-                   placeholder="Password"
-                   required>
-            <input type="hidden" name="_target_path" value="/index" />
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p class="col-8">Mot de passe oublié ?</p>
-        </form>
-    </div>
+            <form action="{{ url('security_connexion') }}" method="post">
+                <div class="form-group">
+                    <input name="_username"
+                           value="{{ last_email }}"
+                           class="form-control" required type="email"
+                           placeholder="Saisissez votre Email"
+                    >
+                </div>
+                <div class="form-group">
+                    <input name="_password"
+                           class="form-control" required type="password"
+                           placeholder="*******"
+                    >
+                </div>
+                <input type="hidden" name="_target_path" value="/index" />
+                <div class="form-group">
+                    <input type="submit" class="col-4 btn btn-secondary" value="Connexion">
+                    <p class="col-8">Mot de passe oublié ?</p>
+                </div>
 
+
+            </form>
+        </div>
+    </div>
 {% endblock %}
 

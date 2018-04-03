@@ -1,16 +1,13 @@
-{% extends 'layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Edit Room{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Edit Room</h1>
-        {% form_theme form 'bootstrap_4_layout.html.twig' %}
-        {{ include('room/_form.html.twig', {'button_label': 'Update'}) }}
-        <br>
-        <a class="btn btn-primary" href="{{ path('room_index') }}">back to list</a>
-        <p>
-            {{ include('room/_delete_form.html.twig') }}
-        </p>
-    </div>
+    <h1>Edit Room</h1>
+
+    {{ include('room/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('room_index') }}">back to list</a>
+
+    {{ include('room/_delete_form.html.twig') }}
 {% endblock %}

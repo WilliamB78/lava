@@ -3,13 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Event\NewUserEvent;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -48,12 +51,20 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             // gestion du mot de passe
+            $plainPassword = $user->getPassword();
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
+
+            /**
+             * Trigger Event for sending Welcome Email
+             */
+            $dispatcher = $this->container->get('event_dispatcher');
+            $event = new NewUserEvent($user, $plainPassword);
+            $dispatcher->dispatch('custom.event.new_user_event', $event);
 
             return $this->redirectToRoute('user_index');
         }
@@ -74,6 +85,9 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function edit(Request $request, User $user): Response
     {
