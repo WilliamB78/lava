@@ -6,7 +6,7 @@
     <div class="row">
         {% for room in rooms %}
             <div class="col-3">
-                <div class="card text-white {{ room.state ? 'bg-primary' : 'bg-secondary' }} m-3">
+                <div class="card text-white {{ room.state ? 'bg-secondary' : 'bg-primary' }} m-3">
                     <div class="card-header">{{ room.name }}</div>
                     <div class="card-body text-center">
                         <p class="card-text">
@@ -17,9 +17,9 @@
                         </p>
                         <p class="card-text">
                             {% if room.state == 0 %}
-                                <a href="#" class="btn btn-warning">Rendre disponible</a>
+                                <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre indisponible</a>
                             {% else %}
-                                <a href="#" class="btn btn-warning">Rendre indisponible</a>
+                                <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre disponible</a>
                             {% endif %}
                         </p>
                     </div>
