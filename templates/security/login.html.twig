@@ -30,7 +30,7 @@
                    required>
             <input type="hidden" name="_target_path" value="/index" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <p class="col-8">Mot de passe oublié ?</p>
+            <a href="{{ path('security_forgot_password') }}" class="col-8">Mot de passe oublié ?</a>
         </form>
     </div>
 {% endblock %}
