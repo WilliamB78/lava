@@ -30,3 +30,8 @@ services:
       class: App\EvenSuscriber\NewUserSuscriber
       tags:
           - { name: kernel.event_listener, event: custom.event.new_user_event, method: onNewUser }
+
+    workflow_subscriber:
+          class: App\EvenSuscriber\WorkflowSuscriber
+          tags:
+              - { name: workernel.event_subscriber }
