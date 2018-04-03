@@ -1,41 +1,55 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Room index{% endblock %}
 
 {% block body %}
-    <h1>Room index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>NbPlaces</th>
-                <th>State</th>
-                <th>CommentState</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="row">
         {% for room in rooms %}
-            <tr>
-                <td>{{ room.id }}</td>
-                <td>{{ room.name }}</td>
-                <td>{{ room.nbPlaces }}</td>
-                <td>{{ room.state ? 'Yes' : 'No' }}</td>
-                <td>{{ room.commentState }}</td>
-                <td>
-                    <a href="{{ path('room_show', {'id': room.id}) }}">show</a>
-                    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
+            <div class="col-3">
+                <div class="card text-white {{ room.state ? 'bg-primary' : 'bg-secondary' }} m-3">
+                    <div class="card-header">{{ room.name }}</div>
+                    <div class="card-body text-center">
+                        <p class="card-text">
+                            Places : <b>{{ room.nbPlaces }}</b>
+                        </p>
+                        <p class="card-text">
+                            <a href="#" class="btn btn-info">Calendrier</a>
+                        </p>
+                        <p class="card-text">
+                            {% if room.state == 0 %}
+                                <a href="#" class="btn btn-warning">Rendre disponible</a>
+                            {% else %}
+                                <a href="#" class="btn btn-warning">Rendre indisponible</a>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('room_new') }}">Create new</a>
+        <div class="col-12">
+            <ul class="pagination">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">5</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
 {% endblock %}
