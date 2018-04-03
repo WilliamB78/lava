@@ -9,7 +9,7 @@
 namespace App\Service;
 
 
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use App\Entity\User;
 use Twig_Environment;
 
 class UserMail
@@ -48,6 +48,32 @@ class UserMail
         $body = $this->templating->render($template, array(
             'user' => $user,
             'password' => $password,
+            'adminEmail' => $from
+        ));
+
+        $this->sendMessage($from, $to, $subject, $body);
+    }
+
+    /**
+     * Envoi un email avec le lien pour changer le mot de passe
+     * @param User $user
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function sendResetPassword(User $user)
+    {
+        $template = 'email/testTemplate.html.twig';
+
+        $from = 'admin@lava.com';
+
+        $to = $user->getEmail();
+
+        $subject = "[$from] Lava Booking System Account is Active";
+
+        $body = $this->templating->render($template, array(
+            'user' => $user,
+            'password' => '',
             'adminEmail' => $from
         ));
 
