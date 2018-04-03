@@ -10,14 +10,14 @@ namespace App\EvenSuscriber;
 
 
 use App\Event\NewUserEvent;
-use App\Service\MailNotifier;
+use App\Service\UserMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NewUserSuscriber implements EventSubscriberInterface
 {
     protected $mailer;
 
-    public function __construct(MailNotifier $mailer)
+    public function __construct(UserMail $mailer)
     {
         $this->mailer = $mailer;
     }

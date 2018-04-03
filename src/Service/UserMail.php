@@ -12,13 +12,13 @@ namespace App\Service;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Twig_Environment;
 
-class MailNotifier
+class UserMail
 {
     protected $mailer;
     protected $templating;
 
     /**
-     * MailNotifier constructor.
+     * UserMail constructor.
      * @param \Swift_Mailer $mailer
      * @param EngineInterface $templating
      */
