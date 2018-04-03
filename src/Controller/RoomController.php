@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
-use Knp\Bundle\PaginatorBundle\DependencyInjection\KnpPaginatorExtension;
-use Knp\Bundle\PaginatorBundle\KnpPaginatorBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
