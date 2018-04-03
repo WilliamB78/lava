@@ -51,6 +51,12 @@ class User implements AdvancedUserInterface
      */
     private $reservations;
 
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $tokenResetPassword;
+
     /**
      * User constructor.
      */
@@ -294,4 +300,21 @@ class User implements AdvancedUserInterface
     {
         return null;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTokenResetPassword()
+    {
+        return $this->tokenResetPassword;
+    }
+
+    /**
+     * @param mixed $tokenResetPassword
+     */
+    public function setTokenResetPassword($tokenResetPassword): void
+    {
+        $this->tokenResetPassword = $tokenResetPassword;
+    }
+
 }

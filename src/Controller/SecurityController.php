@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ForgotPasswordType;
 use App\Form\ResetPasswordType;
+use App\Service\UserMail;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,7 @@ class SecurityController extends Controller
 
     /**
      * @Route("/", name="security_connexion", methods={"GET", "POST"})
+     * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
 
      * @param AuthenticationUtils $authenticationUtils
      * @return \Symfony\Component\HttpFoundation\Response
@@ -45,11 +47,12 @@ class SecurityController extends Controller
 
     /**
      * @Route("/forgot-password",name="security_forgot_password", methods={"GET","POST"})
+     * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function forgotPassword(Request $request)
+    public function forgotPassword(Request $request,UserMail $mail)
     {
         # Création d'un nouvel utilisateur
         if($request->isMethod('post')) {
@@ -67,7 +70,6 @@ class SecurityController extends Controller
         $form->handleRequest($request);
 
         if($form->isSubmitted()) {
-
             if($user) {
                 // TODO : envoyer un email avec le service mailer
                 $this->addFlash('success' , 'Un email a été envoyé');
@@ -84,6 +86,7 @@ class SecurityController extends Controller
     }
 
     /**
+     * Seul les utilisateurs non authentifié peuvent avoir accès a leur reset
      * @Route("/reset-password/{token}", name="security_reset_password", requirements={"token"}, methods={"GET|POST"})
      * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
      *
