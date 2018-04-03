@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends Controller
@@ -50,9 +51,15 @@ class SecurityController extends Controller
      * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request $request
+     * @param UserMail $mail
+     * @param TokenGeneratorInterface $tokenGenerator
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      */
-    public function forgotPassword(Request $request,UserMail $mail)
+    public function forgotPassword(Request $request,UserMail $mail,TokenGeneratorInterface $tokenGenerator)
     {
         # Création d'un nouvel utilisateur
         if($request->isMethod('post')) {
@@ -71,7 +78,17 @@ class SecurityController extends Controller
 
         if($form->isSubmitted()) {
             if($user) {
-                // TODO : envoyer un email avec le service mailer
+                $date = new \DateTime();
+
+                $user->setTokenResetPassword($tokenGenerator->generateToken());
+                $user->setTokenExpire($date->add(new \DateInterval('P1D')));
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                $mail->sendResetPassword($user);
+
                 $this->addFlash('success' , 'Un email a été envoyé');
             } else {
                 $this->addFlash('danger' , 'Email invalide !');
