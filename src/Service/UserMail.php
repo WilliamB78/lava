@@ -20,7 +20,7 @@ class UserMail
     /**
      * UserMail constructor.
      * @param \Swift_Mailer $mailer
-     * @param EngineInterface $templating
+     * @param Twig_Environment $templating
      */
     public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating)
     {
@@ -28,6 +28,13 @@ class UserMail
         $this->templating = $templating;
     }
 
+    /**
+     * @param $user
+     * @param $password
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function sendWelcomeMessage($user, $password)
     {
         $template = 'email/testTemplate.html.twig';
