@@ -5,9 +5,36 @@
 {% block body %}
     <h1>Edit Room</h1>
 
-    {{ include('room/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.nbPlaces) }}
+        {{ form_row(form.state) }}
+
+        <div id="commentState">
+            {{ form_row(form.commentState) }}
+        </div>
+    {{ form_end(form) }}
 
     <a href="{{ path('room_index') }}">back to list</a>
 
     {{ include('room/_delete_form.html.twig') }}
+{% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('#room_state').on('click', function() {
+                if ($(this).val() == 1) {
+                    $(this).val(0);
+                    $('#commentState').hide();
+                } else {
+                    $(this).val(1);
+                    $('#commentState').show();
+                }
+            })
+        });
+    </script>
 {% endblock %}
