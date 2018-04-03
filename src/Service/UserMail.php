@@ -10,22 +10,25 @@ namespace App\Service;
 
 
 use App\Entity\User;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig_Environment;
 
 class UserMail
 {
     protected $mailer;
     protected $templating;
+    protected $router;
 
     /**
      * UserMail constructor.
      * @param \Swift_Mailer $mailer
      * @param Twig_Environment $templating
      */
-    public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating)
+    public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating,UrlGeneratorInterface $router)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
+        $this->router = $router;
     }
 
     /**
@@ -63,18 +66,24 @@ class UserMail
      */
     public function sendResetPassword(User $user)
     {
-        $template = 'email/testTemplate.html.twig';
+        $template = 'email/resetPasswordTemplate.html.twig';
 
         $from = 'admin@lava.com';
 
         $to = $user->getEmail();
 
-        $subject = "[$from] Lava Booking System Account is Active";
+        $subject = "Mot de passe oublié";
+
+        $lien  = $this->router->generate(
+            'security_reset_password',
+            [
+                'token' => $user->getTokenResetPassword()
+            ],
+            $this->router::ABSOLUTE_URL);
 
         $body = $this->templating->render($template, array(
             'user' => $user,
-            'password' => '',
-            'adminEmail' => $from
+            'url' => $lien
         ));
 
         $this->sendMessage($from, $to, $subject, $body);
