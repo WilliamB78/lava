@@ -4,6 +4,12 @@
     <div class="row">
         <div class="col-4 offset-4 login-container">
             <h2>Login</h2>
+            {% if error %}
+                <div class="alert alert-danger">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
             <form action="{{ url('security_connexion') }}" method="post">
                 <div class="form-group">
                     <input name="_username"
@@ -23,6 +29,7 @@
                     <input type="submit" class="col-4 btn btn-secondary" value="Connexion">
                     <p class="col-8">Mot de passe oublié ?</p>
                 </div>
+
 
             </form>
         </div>
