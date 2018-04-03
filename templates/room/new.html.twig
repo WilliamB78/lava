@@ -1,13 +1,11 @@
-{% extends 'layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}New Room{% endblock %}
 
 {% block body %}
-   <div class="container">
-       <h1>Create new Room</h1>
-       {% form_theme form 'bootstrap_4_layout.html.twig' %}
-       {{ include('room/_form.html.twig') }}
-       <br>
-       <a class="btn btn-primary" href="{{ path('room_index') }}">back to list</a>
-   </div>
+    <h1>Create new Room</h1>
+
+    {{ include('room/_form.html.twig') }}
+
+    <a href="{{ path('room_index') }}">back to list</a>
 {% endblock %}

@@ -1,27 +1,11 @@
-{% extends 'layout.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Room index{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <div class="d-flex justify-content-sm-center">
-                    <h1>Room List</h1>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="d-flex justify-content-center">
-                    <a class="btn btn-primary" href="{{ path('room_new') }}">Create new</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h1>Room index</h1>
 
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col">
-                <table class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -41,8 +25,8 @@
                 <td>{{ room.state ? 'Yes' : 'No' }}</td>
                 <td>{{ room.commentState }}</td>
                 <td>
-                    <a class="btn btn-info" href="{{ path('room_show', {'id': room.id}) }}">show</a>
-                    <a class="btn btn-warning" href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
+                    <a href="{{ path('room_show', {'id': room.id}) }}">show</a>
+                    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -52,8 +36,6 @@
         {% endfor %}
         </tbody>
     </table>
-            </div>
-        </div>
-    </div>
 
+    <a href="{{ path('room_new') }}">Create new</a>
 {% endblock %}
