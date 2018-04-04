@@ -49,6 +49,8 @@ class RoomController extends Controller
                 $em->persist($room);
                 $em->flush();
 
+                $this->addFlash('success' , 'Vous venez de créer une nouvelle salle');
+
                 return $this->redirectToRoute('room_index');
             }
 
