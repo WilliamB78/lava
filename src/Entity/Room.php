@@ -33,7 +33,7 @@ class Room
     private $state;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $commentState;
 
@@ -49,6 +49,7 @@ class Room
     {
         $this->nbPlaces = 0;
         $this->reservations = new ArrayCollection();
+        $this->state = false;
     }
 
     public function getId()

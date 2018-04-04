@@ -1,11 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}New Room{% endblock %}
+{% block title %}Nouvelle salle{% endblock %}
 
 {% block body %}
-    <h1>Create new Room</h1>
 
-    {{ include('room/_form.html.twig') }}
+    <div class="row">
+        <div class="col-6 offset-3 text-center">
 
-    <a href="{{ path('room_index') }}">back to list</a>
+        <h1>Nouvelle salle</h1>
+
+        {{ include('room/_form.html.twig') }}
+        </div>
+    </div>
+
 {% endblock %}

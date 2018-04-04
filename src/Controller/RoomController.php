@@ -32,6 +32,9 @@ class RoomController extends Controller
 
     /**
      * @Route("/new", name="room_new", methods="GET|POST")
+     * @param Request $request
+     * @param RoomIsFullHandler $fullHandler
+     * @return Response
      */
     public function new(Request $request, RoomIsFullHandler $fullHandler): Response
     {
