@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Registry;
 
 /**
  * @Route("/reservation")
@@ -27,14 +28,22 @@ class ReservationController extends Controller
 
     /**
      * @Route("/new", name="reservation_new", methods="GET|POST")
+     * @param Request $request
+     * @param Registry $workflows
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Registry $workflows): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
+        $workflow = $workflows->get($reservation);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //TODO setState
+            //TODO setUser
+            $reservation->setUser($this->getUser());
+            $reservation->setState('created');
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
