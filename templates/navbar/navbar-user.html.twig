@@ -1,5 +1,11 @@
-<li class="nav-item active">
-    <a class="nav-link" href="#">Mes réservations</a>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+        Réservations
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{{ path('reservation_new') }}">Ajouter</a>
+        <a class="dropdown-item" href="#">Mes réservations</a>
+    </div>
 </li>
 <li class="nav-item">
     <a class="nav-link" href="#">Reserver</a>
