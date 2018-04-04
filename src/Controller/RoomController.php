@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Utils\Room\RoomIsFullHandler;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
@@ -31,25 +32,36 @@ class RoomController extends Controller
 
     /**
      * @Route("/new", name="room_new", methods="GET|POST")
+     * @param Request $request
+     * @param RoomIsFullHandler $fullHandler
+     * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, RoomIsFullHandler $fullHandler): Response
     {
-        $room = new Room();
-        $form = $this->createForm(RoomType::class, $room);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($room);
-            $em->flush();
+        if (!$fullHandler->isFull()) {
+            $room = new Room();
+            $form = $this->createForm(RoomType::class, $room);
+            $form->handleRequest($request);
 
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($room);
+                $em->flush();
+
+                $this->addFlash('success' , 'Vous venez de créer une nouvelle salle');
+
+                return $this->redirectToRoute('room_index');
+            }
+
+            return $this->render('room/new.html.twig', [
+                'room' => $room,
+                'form' => $form->createView(),
+            ]);
+        } else {
+            $this->addFlash('error', 'Vous ne avez atteins le nombre maximal de salle');
             return $this->redirectToRoute('room_index');
         }
-
-        return $this->render('room/new.html.twig', [
-            'room' => $room,
-            'form' => $form->createView(),
-        ]);
     }
 
     /**
