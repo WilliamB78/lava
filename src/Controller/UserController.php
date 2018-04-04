@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Utils\User\NewUserHandler;
 use App\Entity\User;
 use App\Event\NewUserEvent;
 use App\Form\UserType;
@@ -31,41 +32,18 @@ class UserController extends Controller
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
      * @param Request $request
+     * @param NewUserHandler $handler
      * @param UserPasswordEncoderInterface $passwordEncoder
-     * @Security("has_role('ROLE_ADMIN')")
      * @return Response
+     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function new(Request $request, NewUserHandler $handler): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->add('roles', ChoiceType::class, array(
-            'choices' => array(
-                'USER' => 'ROLE_USER',
-                'SECRETARY' => 'ROLE_SECRETARY',
-                'ADMIN' => 'ROLE_ADMIN',
-            )
-        ));
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // gestion du mot de passe
-            $plainPassword = $user->getPassword();
-            $password = $passwordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            /**
-             * Trigger Event for sending Welcome Email
-             */
-            $dispatcher = $this->container->get('event_dispatcher');
-            $event = new NewUserEvent($user, $plainPassword);
-            $dispatcher->dispatch('custom.event.new_user_event', $event);
-
+        $form = $handler->createForm($user);
+        
+        if ($handler->process($form, $request)) {
+            $handler->success($user);
             return $this->redirectToRoute('user_index');
         }
 
