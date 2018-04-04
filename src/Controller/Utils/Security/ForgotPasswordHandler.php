@@ -10,12 +10,17 @@ namespace App\Controller\Utils\Security;
 
 
 use App\Entity\User;
+use App\Event\ForgotPasswordEvent;
 use App\Form\ForgotPasswordType;
 use App\Service\UserMail;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class ForgotPasswordHandler
@@ -24,20 +29,33 @@ class ForgotPasswordHandler
     private $formFactory;
     private $userMailer;
     private $tokenGenerator;
+    private $dispatcher;
+    protected $router;
 
     /**
      * ForgotPasswordHandler constructor.
      * @param UserMail $userMail
+     * @param EventDispatcherInterface $dispatcher
      * @param EntityManagerInterface $entityManager
      * @param TokenGeneratorInterface $tokenGenerator
      * @param FormFactoryInterface $formFactory
+     * @param RouterInterface $router
      */
-    public function __construct(UserMail $userMail, EntityManagerInterface $entityManager, TokenGeneratorInterface $tokenGenerator, FormFactoryInterface $formFactory)
+    public function __construct(
+        UserMail $userMail,
+        EventDispatcherInterface $dispatcher,
+        EntityManagerInterface $entityManager,
+        TokenGeneratorInterface $tokenGenerator,
+        FormFactoryInterface $formFactory,
+        RouterInterface $router
+    )
     {
         $this->em = $entityManager;
         $this->formFactory = $formFactory;
         $this->userMailer = $userMail;
         $this->tokenGenerator = $tokenGenerator;
+        $this->dispatcher = $dispatcher;
+        $this->router = $router;
     }
 
     /**
@@ -79,11 +97,9 @@ class ForgotPasswordHandler
     }
 
     /**
-     * @param $user
+     * @param User $user
      * @return bool
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @throws \Exception
      */
     public function success($user){
         if ($user) {
@@ -94,7 +110,11 @@ class ForgotPasswordHandler
             $this->em->persist($user);
             $this->em->flush();
 
-            $this->userMailer->sendResetPassword($user);
+            /**
+             * Trigger Event for sending reset password link
+             */
+            $event = new ForgotPasswordEvent($user, $this->router);
+            $this->dispatcher->dispatch('custom.event.forgot_password_event', $event);
             return true;
         } else {
             return false;

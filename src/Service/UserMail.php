@@ -64,7 +64,7 @@ class UserMail
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function sendResetPassword(User $user)
+    public function sendResetPassword(User $user, $link)
     {
         $template = 'email/resetPasswordTemplate.html.twig';
 
@@ -74,12 +74,13 @@ class UserMail
 
         $subject = "Mot de passe oublié";
 
-        $lien  = $this->router->generate(
-            'security_reset_password',
-            [
-                'token' => $user->getTokenResetPassword()
-            ],
-            $this->router::ABSOLUTE_URL);
+//        $lien  = $this->router->generate(
+//            'security_reset_password',
+//            [
+//                'token' => $user->getTokenResetPassword()
+//            ],
+//            $this->router::ABSOLUTE_URL);
+        $lien = $link;
 
         $body = $this->templating->render($template, array(
             'user' => $user,

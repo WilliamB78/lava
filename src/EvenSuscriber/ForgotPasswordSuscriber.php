@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: bmnk
- * Date: 01/04/18
- * Time: 20:02
+ * Date: 04/04/18
+ * Time: 10:27
  */
 
 namespace App\EvenSuscriber;
 
 
-use App\Event\NewUserEvent;
+use App\Event\ForgotPasswordEvent;
 use App\Service\UserMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class NewUserSuscriber implements EventSubscriberInterface
+class ForgotPasswordSuscriber implements EventSubscriberInterface
 {
     protected $mailer;
 
@@ -21,6 +21,7 @@ class NewUserSuscriber implements EventSubscriberInterface
     {
         $this->mailer = $mailer;
     }
+
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -42,20 +43,20 @@ class NewUserSuscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            NewUserEvent::NAME => 'onNewUser'
+            ForgotPasswordEvent::NAME => 'onForgotPassword'
         );
     }
 
     /**
-     * @param NewUserEvent $event
+     * @param ForgotPasswordEvent $event
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function onNewUser(NewUserEvent $event){
+    public function onForgotPassword(ForgotPasswordEvent $event){
         /**
          * Using UserMail Service to send Welcome Email to new User
          */
-        $this->mailer->sendWelcomeMessage($event->getUser(), $event->getPassword());
+        $this->mailer->sendResetPassword($event->getUser(), $event->getLink());
     }
 }
