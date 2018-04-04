@@ -19,7 +19,7 @@ class Parametrage
     /**
      * @ORM\Column(type="string", nullable=false, unique=true)
      */
-    private $key;
+    private $name;
 
     /**
      * @ORM\Column(type="string", nullable=false)
@@ -34,17 +34,17 @@ class Parametrage
     /**
      * @return mixed
      */
-    public function getKey()
+    public function getName()
     {
-        return $this->key;
+        return $this->name;
     }
 
     /**
-     * @param mixed $key
+     * @param mixed $name
      */
-    public function setKey($key): void
+    public function setName($name): void
     {
-        $this->key = $key;
+        $this->name = $name;
     }
 
     /**
