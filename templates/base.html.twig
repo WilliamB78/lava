@@ -6,7 +6,9 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        {% include 'navbar/navbar.html.twig'  %}
+        {% if app.user %}
+            {% include 'navbar/navbar.html.twig'  %}
+        {% endif %}
         {% block body %}{% endblock %}
 
         {% block javascripts %}{% endblock %}
