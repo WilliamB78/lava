@@ -10,6 +10,16 @@
     <div class="body">
         <form action="{{ url('security_connexion') }}" method="post" class="form-signin">
             <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
+            {% for label, messages in app.flashes %}
+                {% for message in messages  %}
+                    <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endfor %}
             {% if error %}
                 <div class="alert alert-danger">
                     <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
