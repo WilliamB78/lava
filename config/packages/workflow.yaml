@@ -17,19 +17,24 @@ framework:
         transitions:
           # Validation de la demande pour la secretaire
           demand_validation:
+            guard: "is_granted('ROLE_SECRETARY')"
             from: created
             to: accepted
           # Rejet de la demande par la secretaire
           demand_refused:
+            guard: "is_granted('ROLE_SECRETARY')"
             from: created
             to: refused
           # Annulation de l'utilisateur qui a créer la demande car il s'est trompé
           cancel_demand:
+            guard: "is_granted('ROLE_USER')"
             from: created
             to: cancelled
           cancel_after:
+            guard: "is_granted('ROLE_USER')"
             from: accepted
             to: cancelled
           cancel_booking:
+            guard: "is_granted('ROLE_SECRETARY')"
             from: cancelled
             to: cancelled_ok
