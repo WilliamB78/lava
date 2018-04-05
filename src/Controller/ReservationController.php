@@ -6,6 +6,7 @@ use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,9 @@ class ReservationController extends Controller
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
+        $form->add('slot', DateTimeType::class, array(
+            'data' => new \DateTime()
+        ));
         $form->handleRequest($request);
         $workflow = $workflows->get($reservation);
 
@@ -96,7 +100,7 @@ class ReservationController extends Controller
      */
     public function delete(Request $request, Reservation $reservation): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($reservation);
             $em->flush();
