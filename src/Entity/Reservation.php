@@ -31,7 +31,12 @@ class Reservation
     /**
      * @ORM\Column(type="datetime")
      */
-    private $slot;
+    private $start;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $end;
 
     /**
      * @ORM\Column(type="array")
@@ -50,17 +55,33 @@ class Reservation
     /**
      * @return mixed
      */
-    public function getSlot()
+    public function getStart()
     {
-        return $this->slot;
+        return $this->start;
     }
 
     /**
-     * @param mixed $slot
+     * @param mixed $start
      */
-    public function setSlot($slot): void
+    public function setStart($start): void
     {
-        $this->slot = $slot;
+        $this->start = $start;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * @param mixed $end
+     */
+    public function setEnd($end): void
+    {
+        $this->end = $end;
     }
 
     /**
