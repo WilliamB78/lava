@@ -1,0 +1,31 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ room.name }} Calendar{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/calendar.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>{{ room.name }} - {{ calendarToString }}</h1>
+        {% set clone = firstDay %}
+        <table class="calendar__table calendar__table--{{ weeks }}weeks">
+            {% for i in 1..weeks %}
+                <tr>
+                    {% for key, day in days %}
+                        {% set v = key + i * 7 %}
+                        {% set dateDay = clone|date_modify('last monday')|date_modify("+"~v~"day") %}
+                        <td class="{% if not calendar.inThisMonth(dateDay) %}calendar__outOfMonth {% endif %}">
+                            {% if i is same as(1) %}
+                                <div class="calendar__weekday">{{ day }}</div>
+                            {% endif %}
+                            <div class="calendar__day">{{ dateDay|date("d") }}</div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
