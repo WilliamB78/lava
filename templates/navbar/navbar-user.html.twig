@@ -4,7 +4,7 @@
     </a>
     <div class="dropdown-menu">
         <a class="dropdown-item" href="{{ path('reservation_new') }}">Ajouter</a>
-        <a class="dropdown-item" href="#">
+        <a class="dropdown-item" href="{{ path('reservation_mes_reservations') }}">
             Mes réservations
             {% if mesReservations > 0 %}
                 <span class="badge badge-secondary">{{ mesReservations }}</span>

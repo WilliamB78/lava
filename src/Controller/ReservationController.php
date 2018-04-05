@@ -28,6 +28,23 @@ class ReservationController extends Controller
     }
 
     /**
+     * @Route("/mes-reservations", name="reservation_mes_reservations", methods={"GET"})
+     *
+     */
+    public function mesReservations()
+    {
+        $reservations = $this
+            ->getDoctrine()
+            ->getRepository(Reservation::class)
+            ->findBy(['user' => $this->getUser()]);
+
+
+        return $this->render('reservation/mes-reservations.html.twig', [
+            'reservations' => $reservations
+        ]);
+    }
+
+    /**
      * @Route("/new", name="reservation_new", methods="GET|POST")
      * @param Request $request
      * @param Registry $workflows
@@ -108,4 +125,6 @@ class ReservationController extends Controller
 
         return $this->redirectToRoute('reservation_index');
     }
+
+
 }

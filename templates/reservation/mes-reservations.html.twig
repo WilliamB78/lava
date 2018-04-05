@@ -1,0 +1,43 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+       <div class="col-6 offset-3">
+         <table class="table">
+            <thead>
+            <tr>
+               <th>Date</th>
+               <th class="text-center">Etat demande</th>
+               <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservations %}
+               <tr>
+                  <td>
+                      {{ reservation.slot ? reservation.slot|date('Y-m-d H:i') : '' }}
+                  </td>
+                  <td class="text-center">
+                        {{ reservation_state(reservation.state) }}
+                  </td>
+                  <td>
+                      {% if workflow_can(reservation,'cancel_demand') or workflow_can(reservation,'cancel_after') %}
+                         <a href="#" class="btn btn-danger">Annuler</a>
+                      {% endif %}
+                  </td>
+               </tr>
+            {% else %}
+               <tr>
+                  <td colspan="4">no records found</td>
+               </tr>
+            {% endfor %}
+            </tbody>
+         </table>
+       </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+Mes réservation
+{% endblock %}
+
