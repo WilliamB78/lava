@@ -21,6 +21,7 @@ class RoomRepository extends ServiceEntityRepository
     }
 
     /**
+     * Retourne le nombre total de salle créé
      * @return int|mixed
      */
     public function findTotalRoom()
@@ -31,6 +32,24 @@ class RoomRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getSingleScalarResult();
         }catch (NonUniqueResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Retourne le nombre
+     * @return int|mixed
+     */
+    public function findTotalRoomHS()
+    {
+        try {
+            return $this->createQueryBuilder('r')
+                ->select('COUNT(r)')
+                ->where('r.state = :state')
+                ->setParameter('state', 1)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }catch ( NonUniqueResultException $e) {
             return 0;
         }
     }

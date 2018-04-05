@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Reservation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,33 +19,52 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
+    /**
+     * Permet d'avoir le nombre de reservation pour un utilisateur
+     * @param $user
+     * @param $state
+     * @return int|mixed
+     */
+    public function findUserReversationByState($user,$state)
+    {
 
-//    /**
-//     * @return Reservation[] Returns an array of Reservation objects
-//     */
-    /*
-    public function findByExampleField($value)
+        try {
+            return $this->byState($state)
+                ->andWhere('r.user = :user')
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }catch (NonUniqueResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Retourne le nombre de reservation par etat
+     * @param $state
+     * @return int|mixed
+     */
+    public function findByState($state)
+    {
+        try {
+            return $this->byState($state)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }catch (NonUniqueResultException $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Creation d'une query vis a vis d'un state
+     * @param $state
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function byState($state)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ->select('COUNT(r)')
+            ->where('r.state LIKE :state')
+            ->setParameter('state', "%$state%");
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Reservation
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
