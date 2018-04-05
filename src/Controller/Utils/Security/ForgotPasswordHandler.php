@@ -25,11 +25,22 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class ForgotPasswordHandler
 {
+    /** @var EntityManagerInterface $em */
     private $em;
+
+    /** @var FormFactoryInterface $formFactory */
     private $formFactory;
+
+    /** @var UserMail $userMailer */
     private $userMailer;
+
+    /** @var TokenGeneratorInterface $tokenGenerator */
     private $tokenGenerator;
+
+    /** @var EventDispatcherInterface $dispatcher */
     private $dispatcher;
+
+    /** @var RouterInterface $router */
     protected $router;
 
     /**
@@ -85,8 +96,8 @@ class ForgotPasswordHandler
     }
 
     /**
-     * @param $form
-     * @param $request
+     * @param FormInterface $form
+     * @param Request $request
      * @return bool
      */
     public function process($form, $request){
