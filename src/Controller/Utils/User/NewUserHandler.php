@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 04/04/18
- * Time: 20:32
+ * Time: 20:32.
  */
 
 namespace App\Controller\Utils\User;
-
 
 use App\Entity\User;
 use App\Event\NewUserEvent;
@@ -39,10 +38,11 @@ class NewUserHandler
 
     /**
      * NewUserHandler constructor.
-     * @param UserMail $userMail
-     * @param EventDispatcherInterface $dispatcher
-     * @param EntityManagerInterface $entityManager
-     * @param FormFactoryInterface $formFactory
+     *
+     * @param UserMail                     $userMail
+     * @param EventDispatcherInterface     $dispatcher
+     * @param EntityManagerInterface       $entityManager
+     * @param FormFactoryInterface         $formFactory
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
@@ -51,8 +51,7 @@ class NewUserHandler
         EntityManagerInterface $entityManager,
         FormFactoryInterface $formFactory,
         UserPasswordEncoderInterface $passwordEncoder
-    )
-    {
+    ) {
         $this->em = $entityManager;
         $this->formFactory = $formFactory;
         $this->userMailer = $userMail;
@@ -62,6 +61,7 @@ class NewUserHandler
 
     /**
      * @param $user
+     *
      * @return FormInterface
      */
     public function createForm($user)
@@ -72,28 +72,31 @@ class NewUserHandler
                 'USER' => 'ROLE_USER',
                 'SECRETARY' => 'ROLE_SECRETARY',
                 'ADMIN' => 'ROLE_ADMIN',
-            )
+            ),
         ));
+
         return $form;
     }
 
     /**
      * @param FormInterface $form
-     * @param Request $request
+     * @param Request       $request
+     *
      * @return bool
      */
-    public function process($form, $request){
+    public function process($form, $request)
+    {
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             return true;
         }
     }
 
     /**
      * @param User $user
-     * @return void
      */
-    public function success($user){
+    public function success($user)
+    {
         // gestion du mot de passe
         $plainPassword = $user->getPassword();
         $password = $this->passwordEncoder->encodePassword($user, $user->getPassword());
@@ -103,7 +106,7 @@ class NewUserHandler
         $this->em->flush();
 
         /**
-         * Trigger Event for sending Welcome Email
+         * Trigger Event for sending Welcome Email.
          */
         $event = new NewUserEvent($user, $plainPassword);
         $this->dispatcher->dispatch('custom.event.new_user_event', $event);

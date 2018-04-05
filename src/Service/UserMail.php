@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 01/04/18
- * Time: 16:51
+ * Time: 16:51.
  */
 
 namespace App\Service;
-
 
 use App\Entity\User;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -21,10 +20,11 @@ class UserMail
 
     /**
      * UserMail constructor.
-     * @param \Swift_Mailer $mailer
+     *
+     * @param \Swift_Mailer    $mailer
      * @param Twig_Environment $templating
      */
-    public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating,UrlGeneratorInterface $router)
+    public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating, UrlGeneratorInterface $router)
     {
         $this->mailer = $mailer;
         $this->templating = $templating;
@@ -34,6 +34,7 @@ class UserMail
     /**
      * @param $user
      * @param $password
+     *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
@@ -51,15 +52,17 @@ class UserMail
         $body = $this->templating->render($template, array(
             'user' => $user,
             'password' => $password,
-            'adminEmail' => $from
+            'adminEmail' => $from,
         ));
 
         $this->sendMessage($from, $to, $subject, $body);
     }
 
     /**
-     * Envoi un email avec le lien pour changer le mot de passe
+     * Envoi un email avec le lien pour changer le mot de passe.
+     *
      * @param User $user
+     *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
@@ -72,7 +75,7 @@ class UserMail
 
         $to = $user->getEmail();
 
-        $subject = "Mot de passe oublié";
+        $subject = 'Mot de passe oublié';
 
 //        $lien  = $this->router->generate(
 //            'security_reset_password',
@@ -84,7 +87,7 @@ class UserMail
 
         $body = $this->templating->render($template, array(
             'user' => $user,
-            'url' => $lien
+            'url' => $lien,
         ));
 
         $this->sendMessage($from, $to, $subject, $body);
@@ -103,6 +106,4 @@ class UserMail
 
         $this->mailer->send($mail);
     }
-
-
 }

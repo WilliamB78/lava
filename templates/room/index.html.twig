@@ -22,9 +22,15 @@
                     <div class="col-3">
                         <div class="card text-white {{ room.state ? 'bg-secondary' : 'bg-primary' }} m-3">
                             <div class="card-header">
-                                <a href="{{ path('room_edit', {'id': room.id}) }}">
+                                {% if is_granted('ROLE_SECRETARY') %}
+                                <a class="text-dark" href="{{ path('room_edit', {'id': room.id}) }}">
                                     {{ room.name }}
                                 </a>
+                                {% else %}
+                                    <a class="text-dark" href="{{ url('room_calendar_show', {'id': room.id}) }}">
+                                        {{ room.name }}
+                                    </a>
+                                {% endif %}
                             </div>
                             <div class="card-body text-center">
                                 <p class="card-text">
@@ -33,13 +39,15 @@
                                 <p class="card-text">
                                     <a href="{{ url('room_calendar_show', {'id': room.id}) }}" class="btn btn-info">Calendrier</a>
                                 </p>
-                                <p class="card-text">
-                                    {% if room.state == 0 %}
-                                        <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre indisponible</a>
-                                    {% else %}
-                                        <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre disponible</a>
-                                    {% endif %}
-                                </p>
+                                {% if is_granted('ROLE_SECRETARY') %}
+                                    <p class="card-text">
+                                        {% if room.state == 0 %}
+                                            <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre indisponible</a>
+                                        {% else %}
+                                            <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre disponible</a>
+                                        {% endif %}
+                                    </p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

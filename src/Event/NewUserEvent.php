@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 01/04/18
- * Time: 20:39
+ * Time: 20:39.
  */
 
 namespace App\Event;
-
 
 use Symfony\Component\EventDispatcher\Event;
 
@@ -20,6 +19,7 @@ class NewUserEvent extends Event
 
     /**
      * NewUserEvent constructor.
+     *
      * @param $user
      */
     public function __construct($user, $plainPassword)
@@ -35,6 +35,7 @@ class NewUserEvent extends Event
     {
         return $this->user;
     }
+
     /**
      * @return mixed
      */
@@ -42,7 +43,4 @@ class NewUserEvent extends Event
     {
         return $this->password;
     }
-
-
-
 }

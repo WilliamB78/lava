@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 04/04/18
- * Time: 09:52
+ * Time: 09:52.
  */
 
 namespace App\Event;
-
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -23,6 +22,7 @@ class ForgotPasswordEvent extends Event
 
     /**
      * ForgotPasswordEvent constructor.
+     *
      * @param $user
      * @param Router $router
      */
@@ -48,12 +48,10 @@ class ForgotPasswordEvent extends Event
         $link = $this->router->generate(
             'security_reset_password',
             [
-                'token' => $this->user->getTokenResetPassword()
+                'token' => $this->user->getTokenResetPassword(),
             ],
             $this->router::ABSOLUTE_URL);
 
         return $link;
     }
-
-
 }

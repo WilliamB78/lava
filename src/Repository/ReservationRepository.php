@@ -19,29 +19,33 @@ class ReservationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Reservation::class);
     }
+
     /**
-     * Permet d'avoir le nombre de reservation pour un utilisateur
+     * Permet d'avoir le nombre de reservation pour un utilisateur.
+     *
      * @param $user
      * @param $state
+     *
      * @return int|mixed
      */
-    public function findUserReversationByState($user,$state)
+    public function findUserReversationByState($user, $state)
     {
-
         try {
             return $this->byState($state)
                 ->andWhere('r.user = :user')
                 ->setParameter('user', $user)
                 ->getQuery()
                 ->getSingleScalarResult();
-        }catch (NonUniqueResultException $e) {
+        } catch (NonUniqueResultException $e) {
             return 0;
         }
     }
 
     /**
-     * Retourne le nombre de reservation par etat
+     * Retourne le nombre de reservation par etat.
+     *
      * @param $state
+     *
      * @return int|mixed
      */
     public function findByState($state)
@@ -50,14 +54,16 @@ class ReservationRepository extends ServiceEntityRepository
             return $this->byState($state)
                 ->getQuery()
                 ->getSingleScalarResult();
-        }catch (NonUniqueResultException $e) {
+        } catch (NonUniqueResultException $e) {
             return 0;
         }
     }
 
     /**
-     * Creation d'une query vis a vis d'un state
+     * Creation d'une query vis a vis d'un state.
+     *
      * @param $state
+     *
      * @return \Doctrine\ORM\QueryBuilder
      */
     private function byState($state)
@@ -66,5 +72,16 @@ class ReservationRepository extends ServiceEntityRepository
             ->select('COUNT(r)')
             ->where('r.state LIKE :state')
             ->setParameter('state', "%$state%");
+    }
+
+    public function findBetween($start, $end)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.start > :start')
+            ->andWhere('r.end < :end')
+            ->setParameter('start', $start->format('Y-m-d 00:00:00'))
+            ->setParameter('end', $end->format('Y-m-d 23:59:59'))
+            ->getQuery()
+            ->getResult();
     }
 }

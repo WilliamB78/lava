@@ -24,14 +24,14 @@ class IndexController extends Controller
         $mesReservations = $this
             ->getDoctrine()
             ->getRepository(Reservation::class)
-            ->findUserReversationByState($this->getUser(),'accepted');
+            ->findUserReversationByState($this->getUser(), 'accepted');
 
-        return $this->render('navbar/navbar-user.html.twig',[
-            'mesReservations' => $mesReservations
+        return $this->render('navbar/navbar-user.html.twig', [
+            'mesReservations' => $mesReservations,
         ]);
     }
 
-    public function navSecretary ()
+    public function navSecretary()
     {
         $countHS = $this
             ->getDoctrine()
@@ -45,11 +45,11 @@ class IndexController extends Controller
 
         return $this->render('navbar/navbar-secretary.html.twig', [
             'countHS' => $countHS,
-            'demReservation' => $demReservation
+            'demReservation' => $demReservation,
         ]);
     }
 
-    public function navAdmin ()
+    public function navAdmin()
     {
         return $this->render('navbar/navbar-admin.html.twig');
     }

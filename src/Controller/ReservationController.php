@@ -19,7 +19,9 @@ class ReservationController extends Controller
 {
     /**
      * @Route("/", name="reservation_index", methods="GET")
+     *
      * @param ReservationRepository $reservationRepository
+     *
      * @return Response
      */
     public function index(ReservationRepository $reservationRepository): Response
@@ -29,7 +31,6 @@ class ReservationController extends Controller
 
     /**
      * @Route("/mes-reservations", name="reservation_mes_reservations", methods={"GET"})
-     *
      */
     public function mesReservations()
     {
@@ -38,16 +39,17 @@ class ReservationController extends Controller
             ->getRepository(Reservation::class)
             ->findBy(['user' => $this->getUser()]);
 
-
         return $this->render('reservation/mes-reservations.html.twig', [
-            'reservations' => $reservations
+            'reservations' => $reservations,
         ]);
     }
 
     /**
      * @Route("/new", name="reservation_new", methods="GET|POST")
-     * @param Request $request
+     *
+     * @param Request  $request
      * @param Registry $workflows
+     *
      * @return Response
      */
     public function new(Request $request, Registry $workflows): Response
@@ -55,7 +57,7 @@ class ReservationController extends Controller
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->add('slot', DateTimeType::class, array(
-            'data' => new \DateTime()
+            'data' => new \DateTime(),
         ));
         $form->handleRequest($request);
         $workflow = $workflows->get($reservation);
@@ -80,7 +82,9 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}", name="reservation_show", methods="GET")
+     *
      * @param Reservation $reservation
+     *
      * @return Response
      */
     public function show(Reservation $reservation): Response
@@ -90,8 +94,10 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/edit", name="reservation_edit", methods="GET|POST")
-     * @param Request $request
+     *
+     * @param Request     $request
      * @param Reservation $reservation
+     *
      * @return Response
      */
     public function edit(Request $request, Reservation $reservation): Response
@@ -117,7 +123,7 @@ class ReservationController extends Controller
      */
     public function delete(Request $request, Reservation $reservation): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($reservation);
             $em->flush();
@@ -125,6 +131,4 @@ class ReservationController extends Controller
 
         return $this->redirectToRoute('reservation_index');
     }
-
-
 }
