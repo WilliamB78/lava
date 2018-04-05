@@ -54,4 +54,30 @@ class RoomRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Retourne un array de salles ouvertes
+     * @return int|mixed
+     */
+    public function findTotalRoomOpen()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state = :state')
+            ->setParameter('state', 0)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Retourne un array de salles ouvertes
+     * @return int|mixed
+     */
+    public function findTotalRoomClosed()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state = :state')
+            ->setParameter('state', 1)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
