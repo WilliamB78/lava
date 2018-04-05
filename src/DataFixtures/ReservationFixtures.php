@@ -34,7 +34,9 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
         for($i = 0; $i < 10; $i++) {
             $reservation = new Reservation();
             $reservation->setState('created');
-            $reservation->setSlot($faker->dateTime());
+            $start = $faker->dateTime();
+            $reservation->setStart($start);
+            $reservation->setEnd($faker->dateTimeInInterval($start));
             # Permet de selectionner aléatoirement une room et user
             $reservation->setRoom($rooms[array_rand($rooms,1)]);
             $reservation->setUser($users[array_rand($users,1)]);
