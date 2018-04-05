@@ -27,7 +27,26 @@ class RoomController extends Controller
      */
     public function index(RoomRepository $roomRepository): Response
     {
-        return $this->render('room/index.html.twig', ['rooms' => $roomRepository->findAll()]);
+        $rooms =  $roomRepository->findTotalRoomOpen();
+        return $this->render('room/index.html.twig', [
+            'rooms' => $rooms
+        ]);
+    }
+
+    /**
+     * Liste des salles pour la secretaire et l'administrateur
+     * @Route("/hors_service", name="room_closed", methods="GET")
+     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     *
+     * @param RoomRepository $roomRepository
+     * @return Response
+     */
+    public function horsService(RoomRepository $roomRepository): Response
+    {
+        $rooms =  $roomRepository->findTotalRoomClosed();
+        return $this->render('room/index.html.twig', [
+            'rooms' => $rooms
+        ]);
     }
 
     /**
