@@ -8,32 +8,18 @@
 
 namespace App\Service\Twig;
 
-use Twig\Extension\AbstractExtension;
+use Twig_Extension;
+use Twig_Function;
 
-class AppExtension extends AbstractExtension
+class AppExtension extends Twig_Extension
 {
+    /**
+     * @return array|Twig_Function[]
+     */
     public function getFunctions()
     {
         return [
-            new \Twig_Function('reservation_state', function ($state) {
-                if ('created' == $state) {
-                    $result = 'En attente du secretariat';
-                }
-                if ('accepted' == $state) {
-                    $result = 'Accepté';
-                }
-                if ('refused' == $state) {
-                    $result = 'Refusé';
-                }
-                if ('cancelled' == $state) {
-                    $result = 'Annulé';
-                }
-                if ('cancelled_ok' == $state) {
-                    $result = 'Supprimé';
-                }
-
-                return $result;
-            }),
+            new Twig_Function('reservation_state', [AppRuntime::class, 'statesSwitcher'])
         ];
     }
 }
