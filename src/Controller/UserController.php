@@ -14,12 +14,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user")
+ * @Route("/user", name="user_")
  */
 class UserController extends Controller
 {
     /**
-     * @Route("/", name="user_index", methods="GET")
+     * @Route("/", name="index", methods="GET")
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -27,7 +27,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/new", name="user_new", methods="GET|POST")
+     * @Route("/new", name="new", methods="GET|POST")
      *
      * @param Request                      $request
      * @param NewUserHandler               $handler
@@ -54,7 +54,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods="GET")
+     * @Route("/{id}", name="show", methods="GET")
      */
     public function show(User $user): Response
     {
@@ -62,7 +62,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="edit", methods="GET|POST")
      *
      * @param Request $request
      * @param User    $user
@@ -87,7 +87,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="user_delete", methods="DELETE")
+     * @Route("/{id}", name="delete", methods="DELETE")
      */
     public function delete(Request $request, User $user): Response
     {
