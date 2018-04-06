@@ -178,19 +178,8 @@
                           </tr>
                           <tr>
                             <td align="center" style="font-size:0px;padding:0 25px;word-break:break-word;">
-                              <div style="font-family:Arial;font-size:18px;line-height:1;text-align:center;color:#000000;"> Nous avons bien recu votre demande<br> Merci de suivre le lien pour changer votre mot de passe </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td align="center" vertical-align="top" style="font-size:0px;padding:15px 30px;padding-top:10;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
-                              <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
-                                <tr>
-                                  <td align="center" bgcolor="#8bb420" role="presentation" style="border:none;border-radius:0px;color:#FFFFFF;cursor:auto;padding:10px 25px;" valign="top"> <a href="{{ lien }}" style="background: #8bb420; font-family: Ubuntu, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: normal; line-height: 120%; Margin: 0; text-transform: none; text-decoration: none; color: inherit;"
-                                      target="_blank">
-              <strong>Nouveau mot de passe</strong>
-            </a> </td>
-                                </tr>
-                              </table>
+                              <div style="font-family:Arial;font-size:18px;line-height:1;text-align:center;color:#000000;"> Votre réservation du {{ reservation.start ? reservation.start|date('Y-m-d') : '' }} ( {{ reservation.start ? reservation.start|date('H:i') : '' }} - {{ reservation.end ? reservation.end|date('H:i') : '' }} )<br> viens de
+                                passer à l'état {{ reservation_state(reservation.state) }} </div>
                             </td>
                           </tr>
                         </table>
