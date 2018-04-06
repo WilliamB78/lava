@@ -12,20 +12,23 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * @Route("/", name="security_")
+ */
 class SecurityController extends Controller
 {
-    /**
-     * @Route("/security", name="security")
-     */
-    public function index()
-    {
-        return $this->render('security/index.html.twig', [
-            'controller_name' => 'SecurityController',
-        ]);
-    }
+//    /**
+//     * @Route("/security", name="security")
+//     */
+//    public function index()
+//    {
+//        return $this->render('security/index.html.twig', [
+//            'controller_name' => 'SecurityController',
+//        ]);
+//    }
 
     /**
-     * @Route("/", name="security_connexion", methods={"GET", "POST"})
+     * @Route("/", name="connexion", methods={"GET", "POST"})
      * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
 
      *
@@ -47,7 +50,7 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/forgot-password",name="security_forgot_password", methods={"GET","POST"})
+     * @Route("/forgot-password",name="forgot_password", methods={"GET","POST"})
      * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Request               $request
@@ -83,7 +86,7 @@ class SecurityController extends Controller
     /**
      * Seul les utilisateurs non authentifié peuvent avoir accès a leur reset.
      *
-     * @Route("/reset-password/{token}", name="security_reset_password", requirements={"token"}, methods={"GET|POST"})
+     * @Route("/reset-password/{token}", name="reset_password", requirements={"token"}, methods={"GET|POST"})
      * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
      * @Entity("user", expr="repository.findOneByTokenResetPassword(token)")
      *
