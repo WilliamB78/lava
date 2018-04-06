@@ -8,6 +8,8 @@
 
 namespace App\Service;
 
+use App\Entity\Reservation;
+use App\Entity\User;
 use Twig_Environment;
 
 class WorkflowMail
@@ -28,16 +30,16 @@ class WorkflowMail
     }
 
     /**
-     * @param $reservation
-     * @param $user
+     * @param Reservation $reservation
+     * @param User $user
      *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function statuChangeMessage($reservation, $user)
+    public function statuChangeMessage(Reservation $reservation, User $user)
     {
-        $template = 'email/testTemplate.html.twig';
+        $template = 'email/workflowStatuChange.html.twig';
 
         $from = 'reservation@lava.com';
 
@@ -46,7 +48,9 @@ class WorkflowMail
         $subject = "Reservation";
 
         $body = $this->templating->render($template, array(
-            'user' => $user
+            'user' => $user,
+            'subject' => $subject,
+            'reservation' => $reservation
         ));
 
         $this->sendMessage($from, $to, $subject, $body);
