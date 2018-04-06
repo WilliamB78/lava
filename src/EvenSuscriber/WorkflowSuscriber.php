@@ -8,14 +8,17 @@
 
 namespace App\EvenSuscriber;
 
-use App\Service\UserMail;
+use App\Event\WorkflowStatusEvent;
+use App\Service\WorkflowMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Workflow\Event\Event;
 
 class WorkflowSuscriber implements EventSubscriberInterface
 {
+    /** @var WorkflowMail $mailer */
     protected $mailer;
 
-    public function __construct(UserMail $mailer)
+    public function __construct(WorkflowMail $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -40,8 +43,20 @@ class WorkflowSuscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            // TODO: Implement getSubscribedEvents() method.
-        );
+        return [
+            'workflow.reservation.completed' => 'onStatuChange',
+        ];
+    }
+
+    /**
+     * @param Event $event
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function onStatuChange(Event $event)
+    {
+        $this->mailer->statuChangeMessage($event->getSubject(),$event->getSubject()->getUser());
     }
 }

@@ -8,9 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Start</th>
-                <th>End</th>
+                <th>Date</th>
                 <th>State</th>
                 <th>actions</th>
             </tr>
@@ -18,13 +16,27 @@
         <tbody>
         {% for reservation in reservations %}
             <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.start ? reservation.start|date('Y-m-d H:i') : '' }}</td>
-                <td>{{ reservation.end ? reservation.end|date('Y-m-d H:i') : '' }}</td>
-                <td>{{ reservation.state ? reservation.state|join(', ') : '' }}</td>
                 <td>
-                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
+                    {{ reservation.start ? reservation.start|date('d/m/Y') : '' }}
+                    de
+                    {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                    a
+                    {{ reservation.end ? reservation.end|date('H:i') : '' }}
+                </td>
+                <td>
+                    {{ reservation_state(reservation.state) }}
+                </td>
+                <td>
+                    {% if workflow_can(reservation, 'demand_validation') %}
+                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
+                    {% endif %}
+                    {% if workflow_can(reservation, 'demand_refused') %}
+                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_refused', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser</a>
+                    {% endif %}
+                    {% if workflow_can(reservation, 'cancel_booking') %}
+                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                    {% endif %}
+                    <a href="#"></a>
                 </td>
             </tr>
         {% else %}

@@ -15,14 +15,21 @@
             {% for reservation in reservations %}
                <tr>
                   <td>
-                      {{ reservation.slot ? reservation.slot|date('Y-m-d H:i') : '' }}
+                      {{ reservation.start ? reservation.start|date('d/m/Y') : '' }}
+                     de
+                      {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                     a
+                      {{ reservation.end ? reservation.end|date('H:i') : '' }}
                   </td>
                   <td class="text-center">
                         {{ reservation_state(reservation.state) }}
                   </td>
                   <td>
-                      {% if workflow_can(reservation,'cancel_demand') or workflow_can(reservation,'cancel_after') %}
-                         <a href="#" class="btn btn-danger">Annuler</a>
+                      {% if workflow_can(reservation,'cancel_demand') %}
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_demand', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                      {% endif %}
+                      {% if workflow_can(reservation,'cancel_after')  %}
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_after', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
                       {% endif %}
                   </td>
                </tr>

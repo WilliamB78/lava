@@ -27,6 +27,31 @@ class WorkflowMail
         $this->templating = $templating;
     }
 
+    /**
+     * @param $reservation
+     * @param $user
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function statuChangeMessage($reservation, $user)
+    {
+        $template = 'email/testTemplate.html.twig';
+
+        $from = 'reservation@lava.com';
+
+        $to = $user->getEmail();
+
+        $subject = "Reservation";
+
+        $body = $this->templating->render($template, array(
+            'user' => $user
+        ));
+
+        $this->sendMessage($from, $to, $subject, $body);
+    }
+
     protected function sendMessage($from, $to, $subject, $body)
     {
         $mail = (new \Swift_Message());
