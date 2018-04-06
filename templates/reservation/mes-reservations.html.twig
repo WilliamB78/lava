@@ -22,8 +22,11 @@
                         {{ reservation_state(reservation.state) }}
                   </td>
                   <td>
-                      {% if workflow_can(reservation,'cancel_demand') or workflow_can(reservation,'cancel_after') %}
-                         <a href="#" class="btn btn-danger">Annuler</a>
+                      {% if workflow_can(reservation,'cancel_demand') %}
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_demand', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                      {% endif %}
+                      {% if workflow_can(reservation,'cancel_after')  %}
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_after', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
                       {% endif %}
                   </td>
                </tr>
