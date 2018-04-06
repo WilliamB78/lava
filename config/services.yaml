@@ -40,3 +40,9 @@ services:
           class: App\EvenSuscriber\WorkflowSuscriber
           tags:
               - { name: workernel.event_subscriber }
+
+    app.twig_runtime:
+            class: App\Service\Twig\AppRuntime
+            public: false
+            tags:
+                - { name: twig.runtime }
