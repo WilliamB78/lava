@@ -19,7 +19,7 @@
         <div class="col-12">
             <div class="row">
                 {% for room in rooms %}
-                    <div class="col-3">
+                    <div class="col-sm-6  col-xl-3">
                         <div class="card text-white {{ room.state ? 'bg-secondary' : 'bg-primary' }} m-3">
                             <div class="card-header">
                                 {% if is_granted('ROLE_SECRETARY') %}
@@ -42,9 +42,9 @@
                                 {% if is_granted('ROLE_SECRETARY') %}
                                     <p class="card-text">
                                         {% if room.state == 0 %}
-                                            <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre indisponible</a>
+                                            <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre indispo.</a>
                                         {% else %}
-                                            <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre disponible</a>
+                                            <a href="{{ url('room_edit', {'id': room.id}) }}" class="btn btn-warning">Rendre dispo.</a>
                                         {% endif %}
                                     </p>
                                 {% endif %}
