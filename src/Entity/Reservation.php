@@ -43,7 +43,6 @@ class Reservation
      */
     private $state;
 
-
     /**
      * @return mixed
      */

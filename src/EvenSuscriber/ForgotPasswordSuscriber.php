@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 04/04/18
- * Time: 10:27
+ * Time: 10:27.
  */
 
 namespace App\EvenSuscriber;
-
 
 use App\Event\ForgotPasswordEvent;
 use App\Service\UserMail;
@@ -43,18 +42,20 @@ class ForgotPasswordSuscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            ForgotPasswordEvent::NAME => 'onForgotPassword'
+            ForgotPasswordEvent::NAME => 'onForgotPassword',
         );
     }
 
     /**
      * @param ForgotPasswordEvent $event
+     *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function onForgotPassword(ForgotPasswordEvent $event){
-        /**
+    public function onForgotPassword(ForgotPasswordEvent $event)
+    {
+        /*
          * Using UserMail Service to send Welcome Email to new User
          */
         $this->mailer->sendResetPassword($event->getUser(), $event->getLink());

@@ -4,12 +4,9 @@ namespace App\Controller;
 
 use App\Controller\Utils\User\NewUserHandler;
 use App\Entity\User;
-use App\Event\NewUserEvent;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,9 +28,11 @@ class UserController extends Controller
 
     /**
      * @Route("/new", name="user_new", methods="GET|POST")
-     * @param Request $request
-     * @param NewUserHandler $handler
+     *
+     * @param Request                      $request
+     * @param NewUserHandler               $handler
      * @param UserPasswordEncoderInterface $passwordEncoder
+     *
      * @return Response
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -41,9 +40,10 @@ class UserController extends Controller
     {
         $user = new User();
         $form = $handler->createForm($user);
-        
+
         if ($handler->process($form, $request)) {
             $handler->success($user);
+
             return $this->redirectToRoute('user_index');
         }
 
@@ -63,8 +63,10 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}/edit", name="user_edit", methods="GET|POST")
+     *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
+     *
      * @return Response
      */
     public function edit(Request $request, User $user): Response
@@ -89,7 +91,7 @@ class UserController extends Controller
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();

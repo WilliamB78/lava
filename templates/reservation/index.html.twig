@@ -9,7 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Slot</th>
+                <th>Start</th>
+                <th>End</th>
                 <th>State</th>
                 <th>actions</th>
             </tr>
@@ -18,7 +19,8 @@
         {% for reservation in reservations %}
             <tr>
                 <td>{{ reservation.id }}</td>
-                <td>{{ reservation.slot ? reservation.slot|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.start ? reservation.start|date('Y-m-d H:i') : '' }}</td>
+                <td>{{ reservation.end ? reservation.end|date('Y-m-d H:i') : '' }}</td>
                 <td>{{ reservation.state ? reservation.state|join(', ') : '' }}</td>
                 <td>
                     <a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>

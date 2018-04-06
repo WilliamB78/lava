@@ -8,20 +8,47 @@
 {% endblock %}
 
 {% block body %}
+    {% set clone = firstDay %}
     <div class="container-fluid">
-        <h1>{{ room.name }} - {{ calendarToString }}</h1>
-        {% set clone = firstDay %}
+        <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
+            <h1>{{ room.name }} - {{ calendarToString }}</h1>
+            <div>
+                <a href="{{ url('room_calendar_previous', {
+                    "id": room.id,
+                    "month" : calendar.previousMonth.month,
+                    "year": calendar.previousMonth.year
+                }) }}" class="btn btn-primary">&lt;</a>
+
+                <a href="{{ url('room_calendar_previous', {
+                    "id": room.id,
+                    "month" : calendar.nextMonth.month,
+                    "year": calendar.nextMonth.year
+                }) }}" class="btn btn-primary">&gt;</a>
+            </div>
+        </div>
+
         <table class="calendar__table calendar__table--{{ weeks }}weeks">
             {% for i in 1..weeks %}
                 <tr>
                     {% for key, day in days %}
                         {% set v = key + i * 7 %}
                         {% set dateDay = clone|date_modify('last monday')|date_modify("+"~v~"day") %}
+                        {% set dayReservation = monthReservationsByDay[dateDay.format('Y-m-d')] ?? [] %}
+
                         <td class="{% if not calendar.inThisMonth(dateDay) %}calendar__outOfMonth {% endif %}">
                             {% if i is same as(1) %}
                                 <div class="calendar__weekday">{{ day }}</div>
                             {% endif %}
                             <div class="calendar__day">{{ dateDay|date("d") }}</div>
+                            {% for key, res in dayReservation %}
+                                <div calendar__reservation>
+                                    <a href="{{ url('reservation_show', {
+                                        'id': res.id
+                                    }) }}">
+                                        From {{ res.start.format('H:i')  }} To {{ res.end.format('H:i')  }}
+                                    </a>
+                                </div>
+                            {% endfor %}
                         </td>
                     {% endfor %}
                 </tr>

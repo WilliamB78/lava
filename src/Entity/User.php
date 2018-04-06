@@ -51,7 +51,6 @@ class User implements AdvancedUserInterface
      */
     private $reservations;
 
-
     /**
      * @ORM\Column(type="string", nullable=true)
      */
@@ -88,6 +87,7 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $firstname
+     *
      * @return User
      */
     public function setFirstname(string $firstname): self
@@ -107,6 +107,7 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $lastname
+     *
      * @return User
      */
     public function setLastname(string $lastname): self
@@ -126,6 +127,7 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $email
+     *
      * @return User
      */
     public function setEmail(string $email): self
@@ -145,6 +147,7 @@ class User implements AdvancedUserInterface
 
     /**
      * @param string $password
+     *
      * @return User
      */
     public function setPassword(string $password): self
@@ -169,7 +172,6 @@ class User implements AdvancedUserInterface
     {
         $this->reservations[] = $reservations;
     }
-
 
     /**
      * Checks whether the user's account has expired.
@@ -239,12 +241,11 @@ class User implements AdvancedUserInterface
         $this->addRole($roles);
     }
 
-
     /**
      * @param $role
+     *
      * @return User
      */
-
     public function addRole($role): self
     {
         $this->roles[] = $role;
@@ -337,5 +338,4 @@ class User implements AdvancedUserInterface
     {
         $this->tokenExpire = $tokenExpire;
     }
-
 }

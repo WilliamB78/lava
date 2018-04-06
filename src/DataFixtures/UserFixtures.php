@@ -14,6 +14,7 @@ class UserFixtures extends Fixture
 
     /**
      * UserFixtures constructor.
+     *
      * @param UserPasswordEncoderInterface $encoder
      */
     public function __construct(UserPasswordEncoderInterface $encoder)
@@ -29,9 +30,9 @@ class UserFixtures extends Fixture
         $faker = Factory::create();
         $roles = ['ROLE_SECRETARY', 'ROLE_USER', 'ROLE_ADMIN'];
 
-        # On ajoute 10 room avec les fixtures
-        for($i = 0; $i < 10; $i++) {
-            #Création de la room avec faker
+        // On ajoute 10 room avec les fixtures
+        for ($i = 0; $i < 10; ++$i) {
+            //Création de la room avec faker
             $user = new User();
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);

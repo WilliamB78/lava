@@ -17,21 +17,21 @@ class RoomType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
             ])
-            ->add('nbPlaces', IntegerType::class,[
+            ->add('nbPlaces', IntegerType::class, [
                 'label' => 'Nombre de place',
                 'invalid_message' => 'Veuillez selectionner un chiffre correct.',
                 'attr' => [
-                    'min' => 0
-                ]
+                    'min' => 0,
+                ],
             ])
 
-            # Permet d'afficher les attributs si c'est pas un ajout
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            // Permet d'afficher les attributs si c'est pas un ajout
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $room = $event->getData();
                 $form = $event->getForm();
-                # Si il y a une salle alors l'affiche
+                // Si il y a une salle alors l'affiche
                 if ($room && $room->getId()) {
                     $form
                         ->add('state')

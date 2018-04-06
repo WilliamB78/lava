@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 03/04/18
- * Time: 11:05
+ * Time: 11:05.
  */
 
 namespace App\Service;
-
 
 use Twig_Environment;
 
@@ -18,7 +17,8 @@ class WorkflowMail
 
     /**
      * WorkflowMail constructor.
-     * @param \Swift_Mailer $mailer
+     *
+     * @param \Swift_Mailer    $mailer
      * @param Twig_Environment $templating
      */
     public function __construct(\Swift_Mailer $mailer, Twig_Environment $templating)

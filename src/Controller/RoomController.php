@@ -18,46 +18,54 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoomController extends Controller
 {
     /**
-     * Liste des salles pour la secretaire et l'administrateur
+     * Liste des salles pour la secretaire et l'administrateur.
+     *
      * @Route("/", name="room_index", methods="GET")
-     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     *
      *
      * @param RoomRepository $roomRepository
+     *
      * @return Response
      */
+    //@Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
     public function index(RoomRepository $roomRepository): Response
     {
-        $rooms =  $roomRepository->findTotalRoomOpen();
+        $rooms = $roomRepository->findTotalRoomOpen();
+
         return $this->render('room/index.html.twig', [
-            'rooms' => $rooms
+            'rooms' => $rooms,
         ]);
     }
 
     /**
-     * Liste des salles pour la secretaire et l'administrateur
+     * Liste des salles pour la secretaire et l'administrateur.
+     *
      * @Route("/hors_service", name="room_closed", methods="GET")
      * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
      *
      * @param RoomRepository $roomRepository
+     *
      * @return Response
      */
     public function horsService(RoomRepository $roomRepository): Response
     {
-        $rooms =  $roomRepository->findTotalRoomClosed();
+        $rooms = $roomRepository->findTotalRoomClosed();
+
         return $this->render('room/index.html.twig', [
-            'rooms' => $rooms
+            'rooms' => $rooms,
         ]);
     }
 
     /**
      * @Route("/new", name="room_new", methods="GET|POST")
-     * @param Request $request
+     *
+     * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
+     *
      * @return Response
      */
     public function new(Request $request, RoomIsFullHandler $fullHandler): Response
     {
-
         if (!$fullHandler->isFull()) {
             $room = new Room();
             $form = $this->createForm(RoomType::class, $room);
@@ -68,7 +76,7 @@ class RoomController extends Controller
                 $em->persist($room);
                 $em->flush();
 
-                $this->addFlash('success' , 'Vous venez de créer une nouvelle salle');
+                $this->addFlash('success', 'Vous venez de créer une nouvelle salle');
 
                 return $this->redirectToRoute('room_index');
             }
@@ -79,6 +87,7 @@ class RoomController extends Controller
             ]);
         } else {
             $this->addFlash('error', 'Vous ne avez atteins le nombre maximal de salle');
+
             return $this->redirectToRoute('room_index');
         }
     }

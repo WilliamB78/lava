@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 01/04/18
- * Time: 20:02
+ * Time: 20:02.
  */
 
 namespace App\EvenSuscriber;
-
 
 use App\Event\NewUserEvent;
 use App\Service\UserMail;
@@ -21,6 +20,7 @@ class NewUserSuscriber implements EventSubscriberInterface
     {
         $this->mailer = $mailer;
     }
+
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -42,18 +42,20 @@ class NewUserSuscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            NewUserEvent::NAME => 'onNewUser'
+            NewUserEvent::NAME => 'onNewUser',
         );
     }
 
     /**
      * @param NewUserEvent $event
+     *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function onNewUser(NewUserEvent $event){
-        /**
+    public function onNewUser(NewUserEvent $event)
+    {
+        /*
          * Using UserMail Service to send Welcome Email to new User
          */
         $this->mailer->sendWelcomeMessage($event->getUser(), $event->getPassword());

@@ -3,18 +3,16 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 03/04/18
- * Time: 11:07
+ * Time: 11:07.
  */
 
 namespace App\EvenSuscriber;
-
 
 use App\Service\UserMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class WorkflowSuscriber implements EventSubscriberInterface
 {
-
     protected $mailer;
 
     public function __construct(UserMail $mailer)
