@@ -61,6 +61,7 @@ class RoomController extends Controller
      *
      * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
+     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
      *
      * @return Response
      */
@@ -102,6 +103,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}/edit", name="room_edit", methods="GET|POST")
+     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Room $room): Response
     {
@@ -111,7 +113,8 @@ class RoomController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('room_edit', ['id' => $room->getId()]);
+            //return $this->redirectToRoute('room_edit', ['id' => $room->getId()]);
+            return $this->redirectToRoute('room_index');
         }
 
         return $this->render('room/edit.html.twig', [
@@ -122,6 +125,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
+     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Room $room): Response
     {
