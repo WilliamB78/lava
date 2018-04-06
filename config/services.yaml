@@ -36,11 +36,6 @@ services:
           tags:
               - { name: kernel.event_listener, event: custom.event.forgot_password_event, method: onForgotPassword }
 
-    workflow_subscriber:
-          class: App\EvenSuscriber\WorkflowSuscriber
-          tags:
-              - { name: workernel.event_subscriber }
-
     app.twig_runtime:
             class: App\Service\Twig\AppRuntime
             public: false
