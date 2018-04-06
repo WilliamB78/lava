@@ -15,7 +15,8 @@
             {% for reservation in reservations %}
                <tr>
                   <td>
-                      {{ reservation.slot ? reservation.slot|date('Y-m-d H:i') : '' }}
+                      <span style="font-weight: bolder">From :</span>{{ reservation.start ? reservation.start|date('Y-m-d H:i') : '' }}
+                      <span style="font-weight: bolder">To :</span>{{ reservation.end ? reservation.end|date('Y-m-d H:i') : '' }}
                   </td>
                   <td class="text-center">
                         {{ reservation_state(reservation.state) }}
