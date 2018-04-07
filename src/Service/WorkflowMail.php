@@ -31,7 +31,7 @@ class WorkflowMail
 
     /**
      * @param Reservation $reservation
-     * @param User $user
+     * @param User        $user
      *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
@@ -45,12 +45,12 @@ class WorkflowMail
 
         $to = $user->getEmail();
 
-        $subject = "Reservation";
+        $subject = 'Reservation';
 
         $body = $this->templating->render($template, array(
             'user' => $user,
             'subject' => $subject,
-            'reservation' => $reservation
+            'reservation' => $reservation,
         ));
 
         $this->sendMessage($from, $to, $subject, $body);

@@ -2,13 +2,7 @@
 
 {% block title %}{{ room.name }} Calendar{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('build/css/calendar.css') }}">
-{% endblock %}
-
 {% block body %}
-    {% set clone = firstDay %}
     <div class="container-fluid">
         <div class="d-flex flex-row align-items-center justify-content-between mx-sm-3">
             <h1>{{ room.name }} - {{ calendarToString }}</h1>
@@ -28,24 +22,38 @@
         </div>
 
         <table class="calendar__table calendar__table--{{ weeks }}weeks">
+            {# Showing weeks of the cuurent month #}
             {% for i in 1..weeks %}
                 <tr>
                     {% for key, day in days %}
-                        {% set v = key + i * 7 %}
-                        {% set dateDay = clone|date_modify('last monday')|date_modify("+"~v~"day") %}
-                        {% set dayReservation = monthReservationsByDay[dateDay.format('Y-m-d')] ?? [] %}
+                        {# Logic to get date of the day #}
+                        {% set dateDay = firstDay|clone|date_modify('last monday')|date_modify("+"~day_next_Value(key, i)~"day") %}
 
-                        <td class="{% if not calendar.inThisMonth(dateDay) %}calendar__outOfMonth {% endif %}">
+                        {# Showing day in string #}
+                        <td class="{% if not day_in_the_month(calendar,dateDay) %}calendar__outOfMonth {% endif %}">
+                            {# Showing day in string only in the first week #}
                             {% if i is same as(1) %}
                                 <div class="calendar__weekday">{{ day }}</div>
                             {% endif %}
-                            <div class="calendar__day">{{ dateDay|date("d") }}</div>
-                            {% for key, res in dayReservation %}
+
+                            {# Showing date of the day #}
+                            {% if day_in_the_month(calendar,dateDay) %}
+                            <a href="{{ url('reservation_new', {
+                                "id": room.id,
+                                "date": dateDay|date('Y-m-d')
+                            }) }}">
+                            {% endif %}
+                                <div class="calendar__day">{{ dateDay|date("d") }}</div>
+                            {% if not day_in_the_month(calendar,dateDay) %}
+                            </a>
+                            {% endif %}
+                            {% for key, reservation in day_reservations(monthReservationsByDay, dateDay|date('Y-m-d')) %}
+                                {# Showing reservation for this day #}
                                 <div calendar__reservation>
                                     <a href="{{ url('reservation_show', {
-                                        'id': res.id
+                                        'id': reservation.id
                                     }) }}">
-                                        From {{ res.start.format('H:i')  }} To {{ res.end.format('H:i')  }}
+                                        From {{ reservation.start|date('H:i')  }} To {{ reservation.end|date('H:i')  }}
                                     </a>
                                 </div>
                             {% endfor %}

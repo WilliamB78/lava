@@ -1,7 +1,5 @@
 /.idea/
 /.idead/*
-/docker-compose.yml
-/Docker/
 ###> symfony/framework-bundle ###
 /.env
 /public/bundles/
@@ -33,3 +31,7 @@ yarn-error.log
 ###> database volume persistence ###
 /.db/
 ###> database volume persistence ###
+
+###> symfony fixer cache ###
+/.php_cs.cache
+###> symfony fixer cache ###

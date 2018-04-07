@@ -3,9 +3,12 @@
 {% block title %}Nouvelle réservation{% endblock %}
 
 {% block body %}
-    <h1>Create new Reservation</h1>
+    <div class="container">
+        <h1>Create new Reservation</h1>
 
-    {{ include('reservation/_form.html.twig') }}
+        {% form_theme form 'bootstrap_4_layout.html.twig' %}
+        {{ include('reservation/_form.html.twig') }}
 
-    <a href="{{ path('reservation_index') }}">back to list</a>
+        <a href="{{ path('room_calendar_show', {"id": app.request.get('id')}) }}">back to list</a>
+    </div>
 {% endblock %}
