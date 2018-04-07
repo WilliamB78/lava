@@ -6,6 +6,7 @@
          <table class="table">
             <thead>
             <tr>
+                <th>Room</th>
                <th>Date</th>
                <th class="text-center">Etat demande</th>
                <th></th>
@@ -14,6 +15,7 @@
             <tbody>
             {% for reservation in reservations %}
                <tr>
+                   <td>{{ reservation.room | room_name }}</td>
                   <td>
                       <span style="font-weight: bolder">From :</span>{{ reservation.start ? reservation.start|date('Y-m-d H:i') : '' }}
                       <span style="font-weight: bolder">To :</span>{{ reservation.end ? reservation.end|date('Y-m-d H:i') : '' }}
