@@ -87,7 +87,7 @@ class Calendar
      */
     public function toString(): string
     {
-        return $this->months[$this->getMonth() - 1] . ' ' . $this->getYear();
+        return $this->months[$this->getMonth() - 1].' '.$this->getYear();
     }
 
     /**
@@ -110,7 +110,7 @@ class Calendar
         }
 
         // Handle case where $end->format('W') return 1
-        if ($weeks === 1) {
+        if (1 === $weeks) {
             $weeks = 6;
         }
 
@@ -141,6 +141,7 @@ class Calendar
 
     /**
      * @return Calendar
+     *
      * @throws \Exception
      */
     public function nextMonth(): Calendar
@@ -151,11 +152,13 @@ class Calendar
             $month = 1;
             $year += 1;
         }
+
         return new Calendar($month, $year);
     }
 
     /**
      * @return Calendar
+     *
      * @throws \Exception
      */
     public function previousMonth(): Calendar
@@ -166,6 +169,7 @@ class Calendar
             $month = 12;
             $year -= 1;
         }
+
         return new Calendar($month, $year);
     }
 }

@@ -8,7 +8,6 @@
 
 namespace App\EvenSuscriber;
 
-use App\Event\WorkflowStatusEvent;
 use App\Service\WorkflowMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Workflow\Event\Event;
@@ -57,6 +56,6 @@ class WorkflowSuscriber implements EventSubscriberInterface
      */
     public function onStatuChange(Event $event)
     {
-        $this->mailer->statuChangeMessage($event->getSubject(),$event->getSubject()->getUser());
+        $this->mailer->statuChangeMessage($event->getSubject(), $event->getSubject()->getUser());
     }
 }

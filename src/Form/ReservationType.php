@@ -17,10 +17,10 @@ class ReservationType extends AbstractType
         $builder
             ->add('start', DateTimeType::class)
             ->add('end', DateTimeType::class)
-            ->add('room', EntityType::class, array(
-                // looks for choices from this entity
-                'class' => Room::class,
-                'choice_label' => 'name', ))
+//            ->add('room', EntityType::class, array(
+//                // looks for choices from this entity
+//                'class' => Room::class,
+//                'choice_label' => 'name', ))
         ;
     }
 

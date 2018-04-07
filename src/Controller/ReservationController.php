@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Entity\Room;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
 
 /**
- * @Route("/reservation")
+ * @Route("/reservation", name="reservation_")
  */
 class ReservationController extends Controller
 {
     /**
-     * @Route("/", name="reservation_index", methods="GET")
+     * @Route("/", name="index", methods="GET")
+     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
      *
      * @param ReservationRepository $reservationRepository
      *
@@ -30,7 +33,7 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/mes-reservations", name="reservation_mes_reservations", methods={"GET"})
+     * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
      */
     public function mesReservations()
     {
@@ -45,19 +48,24 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/new", name="reservation_new", methods="GET|POST")
+     * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
      *
      * @param Request  $request
      * @param Registry $workflows
+     * @param Room     $room
+     * @param $date
      *
      * @return Response
      */
-    public function new(Request $request, Registry $workflows): Response
+    public function new(Request $request, Registry $workflows, Room $room, $date): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
-        $form->add('slot', DateTimeType::class, array(
-            'data' => new \DateTime(),
+        $form->add('start', DateTimeType::class, array(
+            'data' => new \DateTime($date),
+        ));
+        $form->add('end', DateTimeType::class, array(
+            'data' => new \DateTime($date),
         ));
         $form->handleRequest($request);
         $workflow = $workflows->get($reservation);
@@ -65,13 +73,15 @@ class ReservationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             //TODO setState
             //TODO setUser
+            $reservation->setRoom($room);
             $reservation->setUser($this->getUser());
             $reservation->setState('created');
+            //dump($reservation);exit;
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
 
-            return $this->redirectToRoute('reservation_index');
+            return $this->redirectToRoute('room_calendar_show', array('id' => $room->getId()));
         }
 
         return $this->render('reservation/new.html.twig', [
@@ -81,7 +91,7 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="reservation_show", methods="GET")
+     * @Route("/{id}", name="show", methods="GET")
      *
      * @param Reservation $reservation
      *
@@ -93,7 +103,7 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="reservation_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="edit", methods="GET|POST")
      *
      * @param Request     $request
      * @param Reservation $reservation
@@ -119,7 +129,7 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="reservation_delete", methods="DELETE")
+     * @Route("/{id}", name="delete", methods="DELETE")
      */
     public function delete(Request $request, Reservation $reservation): Response
     {

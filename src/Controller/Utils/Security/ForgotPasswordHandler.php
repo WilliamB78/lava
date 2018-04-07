@@ -90,7 +90,8 @@ class ForgotPasswordHandler
                     ['email' => $request
                         ->request
                         ->get('forgot_password')['email'],
-                    ]);
+                    ]
+                );
         } else {
             return $user = new User();
         }

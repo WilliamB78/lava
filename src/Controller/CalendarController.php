@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Controller\Utils\Calendar\CalendarHandler;
 use App\Entity\Room;
 use App\Repository\ReservationRepository;
 use App\Service\Calendar;
@@ -15,47 +16,39 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/room", name="room_")
+ */
 class CalendarController extends Controller
 {
     /**
-     * @Route("/room/{id}/calendar", name="room_calendar_show", methods="GET")
+     * @Route("/{id}/calendar", name="calendar_show", methods="GET")
      *
-     * @param Room $room
-     * @param Calendar $calendar
-     *
+     * @param Room                  $room
+     * @param Calendar              $calendar
      * @param ReservationRepository $reservationRepository
+     *
      * @return Response
      */
     public function show(Room $room, Calendar $calendar, ReservationRepository $reservationRepository): Response
     {
+        $handler = new CalendarHandler($calendar);
+
         // Month and year in string
-        $calendarToString = $calendar->toString();
+        $calendarToString = $handler->getMonthToSTring();
 
         // number of weeks in the current month
-        $weeks = $calendar->getWeeks();
+        $weeks = $handler->getWeeks();
 
         // Array on weeks days
-        $days = $calendar->getDays();
+        $days = $handler->getDays();
 
         // fisrt day of the first week
-        $firstDay = $calendar->getFirstDay();
-        $firstDay = $firstDay->format('N') === '1' ? $firstDay : $calendar->getFirstDay()->modify('last monday');
-
-        // last day of the last week
-        $end = (clone $firstDay)->modify('+'.(6 + 7 * ($weeks - 1)). ' days');
+        $firstDay = $handler->getFirstDay();
 
         // Current month reservations
-        $reservations = $reservationRepository->findBetween($firstDay, $end);
-        $monthReservationsByDay = [];
-        foreach ($reservations as $reservation){
-            $date = $reservation->getStart()->format('Y-m-d');
-            if(!isset($monthReservationsByDay[$date])){
-                $monthReservationsByDay[$date] = [$reservation];
-            }else{
-                $monthReservationsByDay[$date][] = $reservation;
-            }
-        }
-        dump($monthReservationsByDay);
+        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository, $room);
+
         return $this->render('calendar/show.html.twig', [
             'room' => $room,
             'calendar' => $calendar,
@@ -68,7 +61,14 @@ class CalendarController extends Controller
     }
 
     /**
-     * @Route("/room/{id}/calendar/{month}/{year}", name="room_calendar_previous", methods="GET")
+     * @Route("/{id}/calendar/{month}/{year}", name="calendar_previous", methods="GET")
+     *
+     * @param Room $room
+     * @param $month
+     * @param $year
+     * @param ReservationRepository $reservationRepository
+     *
+     * @return Response
      *
      * @throws \Exception
      */
@@ -76,24 +76,23 @@ class CalendarController extends Controller
     {
         $calendar = new Calendar($month, $year);
 
+        $handler = new CalendarHandler($calendar);
+
         // Month and year in string
-        $calendarToString = $calendar->toString();
+        $calendarToString = $handler->getMonthToSTring();
 
         // number of weeks in the current month
-        $weeks = $calendar->getWeeks();
+        $weeks = $handler->getWeeks();
 
         // Array on weeks days
-        $days = $calendar->getDays();
+        $days = $handler->getDays();
 
         // fisrt day of the first week
-        $firstDay = $calendar->getFirstDay();
-        $firstDay = $firstDay->format('N') === '1' ? $firstDay : $calendar->getFirstDay()->modify('last monday');
-
-        // last day of the last week
-        $end = (clone $firstDay)->modify('+'.(6 + 7 * ($weeks - 1)). ' days');
+        $firstDay = $handler->getFirstDay();
 
         // Current month reservations
-        $monthReservations = $reservationRepository->findBetween($firstDay, $end);
+        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository);
+
         return $this->render('calendar/show.html.twig', [
             'room' => $room,
             'calendar' => $calendar,
@@ -101,35 +100,43 @@ class CalendarController extends Controller
             'weeks' => $weeks,
             'firstDay' => $firstDay,
             'days' => $days,
+            'monthReservationsByDay' => $monthReservationsByDay,
         ]);
     }
 
     /**
-     * @Route("/room/{id}/calendar/", name="room_calendar_next", methods="GET")
+     * @Route("/{id}/calendar/", name="calendar_next", methods="GET")
      *
+     * @param Room $room
+     * @param $month
+     * @param $year
+     * @param ReservationRepository $reservationRepository
+     *
+     * @return Response
+     *
+     * @throws \Exception
      */
     public function nextMonth(Room $room, $month, $year, ReservationRepository $reservationRepository)
     {
         $calendar = new Calendar($month, $year);
 
+        $handler = new CalendarHandler($calendar);
+
         // Month and year in string
-        $calendarToString = $calendar->toString();
+        $calendarToString = $handler->getMonthToSTring();
 
         // number of weeks in the current month
-        $weeks = $calendar->getWeeks();
+        $weeks = $handler->getWeeks();
 
         // Array on weeks days
-        $days = $calendar->getDays();
+        $days = $handler->getDays();
 
         // fisrt day of the first week
-        $firstDay = $calendar->getFirstDay();
-        $firstDay = $firstDay->format('N') === '1' ? $firstDay : $calendar->getFirstDay()->modify('last monday');
-
-        // last day of the last week
-        $end = (clone $firstDay)->modify('+'.(6 + 7 * ($weeks - 1)). ' days');
+        $firstDay = $handler->getFirstDay();
 
         // Current month reservations
-        $monthReservations = $reservationRepository->findBetween($firstDay, $end);
+        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository);
+
         return $this->render('calendar/show.html.twig', [
             'room' => $room,
             'calendar' => $calendar,
@@ -137,6 +144,7 @@ class CalendarController extends Controller
             'weeks' => $weeks,
             'firstDay' => $firstDay,
             'days' => $days,
+            'monthReservationsByDay' => $monthReservationsByDay,
         ]);
     }
 }
