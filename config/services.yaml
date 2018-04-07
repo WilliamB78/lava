@@ -37,7 +37,9 @@ services:
               - { name: kernel.event_listener, event: custom.event.forgot_password_event, method: onForgotPassword }
 
     app.twig_runtime:
-            class: App\Service\Twig\AppRuntime
+            class: App\Twig\AppRuntime
             public: false
+            arguments:
+                - "@doctrine.orm.entity_manager"
             tags:
                 - { name: twig.runtime }

@@ -22,7 +22,6 @@ class RoomController extends Controller
      *
      * @Route("/", name="room_index", methods="GET")
      *
-     *
      * @param RoomRepository $roomRepository
      *
      * @return Response

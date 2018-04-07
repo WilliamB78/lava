@@ -50,7 +50,8 @@ class ForgotPasswordEvent extends Event
             [
                 'token' => $this->user->getTokenResetPassword(),
             ],
-            $this->router::ABSOLUTE_URL);
+            $this->router::ABSOLUTE_URL
+        );
 
         return $link;
     }
