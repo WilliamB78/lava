@@ -33,5 +33,5 @@ yarn-error.log
 ###> database volume persistence ###
 
 ###> symfony fixer cache ###
-/.php_cs.cache
+.php_cs.cache
 ###> symfony fixer cache ###
