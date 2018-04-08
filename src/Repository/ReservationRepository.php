@@ -74,6 +74,12 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('state', "%$state%");
     }
 
+    /**
+     * @param $start
+     * @param $end
+     * @param $roomId
+     * @return mixed
+     */
     public function findBetween($start, $end, $roomId)
     {
         return $this->createQueryBuilder('r')
@@ -83,6 +89,22 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('start', $start->format('Y-m-d 00:00:00'))
             ->setParameter('end', $end->format('Y-m-d 23:59:59'))
             ->setParameter('roomId', $roomId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findInProgress()
+    {
+       return $this->createQueryBuilder('r')
+            ->where('r.state NOT LIKE :accepted')
+            ->setParameter('accepted',"%accepted%")
+            ->andWhere('r.state NOT LIKE :cancelled')
+            ->setParameter('cancelled', "%cancelled_ok%")
+            ->andWhere('r.state NOT LIKE :refused')
+            ->setParameter('refused', '%refused%')
             ->getQuery()
             ->getResult();
     }
