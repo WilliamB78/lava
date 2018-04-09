@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
@@ -129,5 +131,21 @@ class Reservation
     public function setUser($user): void
     {
         $this->user = $user;
+    }
+
+    /**
+     * @Assert\Callback
+     *
+     * @param ExecutionContextInterface $context
+     * @param $payload
+     */
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->getEnd() < $this->getStart())
+        {
+           $context->buildViolation('Vous ne pouvez pas entrer une fin supérieur à un début')
+               ->atPath('end')
+               ->addViolation();
+        }
     }
 }
