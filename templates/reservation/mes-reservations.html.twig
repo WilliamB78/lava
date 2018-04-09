@@ -25,10 +25,10 @@
                   </td>
                   <td>
                       {% if workflow_can(reservation,'cancel_demand') %}
-                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_demand', 'id': reservation.id}) }}" class="btn btn-secondary">Annuler la demande</a>
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_demand', 'id': reservation.id}) }}" class="btn btn-secondary">Annuler</a>
                       {% endif %}
                       {% if workflow_can(reservation,'cancel_after')  %}
-                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_after', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser la validation</a>
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_after', 'id': reservation.id}) }}" class="btn btn-secondary">Annuler</a>
                       {% endif %}
                   </td>
                </tr>
