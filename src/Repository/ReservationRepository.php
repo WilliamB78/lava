@@ -108,4 +108,26 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Retourne la liste des réservations d'un utilisateur
+     * @param $user
+     * @return mixed
+     */
+    public function findInProgressUser($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state NOT LIKE :refused')
+            ->setParameter('refused',"%refused%")
+            ->andWhere('r.state NOT LIKE :cancelled')
+            ->setParameter('cancelled', "%cancelled_ok%")
+            ->andWhere('r.state NOT LIKE :refused')
+            ->setParameter('refused', '%refused%')
+            ->andWhere('r.state NOT LIKE :cancelled')
+            ->setParameter('cancelled', '%cancelled%')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

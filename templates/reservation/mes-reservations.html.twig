@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="row">
-       <div class="col-6 offset-3">
+       <div class="col-10 offset-1">
          <table class="table">
             <thead>
             <tr>
@@ -17,18 +17,18 @@
                <tr>
                    <td>{{ reservation.room | room_name }}</td>
                   <td>
-                      <span style="font-weight: bolder">From :</span>{{ reservation.start ? reservation.start|date('Y-m-d H:i') : '' }}
-                      <span style="font-weight: bolder">To :</span>{{ reservation.end ? reservation.end|date('Y-m-d H:i') : '' }}
+                      <span>Le {{ reservation.start ? reservation.start|date('d/m/Y') : '' }}</span>
+                      <span>{{ reservation.start ? reservation.start|date('H:i') : '' }} à {{ reservation.end ? reservation.end|date('H:i') : '' }}</span>
                   </td>
                   <td class="text-center">
                         {{ reservation_state(reservation.state) }}
                   </td>
                   <td>
                       {% if workflow_can(reservation,'cancel_demand') %}
-                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_demand', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_demand', 'id': reservation.id}) }}" class="btn btn-secondary">Annuler la demande</a>
                       {% endif %}
                       {% if workflow_can(reservation,'cancel_after')  %}
-                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_after', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                         <a href="{{ path('reservation_workflow_user_approve', {'state': 'cancel_after', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser la validation</a>
                       {% endif %}
                   </td>
                </tr>

@@ -40,7 +40,8 @@ class ReservationController extends Controller
         $reservations = $this
             ->getDoctrine()
             ->getRepository(Reservation::class)
-            ->findBy(['user' => $this->getUser()]);
+            ->findInProgressUser($this->getUser());
+            //->findBy(['user' => $this->getUser()]);
 
         return $this->render('reservation/mes-reservations.html.twig', [
             'reservations' => $reservations,
