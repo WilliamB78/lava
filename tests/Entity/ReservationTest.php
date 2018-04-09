@@ -12,9 +12,7 @@ namespace App\Tests\Entity;
 use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Entity\User;
-use App\Kernel;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Config\Tests\Util\Validator;
 
 class ReservationTest extends TestCase
 {
