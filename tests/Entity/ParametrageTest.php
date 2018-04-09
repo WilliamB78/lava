@@ -14,6 +14,16 @@ use PHPUnit\Framework\TestCase;
 
 class ParametrageTest extends TestCase
 {
+
+    protected $params;
+
+    public function setUp()
+    {
+        $this->params = new Parametrage();
+        $this->params->setValue(12);
+        $this->params->setName("param");
+    }
+
     public function testCanBeCreate()
     {
         $this->assertInstanceOf(
@@ -24,17 +34,13 @@ class ParametrageTest extends TestCase
 
     public function testParamName()
     {
-        $params = new Parametrage();
-        $params->setName("param");
-
-        $this->assertEquals("param", $params->getName());
+        $this->assertEquals("param", $this->params->getName());
     }
 
     public function testParamValue()
     {
-        $params = new Parametrage();
-        $params->setValue(12);
-
-        $this->assertEquals(12, $params->getValue());
+        $this->assertEquals(12, $this->params->getValue());
     }
+
+
 }
