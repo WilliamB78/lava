@@ -98,15 +98,13 @@ class ReservationRepository extends ServiceEntityRepository
      */
     public function findInProgress()
     {
-       return $this->createQueryBuilder('r')
-            ->where('r.state NOT LIKE :accepted')
-            ->setParameter('accepted',"%accepted%")
-            ->andWhere('r.state NOT LIKE :cancelled')
-            ->setParameter('cancelled', "%cancelled_ok%")
-            ->andWhere('r.state NOT LIKE :refused')
-            ->setParameter('refused', '%refused%')
-            ->getQuery()
-            ->getResult();
+        return $this->createQueryBuilder('r')
+           ->where('r.state LIKE :created')
+           ->setParameter('created', '%created%')
+           ->andWhere('r.state LIKE :cancelled')
+           ->setParameter('cancelled', '%cancelled%')
+           ->getQuery()
+           ->getResult();
     }
 
     /**
@@ -117,17 +115,14 @@ class ReservationRepository extends ServiceEntityRepository
     public function findInProgressUser($user)
     {
         return $this->createQueryBuilder('r')
-            ->where('r.state NOT LIKE :refused')
-            ->setParameter('refused',"%refused%")
-            ->andWhere('r.state NOT LIKE :cancelled')
-            ->setParameter('cancelled', "%cancelled_ok%")
-            ->andWhere('r.state NOT LIKE :refused')
-            ->setParameter('refused', '%refused%')
-            ->andWhere('r.state NOT LIKE :cancelled')
-            ->setParameter('cancelled', '%cancelled%')
+            ->where('r.state LIKE :created')
+            ->setParameter('created', '%created%')
+            ->andWhere('r.state LIKE :accepted')
+            ->setParameter('accepted' , '%accepted%')
             ->andWhere('r.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
+
     }
 }
