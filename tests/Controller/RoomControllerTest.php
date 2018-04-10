@@ -1,0 +1,105 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: coubardalexis
+ * Date: 09/04/2018
+ * Time: 14:18
+ */
+
+namespace App\Tests\Controller;
+
+use App\Entity\Room;
+use App\Tests\Traits\UserLogger;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Client;
+
+class RoomControllerTest extends WebTestCase
+{
+    use UserLogger;
+
+    /** @var Client $client  */
+    private $client = null;
+    /** @var EntityManager $repository */
+    private $repository;
+
+    /**
+     * Test de la liste des salles disponible
+     */
+    public function testIndex()
+    {
+        $this->logIn('Secretaire');
+
+        $crawler = $this->client->request('GET', '/room/');
+        $title = $crawler->filter('title:contains("Liste des salles")')->count();
+
+        $reservations = $this->repository->getRepository(Room::class)->findAll();
+
+        $this->assertCount(10, $reservations);
+        $this->assertInternalType('array', $reservations);
+        $this->assertEquals(1, $title);
+    }
+
+    /**
+     * Test bouton calendrier
+     */
+    public function testIndexCalendar()
+    {
+        $this->logIn('Secretaire');
+
+        $crawler = $this->client->request('GET', '/room/');
+        $calendar = $crawler->filter('.btn-info');
+        $this->assertEquals("Calendrier", $calendar->text());
+
+        $this->client->click($calendar->link());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+    }
+
+    /**
+     * Test bouton indisponible
+     */
+    public function testIndexBtnIndispo()
+    {
+        $this->logIn('Secretaire');
+
+        $crawler = $this->client->request('GET', '/room/');
+        $indispo = $crawler->filter('.btn-warning');
+        $this->assertEquals("Rendre indispo.", $indispo->text());
+
+        $this->client->click($indispo->link());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test bouton disponible dans les salle hors service
+     */
+    public function testIndexBtnDispo()
+    {
+        $this->logIn('Secretaire');
+
+        $crawler = $this->client->request('GET', '/room/hors_service');
+        $dispo = $crawler->filter('.btn-warning');
+        $this->assertEquals("Rendre dispo.", $dispo->text());
+
+        $this->client->click($dispo->link());
+        $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
+    }
+
+    public function testNewRoomFailed()
+    {
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/room/new');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $this->assertEquals(1, $crawler->filter('form')->count());
+    }
+
+    public function setUp()
+    {
+        $this->client = static::createClient();
+        $this->client->enableProfiler();
+        $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+    }
+}
