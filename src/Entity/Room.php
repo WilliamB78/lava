@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
@@ -18,11 +19,16 @@ class Room
     private $id;
 
     /**
+     * @Assert\NotBlank()
+     *
      * @ORM\Column(type="string", length=75)
      */
     private $name;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
+     *
      * @ORM\Column(type="integer")
      */
     private $nbPlaces;
