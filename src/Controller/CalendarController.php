@@ -12,6 +12,7 @@ use App\Controller\Utils\Calendar\CalendarHandler;
 use App\Entity\Room;
 use App\Repository\ReservationRepository;
 use App\Service\Calendar;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +24,7 @@ class CalendarController extends Controller
 {
     /**
      * @Route("/{id}/calendar", name="calendar_show", methods="GET")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param Room                  $room
      * @param Calendar              $calendar

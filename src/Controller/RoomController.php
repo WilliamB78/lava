@@ -18,15 +18,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoomController extends Controller
 {
     /**
-     * Liste des salles pour la secretaire et l'administrateur.
+     * Liste des salles
      *
      * @Route("/", name="room_index", methods="GET")
+     * @Security("has_role('ROLE_USER')")
      *
      * @param RoomRepository $roomRepository
      *
      * @return Response
      */
-    //@Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
     public function index(RoomRepository $roomRepository): Response
     {
         $rooms = $roomRepository->findTotalRoomOpen();

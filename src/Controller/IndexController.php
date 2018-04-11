@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Entity\Room;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -11,6 +12,7 @@ class IndexController extends Controller
 {
     /**
      * @Route("/index", name="index")
+     * @Security("has_role('ROLE_USER')")
      */
     public function index()
     {

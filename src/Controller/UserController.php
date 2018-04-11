@@ -20,6 +20,7 @@ class UserController extends Controller
 {
     /**
      * @Route("/", name="index", methods="GET")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -55,6 +56,7 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="show", methods="GET")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function show(User $user): Response
     {
@@ -63,6 +65,7 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}/edit", name="edit", methods="GET|POST")
+     * @Security("has_role('ROLE_ADMIN')")
      *
      * @param Request $request
      * @param User    $user
@@ -88,6 +91,7 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function delete(Request $request, User $user): Response
     {
