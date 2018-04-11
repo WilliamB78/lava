@@ -28,7 +28,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $roles = ['ROLE_SECRETARY', 'ROLE_USER', 'ROLE_ADMIN'];
+        $roles = ['ROLE_SECRETARY', 'ROLE_UTILISATEUR', 'ROLE_ADMIN'];
 
         // On ajoute 10 room avec les fixtures
         for ($i = 0; $i < 10; ++$i) {
