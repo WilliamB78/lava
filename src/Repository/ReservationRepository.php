@@ -119,7 +119,7 @@ class ReservationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->where('r.state LIKE :created')
             ->setParameter('created', '%created%')
-            ->andWhere('r.state LIKE :accepted')
+            ->orWhere('r.state LIKE :accepted')
             ->setParameter('accepted' , '%accepted%')
             ->andWhere('r.user = :user')
             ->setParameter('user', $user)
