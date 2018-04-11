@@ -34,6 +34,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function mesReservations()
     {
@@ -50,6 +51,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
+     * @Security("has_role('ROLE_USER') or has_role('ROLE_SECRETARY')")
      *
      * @param Request  $request
      * @param Registry $workflows
@@ -62,12 +64,12 @@ class ReservationController extends Controller
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
-        $form->add('start', DateTimeType::class, array(
+        /*$form->add('start', DateTimeType::class, array(
             'data' => new \DateTime($date),
         ));
         $form->add('end', DateTimeType::class, array(
             'data' => new \DateTime($date),
-        ));
+        ));*/
         $form->handleRequest($request);
         $workflow = $workflows->get($reservation);
 
@@ -77,7 +79,6 @@ class ReservationController extends Controller
             $reservation->setRoom($room);
             $reservation->setUser($this->getUser());
             $reservation->setState('created');
-            //dump($reservation);exit;
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();

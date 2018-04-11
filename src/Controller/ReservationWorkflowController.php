@@ -54,8 +54,7 @@ class ReservationWorkflowController extends Controller
 
         if ($workflow->can($reservation, $state)) {
             $workflow->apply($reservation, $state);
+            $this->getDoctrine()->getManager()->flush();
         }
-
-        $this->getDoctrine()->getManager()->flush();
     }
 }
