@@ -94,6 +94,11 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_show", methods="GET")
+     * @Security("is_granted('ROLE_SECRETARY')")
+     *
+     * @param Room $room
+     *
+     * @return Response
      */
     public function show(Room $room): Response
     {
@@ -103,6 +108,11 @@ class RoomController extends Controller
     /**
      * @Route("/{id}/edit", name="room_edit", methods="GET|POST")
      * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     *
+     * @param Request $request
+     * @param Room $room
+     *
+     * @return Response
      */
     public function edit(Request $request, Room $room): Response
     {

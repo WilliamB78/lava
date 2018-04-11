@@ -99,12 +99,14 @@ class ReservationRepository extends ServiceEntityRepository
     public function findInProgress()
     {
         return $this->createQueryBuilder('r')
-           ->where('r.state LIKE :created')
-           ->setParameter('created', '%created%')
-           ->andWhere('r.state LIKE :cancelled')
-           ->setParameter('cancelled', '%cancelled%')
-           ->getQuery()
-           ->getResult();
+            ->where('r.state LIKE :created')
+            ->setParameter('created', '%created%')
+            ->orWhere('r.state LIKE :cancelled')
+            ->setParameter('cancelled', '%cancelled%')
+            ->andWhere('r.state NOT LIKE :cancelled_ok')
+            ->setParameter('cancelled_ok', '%cancelled_ok%')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -124,5 +126,22 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
+    }
+
+    /**
+     * Retourne la liste des reservations qui sont a l'état de création 36h avant la date d'écheance
+     */
+    public function findWarningReservation()
+    {
+        $echeance = new \DateTime();
+        $echeance->modify("+36 hours");
+
+        return $this->createQueryBuilder('r')
+            ->where('r.start < :start')
+            ->andWhere('r.start > :now')
+            ->setParameter('start', $echeance->format('Y-m-d H:m:s'))
+            ->setParameter('now', new \DateTime())
+            ->getQuery()
+            ->getResult();
     }
 }

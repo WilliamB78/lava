@@ -22,7 +22,7 @@ class ParametrageFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $datas = [
-            ['name' => 'max_room', 'value' => '5'],
+            ['name' => 'max_room', 'value' => '50'],
         ];
 
         foreach ($datas as $data) {
