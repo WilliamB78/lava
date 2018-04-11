@@ -10,10 +10,11 @@ namespace App\Tests\Controller;
 
 use App\Entity\Room;
 use App\Tests\Traits\UserLogger;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\StringInput;
 
 class RoomControllerTest extends WebTestCase
 {
@@ -66,6 +67,7 @@ class RoomControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/room/');
         $indispo = $crawler->filter('.btn-warning');
+
         $this->assertEquals("Rendre indispo.", $indispo->text());
 
         $this->client->click($indispo->link());
@@ -87,7 +89,10 @@ class RoomControllerTest extends WebTestCase
         $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
     }
 
-    public function testNewRoomFailed()
+    /**
+     * Test le bon chargement du formulaire d'ajout d'une room
+     */
+    public function testNewRoomLoaded()
     {
         $this->logIn('Secretaire');
         $crawler = $this->client->request('GET', '/room/new');
@@ -96,10 +101,128 @@ class RoomControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('form')->count());
     }
 
+    /**
+     * Test la validation du formulaire invalide
+     */
+    public function testNewRoomFailed()
+    {
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/room/new');
+
+        $form = $crawler->filter('form')->form();
+        $form['room[name]'] = '';
+        $form['room[nbPlaces]'] = -12;
+
+        $crawler = $this->client->submit($form);
+
+        $errorName = explode(' ',$crawler->filter('#room_name')->attr('class'));
+        $errorNbPlace = explode(' ',$crawler->filter('#room_nbPlaces')->attr('class'));
+
+        $this->assertEquals(true, in_array('is-invalid', $errorName));
+        $this->assertEquals(true, in_array('is-invalid', $errorNbPlace));
+    }
+
+    /**
+     * Test la validation d'un formulaire valide
+     */
+    public function testNewRoomSuccess()
+    {
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/room/new');
+
+        $form = $crawler->filter('form')->form();
+        $form['room[name]'] = 'test';
+        $form['room[nbPlaces]'] = 12;
+
+        $this->client->submit($form);
+        $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test l'acces a une room pour un user
+     */
+    public function testShowRoomAsUser()
+    {
+        $this->logIn('User');
+        $this->client->request('GET', '/room/1');
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test l'acces et la bonne vue d'une room pour une secretaire
+     */
+    public function testShowRoomAsSecretary()
+    {
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/room/1');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
+        $room = $this->repository->getRepository(Room::class)->find(1);
+        $title = $crawler->filter('title')->text();
+        $this->assertEquals('Salle '.$room->getName(), $title);
+    }
+
+    /**
+     * Test la redirection pour un user qui souhaite modifier une salle
+     */
+    public function testEditRoomAsUser()
+    {
+        $this->logIn('User');
+        $this->client->request('GET', '/room/1/edit');
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test l'acces et la bonne vue du formulaire d'edition pour une secretaire
+     */
+    public function testEditRoomAsSecretary()
+    {
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/room/1/edit');
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        // On va chercher le premier enregistrement
+        $room = $this->repository->getRepository(Room::class)->find(1);
+        $title = $crawler->filter('title')->text();
+        $this->assertEquals('Edition '.$room->getName(), $title);
+        // On vérifie que le formulaire est bien présent
+        $form = $crawler->filter('form');
+        $this->assertEquals(2,$form->count());
+        $form = $form->first()->form();
+        $this->client->submit($form);
+        $this->client->followRedirect();
+        $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
+    }
+
+    public function testDeleteRoom()
+    {
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/room/1/edit');
+        $form = $crawler->filter('form')->last();
+        $this->client->submit($form->form());
+        $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }
+
     public function setUp()
     {
         $this->client = static::createClient();
         $this->client->enableProfiler();
         $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
+
+    /**
+     * @throws \Exception
+     */
+    public static function setUpBeforeClass()
+    {
+        $client = self::createClient();
+        $application = new Application($client->getKernel());
+        $application->setAutoExit(false);
+        $application->run(new StringInput('doctrine:database:drop --force --env=test'));
+        $application->run(new StringInput('doctrine:database:create --env=test'));
+        $application->run(new StringInput('doctrine:migrations:migrate --no-interaction --env=test'));
+        $application->run(new StringInput('doctrine:fixtures:load --env=test'));
+    }
+
 }

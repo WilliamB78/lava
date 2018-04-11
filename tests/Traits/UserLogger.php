@@ -49,7 +49,7 @@ trait UserLogger
     {
         $doctrine = $this->client->getContainer()->get('doctrine');
 
-        return $doctrine->getRepository(User::class)->find(3);
+        return $doctrine->getRepository(User::class)->findOneBy(['email' => 'user@lava.com']);
 
 
     }
@@ -58,14 +58,14 @@ trait UserLogger
     {
         $doctrine = $this->client->getContainer()->get('doctrine');
 
-        return $doctrine->getRepository(User::class)->find(1);
+        return $doctrine->getRepository(User::class)->findOneBy(['email' => 'secretaire@lava.com']);
     }
 
     private function getAdmin(): User
     {
         $doctrine = $this->client->getContainer()->get('doctrine');
 
-        return $doctrine->getRepository(User::class)->find(5);
+        return $doctrine->getRepository(User::class)->findOneBy(['email' => 'admin@lava.com']);
     }
 
 }
