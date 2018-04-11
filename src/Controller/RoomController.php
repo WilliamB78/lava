@@ -21,7 +21,7 @@ class RoomController extends Controller
      * Liste des salles
      *
      * @Route("/", name="room_index", methods="GET")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_USER')")
      *
      * @param RoomRepository $roomRepository
      *
