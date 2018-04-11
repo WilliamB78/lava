@@ -101,7 +101,7 @@ class SecurityController extends Controller
         // Si il n'y a pas d'utilisateur c'est qu'il n'a pas fait de demande de mot de passe
         // Ou de le token n'est plus valide dans la periode voulu
         if (!$user || ($user->getTokenExpire()->format('Y-m-d H:i:s') < date('Y-m-d H:i:s'))) {
-            throw new \InvalidArgumentException('Votre token de remise à jour de votre mot de passe est incorrect.');
+            throw $this->createNotFoundException('Votre token de remise à jour de votre mot de passe est incorrect.');
         }
 
         $form = $handler->createForm($user);
