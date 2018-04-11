@@ -51,7 +51,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
-     * @Security("has_role('ROLE_USER') or has_role('ROLE_SECRETARY')")
+     * @Security("has_role('ROLE_UTILISATEUR') or has_role('ROLE_SECRETARY')")
      *
      * @param Request  $request
      * @param Registry $workflows
@@ -94,6 +94,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}", name="show", methods="GET")
+     * @Security("has_role('ROLE_USER')")
      *
      * @param Reservation $reservation
      *
@@ -106,6 +107,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/edit", name="edit", methods="GET|POST")
+     * @Security("has_role('ROLE_USER')")
      *
      * @param Request     $request
      * @param Reservation $reservation
