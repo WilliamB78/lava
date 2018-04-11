@@ -94,7 +94,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}", name="show", methods="GET")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
      *
      * @param Reservation $reservation
      *
@@ -107,7 +107,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/edit", name="edit", methods="GET|POST")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
      *
      * @param Request     $request
      * @param Reservation $reservation
