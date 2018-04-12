@@ -87,7 +87,7 @@ class ReservationControllerTest extends WebTestCase
 
     public function testReservationSuccess()
     {
-        $this->logIn('User');
+        $this->logIn('Secretaire');
         $crawler = $this->client->request('GET', '/reservation/1/new/2018-04-05');
         $form = $crawler->filter('form')->form();
         // start
@@ -110,7 +110,7 @@ class ReservationControllerTest extends WebTestCase
 
     public function testReservationShow()
     {
-        $this->logIn('User');
+        $this->logIn('Secretaire');
         $crawler = $this->client->request('GET', '/reservation/1');
 
         $table = $crawler->filter('table');
@@ -119,7 +119,7 @@ class ReservationControllerTest extends WebTestCase
 
     public function testReservationEdit()
     {
-        $this->logIn('User');
+        $this->logIn('Secretaire');
         $crawler = $this->client->request('GET', '/reservation/1/edit');
 
         $titre = $crawler->filter('h1');
