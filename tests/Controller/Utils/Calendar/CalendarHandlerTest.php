@@ -68,10 +68,10 @@ class CalendarHandlerTest extends TestCase
         $this->assertInstanceOf('DateTime', $this->calendarHandler->getLastDay());
     }
 
-//    public function testGetMonthReservations()
-//    {
-//        $reservationRepository = $this->em->getRepository(Reservation::class);
-//        $room = $this->em->getRepository(Room::class)->find(1);
-//        $this->assertInternalType('array', $this->calendarHandler->getMonthReservations($reservationRepository, $room));
-//    }
+    public function testGetMonthReservations()
+    {
+        $reservationRepository = $this->em->getRepository(Reservation::class);
+        $room = $this->em->getRepository(Room::class)->find(1);
+        $this->assertInternalType('array', $this->calendarHandler->getMonthReservations($reservationRepository, $room));
+    }
 }

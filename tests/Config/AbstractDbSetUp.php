@@ -74,4 +74,14 @@ abstract class AbstractDbSetUp extends KernelTestCase
     {
         return self::$kernel->getContainer()->get('session');
     }
+
+    public static function getEventDispatcher()
+    {
+        return self::$kernel->getContainer()->get('event_dispatcher');
+    }
+
+    public static function getFormFactory()
+    {
+        return self::$kernel->getContainer()->get('form.factory');
+    }
 }
