@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for C:\xampp\htdocs\TD\LAVA_project2\lava\src/Repository</title>
+  <title>Dashboard for C:\xampp\htdocs\TD\LAVA_project2\lava\src/Security</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../.css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="../.css/nv.d3.min.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,7 @@
      <div class="col-md-12">
       <ol class="breadcrumb">
         <li><a href="../index.html">C:\xampp\htdocs\TD\LAVA_project2\lava\src</a></li>
-        <li><a href="index.html">Repository</a></li>
+        <li><a href="index.html">Security</a></li>
         <li class="active">(Dashboard)</li>
 
       </ol>
@@ -59,8 +59,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="ReservationRepository.php.html#16">App\Repository\ReservationRepository</a></td><td class="text-right">75%</td></tr>
-       <tr><td><a href="RoomRepository.php.html#16">App\Repository\RoomRepository</a></td><td class="text-right">84%</td></tr>
+       <tr><td><a href="ReservationVoter.php.html#17">App\Security\ReservationVoter</a></td><td class="text-right">66%</td></tr>
 
        </tbody>
       </table>
@@ -77,8 +76,7 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="ReservationRepository.php.html#16">App\Repository\ReservationRepository</a></td><td class="text-right">11</td></tr>
-       <tr><td><a href="RoomRepository.php.html#16">App\Repository\RoomRepository</a></td><td class="text-right">7</td></tr>
+       <tr><td><a href="ReservationVoter.php.html#17">App\Security\ReservationVoter</a></td><td class="text-right">12</td></tr>
 
        </tbody>
       </table>
@@ -116,11 +114,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="ReservationRepository.php.html#134"><abbr title="App\Repository\ReservationRepository::findWarningReservation">findWarningReservation</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="ReservationRepository.php.html#51"><abbr title="App\Repository\ReservationRepository::findByState">findByState</abbr></a></td><td class="text-right">60%</td></tr>
-       <tr><td><a href="RoomRepository.php.html#28"><abbr title="App\Repository\RoomRepository::findTotalRoom">findTotalRoom</abbr></a></td><td class="text-right">66%</td></tr>
-       <tr><td><a href="ReservationRepository.php.html#31"><abbr title="App\Repository\ReservationRepository::findUserReversationByState">findUserReversationByState</abbr></a></td><td class="text-right">71%</td></tr>
-       <tr><td><a href="RoomRepository.php.html#45"><abbr title="App\Repository\RoomRepository::findTotalRoomHS">findTotalRoomHS</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="ReservationVoter.php.html#53"><abbr title="App\Security\ReservationVoter::voteOnAttribute">voteOnAttribute</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="ReservationVoter.php.html#31"><abbr title="App\Security\ReservationVoter::supports">supports</abbr></a></td><td class="text-right">80%</td></tr>
 
        </tbody>
       </table>
@@ -137,10 +132,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="ReservationRepository.php.html#51"><abbr title="App\Repository\ReservationRepository::findByState">findByState</abbr></a></td><td class="text-right">2</td></tr>
-       <tr><td><a href="RoomRepository.php.html#28"><abbr title="App\Repository\RoomRepository::findTotalRoom">findTotalRoom</abbr></a></td><td class="text-right">2</td></tr>
-       <tr><td><a href="ReservationRepository.php.html#31"><abbr title="App\Repository\ReservationRepository::findUserReversationByState">findUserReversationByState</abbr></a></td><td class="text-right">2</td></tr>
-       <tr><td><a href="RoomRepository.php.html#45"><abbr title="App\Repository\RoomRepository::findTotalRoomHS">findTotalRoomHS</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="ReservationVoter.php.html#53"><abbr title="App\Security\ReservationVoter::voteOnAttribute">voteOnAttribute</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="ReservationVoter.php.html#31"><abbr title="App\Security\ReservationVoter::supports">supports</abbr></a></td><td class="text-right">3</td></tr>
 
        </tbody>
       </table>
@@ -171,7 +164,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,1,1,0,2], "Class Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,1,0,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -189,7 +182,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,2,2,0,0,10], "Method Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,1,0,0,1,0,2], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -239,7 +232,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"ParametrageRepository.php.html#15\">App\\Repository\\ParametrageRepository<\/a>"],[75.92592592592592,10,"<a href=\"ReservationRepository.php.html#16\">App\\Repository\\ReservationRepository<\/a>"],[84.61538461538461,7,"<a href=\"RoomRepository.php.html#16\">App\\Repository\\RoomRepository<\/a>"],[100,1,"<a href=\"UserRepository.php.html#15\">App\\Repository\\UserRepository<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[66.66666666666666,9,"<a href=\"ReservationVoter.php.html#17\">App\\Security\\ReservationVoter<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -263,7 +256,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"ParametrageRepository.php.html#17\">App\\Repository\\ParametrageRepository::__construct<\/a>"],[100,1,"<a href=\"ReservationRepository.php.html#18\">App\\Repository\\ReservationRepository::__construct<\/a>"],[71.42857142857143,2,"<a href=\"ReservationRepository.php.html#31\">App\\Repository\\ReservationRepository::findUserReversationByState<\/a>"],[60,2,"<a href=\"ReservationRepository.php.html#51\">App\\Repository\\ReservationRepository::findByState<\/a>"],[100,1,"<a href=\"ReservationRepository.php.html#69\">App\\Repository\\ReservationRepository::byState<\/a>"],[100,1,"<a href=\"ReservationRepository.php.html#83\">App\\Repository\\ReservationRepository::findBetween<\/a>"],[100,1,"<a href=\"ReservationRepository.php.html#99\">App\\Repository\\ReservationRepository::findInProgress<\/a>"],[100,1,"<a href=\"ReservationRepository.php.html#117\">App\\Repository\\ReservationRepository::findInProgressUser<\/a>"],[0,1,"<a href=\"ReservationRepository.php.html#134\">App\\Repository\\ReservationRepository::findWarningReservation<\/a>"],[100,1,"<a href=\"RoomRepository.php.html#18\">App\\Repository\\RoomRepository::__construct<\/a>"],[66.66666666666666,2,"<a href=\"RoomRepository.php.html#28\">App\\Repository\\RoomRepository::findTotalRoom<\/a>"],[75,2,"<a href=\"RoomRepository.php.html#45\">App\\Repository\\RoomRepository::findTotalRoomHS<\/a>"],[100,1,"<a href=\"RoomRepository.php.html#64\">App\\Repository\\RoomRepository::findTotalRoomOpen<\/a>"],[100,1,"<a href=\"RoomRepository.php.html#78\">App\\Repository\\RoomRepository::findTotalRoomClosed<\/a>"],[100,1,"<a href=\"UserRepository.php.html#17\">App\\Repository\\UserRepository::__construct<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[80,3,"<a href=\"ReservationVoter.php.html#31\">App\\Security\\ReservationVoter::supports<\/a>"],[50,4,"<a href=\"ReservationVoter.php.html#53\">App\\Security\\ReservationVoter::voteOnAttribute<\/a>"],[100,1,"<a href=\"ReservationVoter.php.html#70\">App\\Security\\ReservationVoter::canView<\/a>"],[100,1,"<a href=\"ReservationVoter.php.html#75\">App\\Security\\ReservationVoter::canEdit<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
