@@ -16,11 +16,20 @@ class ForgotPasswordType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class,[
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Votre email'
+                ],
                 'constraints' => [
                     new NotBlank()
                 ]
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class, [
+                'label' => 'Envoyer',
+                'attr' => [
+                    'class' => 'btn btn-primary col-12'
+                ]
+            ])
         ;
     }
 
