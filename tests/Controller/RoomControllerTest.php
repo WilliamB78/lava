@@ -211,18 +211,18 @@ class RoomControllerTest extends WebTestCase
         $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
 
-    /**
-     * @throws \Exception
-     */
-    public static function setUpBeforeClass()
-    {
-        $client = self::createClient();
-        $application = new Application($client->getKernel());
-        $application->setAutoExit(false);
-        $application->run(new StringInput('doctrine:database:drop --force --env=test'));
-        $application->run(new StringInput('doctrine:database:create --env=test'));
-        $application->run(new StringInput('doctrine:migrations:migrate --no-interaction --env=test'));
-        $application->run(new StringInput('doctrine:fixtures:load --env=test'));
-    }
+//    /**
+//     * @throws \Exception
+//     */
+//    public static function setUpBeforeClass()
+//    {
+//        $client = self::createClient();
+//        $application = new Application($client->getKernel());
+//        $application->setAutoExit(false);
+//        $application->run(new StringInput('doctrine:database:drop --force --env=test'));
+//        $application->run(new StringInput('doctrine:database:create --env=test'));
+//        $application->run(new StringInput('doctrine:migrations:migrate --no-interaction --env=test'));
+//        $application->run(new StringInput('doctrine:fixtures:load --env=test'));
+//    }
 
 }

@@ -10,6 +10,7 @@ namespace App\Tests\Controller;
 
 
 use App\Entity\User;
+use App\Tests\Config\AbstractDbSetUp;
 use App\Tests\Traits\UserLogger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -57,9 +58,15 @@ class SecurityControllerTest extends WebTestCase
     public function testForgotPasswordSuccess()
     {
         $crawler = $this->client->request('GET', '/forgot-password');
+
+        $this->client->enableProfiler();
         $form = $crawler->filter('form')->form();
         $form['forgot_password[email]'] = "user@lava.com";
         $this->client->submit($form);
+        $mailCollector = $this->client->getProfile()->getCollector('swiftmailer');
+
+        // checks that an email was sent
+        $this->assertSame(1, $mailCollector->getMessageCount());
         $crawler = $this->client->followRedirect();
         $error = $crawler->filter('div.alert-success');
         $this->assertEquals(1,$error->count());
@@ -72,11 +79,12 @@ class SecurityControllerTest extends WebTestCase
     {
         /** @var User $user */
         $user = $this->repository->getRepository(User::class)->findOneBy(['email' => 'user@lava.com']);
-        //dump($user)
+        //dump($user);
         $date = new \DateTime();
         $date->sub(new \DateInterval('P10D'));
         $user->setTokenExpire($date);
         $this->client->request('GET', '/reset-password/'.$user->getTokenResetPassword());
+
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
@@ -98,21 +106,6 @@ class SecurityControllerTest extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
-        $this->client->enableProfiler();
-        $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+        $this->repository = AbstractDbSetUp::getEntityManager();
     }
-    /**
-     * @throws \Exception
-     */
-    public static function setUpBeforeClass()
-    {
-        $client = self::createClient();
-        $application = new Application($client->getKernel());
-        $application->setAutoExit(false);
-        $application->run(new StringInput('doctrine:database:drop --force --env=test'));
-        $application->run(new StringInput('doctrine:database:create --env=test'));
-        $application->run(new StringInput('doctrine:migrations:migrate --no-interaction --env=test'));
-        $application->run(new StringInput('doctrine:fixtures:load --env=test'));
-    }
-
 }

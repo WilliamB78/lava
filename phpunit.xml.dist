@@ -15,7 +15,8 @@
         <env name="APP_SECRET" value="s$cretf0rt3st" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <!-- define your env variables for the test env here -->
-        <env name="DATABASE_URL" value="mysql://root:root@127.0.0.1:3307/lava-test" />
+        <!--<env name="DATABASE_URL" value="mysql://root:epicure@localhost:3306/lava-test" />-->
+        <env name="DATABASE_URL" value="sqlite:///%kernel.project_dir%/var/data.db" />
     </php>
 
     <testsuites>

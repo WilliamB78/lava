@@ -10,15 +10,11 @@ namespace App\Tests\Controller;
 
 
 use App\Tests\Traits\UserLogger;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Client;
 use Doctrine\ORM\EntityManager;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\StringInput;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ReservationControllerTest extends WebTestCase
 {
-
     use UserLogger;
     /** @var Client $client  */
     private $client = null;
@@ -153,19 +149,5 @@ class ReservationControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->client->enableProfiler();
         $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public static function setUpBeforeClass()
-    {
-        $client = self::createClient();
-        $application = new Application($client->getKernel());
-        $application->setAutoExit(false);
-        $application->run(new StringInput('doctrine:database:drop --force --env=test'));
-        $application->run(new StringInput('doctrine:database:create --env=test'));
-        $application->run(new StringInput('doctrine:migrations:migrate --no-interaction --env=test'));
-        $application->run(new StringInput('doctrine:fixtures:load --env=test'));
     }
 }

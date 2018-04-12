@@ -10,6 +10,7 @@ namespace App\Tests\Traits;
 
 
 use App\Entity\User;
+use App\Tests\Config\AbstractDbSetUp;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -24,8 +25,9 @@ trait UserLogger
 
     private function logIn($role)
     {
+        AbstractDbSetUp::prime();
         /** @var Session $session */
-        $session = $this->client->getContainer()->get('session');
+        $session = AbstractDbSetUp::getSession();
         if ($role == 'User') {
             $user = $this->getUser();
         }
@@ -47,25 +49,26 @@ trait UserLogger
 
     private function getUser(): User
     {
-        $doctrine = $this->client->getContainer()->get('doctrine');
+        $doctrine = AbstractDbSetUp::getEntityManager();
 
-        return $doctrine->getRepository(User::class)->findOneBy(['email' => 'user@lava.com']);
+        return $doctrine->getRepository(User::class)->findOneBy(['firstname' => 'USER']);
 
 
     }
 
     private function getSecretaire(): User
     {
-        $doctrine = $this->client->getContainer()->get('doctrine');
+        $doctrine = AbstractDbSetUp::getEntityManager();
 
-        return $doctrine->getRepository(User::class)->findOneBy(['email' => 'secretaire@lava.com']);
+        return $doctrine->getRepository(User::class)->findOneBy(array('firstname' => 'SECRETARY'));
     }
 
     private function getAdmin(): User
     {
-        $doctrine = $this->client->getContainer()->get('doctrine');
+        $doctrine = AbstractDbSetUp::getEntityManager();
+        //dump($doctrine->getRepository(User::class)->findByFirstname('ADMIN'));
 
-        return $doctrine->getRepository(User::class)->findOneBy(['email' => 'admin@lava.com']);
+        return $doctrine->getRepository(User::class)->findOneBy(array('firstname' => 'ADMIN'));
     }
 
 }
