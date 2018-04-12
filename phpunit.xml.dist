@@ -28,6 +28,16 @@
     <filter>
         <whitelist>
             <directory>./src/</directory>
+            <exclude>
+                <file>./src/Kernel.php</file>
+                <file>./src/DataFixtures/ParametrageFixtures.php</file>
+                <file>./src/DataFixtures/ReservationFixtures.php</file>
+                <file>./src/DataFixtures/RoomFixtures.php</file>
+                <file>./src/DataFixtures/UserFixtures.php</file>
+            </exclude>
+            <exclude>
+                <directory>./src/Migrations/</directory>
+            </exclude>
         </whitelist>
     </filter>
 
