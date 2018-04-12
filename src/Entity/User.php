@@ -62,11 +62,17 @@ class User implements AdvancedUserInterface
     private $tokenExpire;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isBlocked;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
+        $this->isBlocked = false;
     }
 
     /**
@@ -200,6 +206,9 @@ class User implements AdvancedUserInterface
      */
     public function isAccountNonLocked()
     {
+        if ($this->isBlocked) {
+            return false;
+        }
         return true;
     }
 
@@ -337,5 +346,21 @@ class User implements AdvancedUserInterface
     public function setTokenExpire($tokenExpire): void
     {
         $this->tokenExpire = $tokenExpire;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisBlocked()
+    {
+        return $this->isBlocked;
+    }
+
+    /**
+     * @param mixed $isBlocked
+     */
+    public function setIsBlocked($isBlocked): void
+    {
+        $this->isBlocked = $isBlocked;
     }
 }
