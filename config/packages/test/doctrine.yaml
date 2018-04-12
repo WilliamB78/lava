@@ -1,5 +1,5 @@
 doctrine:
     dbal:
-        # configure these for your database server
-        driver: 'pdo_sqlite'
-        url: 'mysql://root:root@127.0.0.1:3307/lava-test'
+        driver:  pdo_sqlite
+        memory:  true
+        charset: UTF8

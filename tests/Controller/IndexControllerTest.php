@@ -11,8 +11,6 @@ namespace App\Tests\Controller;
 use App\Tests\Traits\UserLogger;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\StringInput;
 
 class IndexControllerTest extends WebTestCase
 {
@@ -85,19 +83,5 @@ class IndexControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->client->enableProfiler();
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public static function setUpBeforeClass()
-    {
-        $client = self::createClient();
-        $application = new Application($client->getKernel());
-        $application->setAutoExit(false);
-        $application->run(new StringInput('doctrine:database:drop --force --env=test'));
-        $application->run(new StringInput('doctrine:database:create --env=test'));
-        $application->run(new StringInput('doctrine:migrations:migrate --no-interaction --env=test'));
-        $application->run(new StringInput('doctrine:fixtures:load --env=test'));
     }
 }
