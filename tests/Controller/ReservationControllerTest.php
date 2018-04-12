@@ -56,9 +56,10 @@ class ReservationControllerTest extends WebTestCase
 
     public function testReservationNewLoaded()
     {
-        $this->logIn('User');
-        $crawler = $this->client->request('GET', '/reservation/1/new/2018-04-05');
+        $this->logIn('Secretaire');
+        $crawler = $this->client->request('GET', '/reservation/5/new/2018-04-05');
         $form = $crawler->filter('form');
+        //dump($form);
         $this->assertEquals(1, $form->count());
     }
 
@@ -66,7 +67,7 @@ class ReservationControllerTest extends WebTestCase
     {
         $this->logIn('User');
         $crawler = $this->client->request('GET', '/reservation/1/new/2018-04-05');
-        $form = $crawler->filter('form')->form();
+        $form = $crawler->filter('.reservation_new')->form();
         // start
         $form['reservation[start][date][month]'] = '4';
         $form['reservation[start][date][day]'] = '5';
@@ -147,7 +148,7 @@ class ReservationControllerTest extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
-        $this->client->enableProfiler();
+        //$this->client->enableProfiler();
         $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
 }
