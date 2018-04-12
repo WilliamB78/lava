@@ -1,0 +1,69 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all padding="0" />
+      <mj-text font-family="Ubuntu, Helvetica, Arial, sans-serif" padding="0 25px" font-size="13px" />
+      <mj-section background-color="#ffffff" />
+      <mj-class name="preheader" color="#000000" font-size="11px" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      a { text-decoration: none!important; color: inherit!important; }
+    </mj-style>
+  </mj-head>
+  <mj-body>
+    <mj-container background-color="#bedae6">
+
+      <mj-section full-width="full-width" padding="20px 0" background-color="#bedae6">
+        <mj-text>
+          {{ subject }}
+        </mj-text>
+      </mj-section>
+
+      <mj-section padding-bottom="20px" padding-top="50px">
+        <mj-column>
+
+          <mj-text align="center" padding="10px 25px" font-size="20px" color="#512d0b">
+            <strong>Hey {{ user.firstname }}!</strong>
+          </mj-text>
+          <mj-text align="center" font-size="18px" font-family="Arial">
+           Voici la liste des réservations à traiter en urgence.
+          </mj-text>
+
+        </mj-column>
+      </mj-section>
+
+      <mj-section>
+        <mj-column padding="10px 25px">
+          <mj-table>
+          <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+            <th style="padding: 0 15px 0 0;">Date</th>
+            <th style="padding: 0 15px;">Salle</th>
+            <th style="padding: 0 0 0 15px;"></th>
+          </tr>
+          {% for reservation in reservations %}
+              <tr>
+                <td style="padding: 0 15px 0 0;">
+                    {{ reservation.start ? reservation.start|date('d/m/Y') : '' }}
+                    de
+                    {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                    a
+                    {{ reservation.end ? reservation.end|date('H:i') : '' }}
+                </td>
+                <td style="padding: 0 15px;">
+                    {{reservation.room.name }}
+                </td>
+                <td style="padding: 0 0 0 15px;">
+                  <a href="{{ url('reservation_show', {'id': reservation.id}) }}">
+                    Voir
+                  </a>
+                </td>
+              </tr>
+          {% endfor %}
+
+        </mj-table>
+        </mj-column>
+      </mj-section>
+
+    </mj-container>
+  </mj-body>
+</mjml>
