@@ -105,15 +105,16 @@ class IndexController extends Controller
 
     public function IndexContentUser()
     {
-//        $userRepository = $this->getDoctrine()
-//            ->getManager()
-//            ->getRepository(User::class);
-//
-//        $last5User = $userRepository->findLast5User();
-//        $last5BlockedUser = $userRepository->findLast5BlockedUser();
-        //return $this->render('index/content/user.html.twig', [
-//            'last5User' => $last5User,
-//            'last5BlockedUser' => $last5BlockedUser
-//        ]);
+        $reservationRepository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Reservation::class);
+
+        $userReservation = $reservationRepository->findInProgressUser($this->getUser());
+        $userReservationAccepted = $reservationRepository->findByState('accepted');
+
+        return $this->render('index/content/user.html.twig', [
+            'userReservation' => $userReservation,
+            'userReservationAccepted' => $userReservationAccepted
+        ]);
     }
 }
