@@ -33,7 +33,7 @@ class AppExtension extends Twig_Extension
             new Twig_Function('day_next_Value', [AppRuntime::class, 'dayNextValue']),
             new Twig_Function('day_reservations', [AppRuntime::class, 'dayReservations']),
             new Twig_Function('day_in_the_month', [AppRuntime::class, 'dayInTheMonth']),
-            new Twig_Function('is_role_utilisateur', [AppRuntime::class, 'isRoleUtilisateur']),
+            new Twig_Function('can_book', [AppRuntime::class, 'isRoleCanDoBooking']),
         ];
     }
 }

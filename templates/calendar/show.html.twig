@@ -37,7 +37,7 @@
                             {% endif %}
 
                             {# Showing date of the day #}
-                            {% if is_role_utilisateur() %}
+                            {% if can_book() %}
                             <a href="{{ url('reservation_new', {
                                 "id": room.id,
                                 "date": dateDay|date('Y-m-d')
