@@ -3,14 +3,16 @@
 {% block title %}Liste des réservations{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
+<div class="flex">
+    <div class="col-10 offset-1">
+        <h1 class="text-center">Liste des réservations</h1>
 
-    <table class="table">
+        <table class="table">
         <thead>
             <tr>
                 <th>Date</th>
                 <th>State</th>
-                <th>actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +48,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-    {# <a href="{{ path('reservation_new') }}">Create new</a> #}
+    </div>
+</div>
 {% endblock %}
