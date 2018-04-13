@@ -6,7 +6,7 @@
  * Time: 10:45.
  */
 
-namespace App\DataFixtures\testFixtures;
+namespace App\Tests\Config\testFixtures;
 
 use App\Entity\Parametrage;
 use Doctrine\Bundle\FixturesBundle\Fixture;
