@@ -103,4 +103,20 @@ class UserController extends Controller
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @Route("/{id}/{isBlocked}", name="change_is_blocked", methods={"GET"})
+     * @Security("has_role('ROLE_ADMIN')")
+     *
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function changeIsBlocked(User $user)
+    {
+        $user->setIsBlocked(!$user->getisBlocked());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+        return $this->redirectToRoute('user_index');
+    }
 }
