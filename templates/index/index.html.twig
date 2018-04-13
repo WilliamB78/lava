@@ -3,5 +3,11 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ render(controller('App\\Controller\\IndexController::IndexContentAdmin')) }}
+    {% elseif is_granted('ROLE_SECRETARY') %}
+        {{ render(controller('App\\Controller\\IndexController::IndexContentSecretary')) }}
+    {% elseif is_granted('ROLE_USER') %}
+        {{ render(controller('App\\Controller\\IndexController::IndexContentUser')) }}
+    {% endif %}
 {% endblock %}

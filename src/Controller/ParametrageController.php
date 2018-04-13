@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: hello
+ * Date: 13/04/2018
+ * Time: 09:31
+ */
 
 namespace App\Controller;
 
@@ -44,3 +50,4 @@ class ParametrageController extends Controller
         return $this->redirectToRoute('parametrage_index');
     }
 }
+
