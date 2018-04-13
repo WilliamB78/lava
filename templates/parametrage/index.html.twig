@@ -1,0 +1,46 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Parametrage{% endblock %}
+
+{% block body %}
+<div class="flex">
+    <div class="col-4 offset-4">
+        {% for label, messages in app.flashes %}
+            {% for message in messages  %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Parametre</th>
+                    <th>Valeur</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for parametrage in parametrages %}
+                <tr>
+                    <td>{{ parametrage.name }}</td>
+                    <form action="{{ url('parametrage_change', {'id': parametrage.id}) }}" method="GET">
+                        <td>
+                            <div class="form-group">
+                                <input type="text" value="{{ parametrage.value }}" name="value" class="form-control">
+                            </div>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-warning">Modifier</button>
+                        </td>
+                    </form>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
