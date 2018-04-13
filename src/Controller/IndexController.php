@@ -28,6 +28,7 @@ class IndexController extends Controller
      */
     public function navUser()
     {
+        dump($this->getUser());
         $mesReservations = $this
             ->getDoctrine()
             ->getRepository(Reservation::class)
@@ -111,9 +112,6 @@ class IndexController extends Controller
 //
 //        $last5User = $userRepository->findLast5User();
 //        $last5BlockedUser = $userRepository->findLast5BlockedUser();
-        //return $this->render('index/content/user.html.twig', [
-//            'last5User' => $last5User,
-//            'last5BlockedUser' => $last5BlockedUser
-//        ]);
+        return $this->render('index/content/user.html.twig');
     }
 }
