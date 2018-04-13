@@ -28,7 +28,8 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $roles = ['ROLE_SECRETARY', 'ROLE_UTILISATEUR', 'ROLE_ADMIN'];
+        $roles = ['ROLE_SECRETARY', 'ROLE_ADMIN'];
+
 
         // On ajoute 10 room avec les fixtures
         for ($i = 0; $i < 10; ++$i) {
@@ -44,7 +45,20 @@ class UserFixtures extends Fixture
             $user->addRole($roles[$randRole]);
             $manager->persist($user);
         }
-
+        for ($i = 0; $i < 4; ++$i) {
+            //Création de la room avec faker
+            $user1 = new User();
+            $user1->setFirstname($faker->firstName);
+            $user1->setLastname($faker->lastName);
+            $user1->setEmail($faker->email);
+            $password = $this->encoder->encodePassword($user, 'test');
+            $user1->setPassword($password);
+            $user1->setIsBlocked(false);
+            //$randRole = array_rand($roles, 1);
+            $user1->addRole('ROLE_UTILISATEUR');
+            $user1->addRole('ROLE_CAN_DO_BOOKING');
+            $manager->persist($user1);
+        }
         $manager->flush();
     }
 

@@ -51,7 +51,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
-     * @Security("has_role('ROLE_UTILISATEUR') or has_role('ROLE_SECRETARY')")
+     * @Security("has_role('ROLE_CAN_DO_BOOKING')")
      *
      * @param Request  $request
      * @param Registry $workflows
@@ -60,6 +60,7 @@ class ReservationController extends Controller
      *
      * @return Response
      */
+    //@Security("has_role('ROLE_CAN_DO_BOOKING') or has_role('ROLE_SECRETARY')")
     public function new(Request $request, Registry $workflows, Room $room, $date): Response
     {
         $reservation = new Reservation();

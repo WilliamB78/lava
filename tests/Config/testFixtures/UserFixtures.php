@@ -34,7 +34,8 @@ class UserFixtures extends Fixture
         $user2->setLastname($faker->lastName);
         $user2->setEmail('user@lava.com');
         $user2->setPassword('test');
-        $user2->addRole('ROLE_USER');
+        $user2->addRole('ROLE_UTILISATEUR');
+        $user2->addRole('ROLE_CAN_DO_BOOKING');
         $manager->persist($user2);
 
         // User 4
