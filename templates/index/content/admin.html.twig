@@ -29,11 +29,10 @@
                                     }) }}">
                                     Voir
                                 </a>
-                                <a class="btn btn-success"
+                                <a class="btn btn-danger"
                                    href="{{ url('user_account_status', {
                                        'id': user.id
                                    }) }}">Bloquer</a>
-                                <button class="btn btn-danger">Supprimer</button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -73,7 +72,6 @@
                                    }) }}">
                                     Activer
                                 </a>
-                                <button class="btn btn-danger">Supprimer</button>
                             </td>
                         </tr>
                     {% endfor %}
