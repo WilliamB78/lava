@@ -69,7 +69,7 @@ class NewUserHandler
         $form = $this->formFactory->create(UserType::class, $user);
         $form->add('roles', ChoiceType::class, array(
             'choices' => array(
-                'USER' => 'ROLE_USER',
+                'UTILISATEUR' => 'ROLE_UTILISATEUR',
                 'SECRETARY' => 'ROLE_SECRETARY',
                 'ADMIN' => 'ROLE_ADMIN',
             ),
