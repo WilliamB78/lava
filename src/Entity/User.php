@@ -72,7 +72,7 @@ class User implements AdvancedUserInterface
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
-        $this->isBlocked = false;
+        $this->isBlocked = 0;
     }
 
     /**

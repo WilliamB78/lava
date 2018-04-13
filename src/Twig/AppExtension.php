@@ -19,6 +19,7 @@ class AppExtension extends Twig_Extension
         return array(
             new TwigFilter('clone', array(AppRuntime::class, 'cloneVar')),
             new TwigFilter('room_name', array(AppRuntime::class, 'getRoomName')),
+            new TwigFilter('is_enabled', array(AppRuntime::class, 'isEnabled')),
         );
     }
 

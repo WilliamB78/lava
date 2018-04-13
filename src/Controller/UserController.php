@@ -15,12 +15,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user", name="user_")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends Controller
 {
     /**
      * @Route("/", name="index", methods="GET")
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -30,12 +31,12 @@ class UserController extends Controller
     /**
      * @Route("/new", name="new", methods="GET|POST")
      *
-     * @param Request                      $request
-     * @param NewUserHandler               $handler
+     * @param Request $request
+     * @param NewUserHandler $handler
      * @param UserPasswordEncoderInterface $passwordEncoder
      *
      * @return Response
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function new(Request $request, NewUserHandler $handler): Response
     {
@@ -56,7 +57,7 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="show", methods="GET")
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function show(User $user): Response
     {
@@ -65,10 +66,10 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}/edit", name="edit", methods="GET|POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      *
      * @param Request $request
-     * @param User    $user
+     * @param User $user
      *
      * @return Response
      */
@@ -91,11 +92,11 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")
-     * @Security("has_role('ROLE_ADMIN')")
+     *
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
@@ -105,17 +106,23 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/{id}/{isBlocked}", name="change_is_blocked", methods={"GET"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Route("/{id}/status", name="account_status", methods={"GET"})
+     *
      *
      * @param User $user
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function changeIsBlocked(User $user)
     {
-        $user->setIsBlocked(!$user->getisBlocked());
         $em = $this->getDoctrine()->getManager();
+
+        if(!$user->getisBlocked()){
+            $user->setIsBlocked(1);
+        } else {
+            $user->setIsBlocked(0);
+        }
         $em->persist($user);
+        //dump($user);exit;
         $em->flush();
         return $this->redirectToRoute('user_index');
     }

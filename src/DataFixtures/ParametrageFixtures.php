@@ -21,16 +21,11 @@ class ParametrageFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $datas = [
-            ['name' => 'max_room', 'value' => '50'],
-        ];
+        $parametrage = new Parametrage();
+        $parametrage->setName('max_room');
+        $parametrage->setValue(50);
+        $manager->persist($parametrage);
 
-        foreach ($datas as $data) {
-            $parametrage = new Parametrage();
-            $parametrage->setName($data['name']);
-            $parametrage->setValue($data['value']);
-            $manager->persist($parametrage);
-        }
         $manager->flush();
     }
 }
