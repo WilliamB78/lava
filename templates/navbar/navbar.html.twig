@@ -10,7 +10,7 @@
                 {{ render(controller('App\\Controller\\IndexController::navAdmin')) }}
             {% elseif is_granted('ROLE_SECRETARY') %}
                 {{ render(controller('App\\Controller\\IndexController::navSecretary')) }}
-            {% elseif is_granted('ROLE_USER') %}
+            {% elseif is_granted('ROLE_UTILISATEUR') %}
                 {{ render(controller('App\\Controller\\IndexController::navUser')) }}
             {% endif %}
         </ul>
