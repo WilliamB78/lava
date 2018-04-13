@@ -6,7 +6,7 @@
  * Time: 20:38.
  */
 
-namespace App\DataFixtures\testFixtures;
+namespace App\tests\testFixtures;
 
 use App\Entity\Reservation;
 use App\Entity\Room;

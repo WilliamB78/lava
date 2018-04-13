@@ -6,7 +6,7 @@
  * Time: 19:47.
  */
 
-namespace App\DataFixtures\testFixtures;
+namespace App\Tests\Config\testFixtures;
 
 use App\Entity\Room;
 use Doctrine\Bundle\FixturesBundle\Fixture;
