@@ -43,8 +43,8 @@ class IndexControllerTest extends WebTestCase
 
         $nav = $crawler->filter('nav')->count();
         $mesReservation = $crawler->filter('a:contains("Mes réservations")')->count();
-        $this->assertEquals(1, $nav);
-        $this->assertEquals(1, $mesReservation);
+        $this->assertEquals(1, $nav,'NavBar assert');
+        $this->assertEquals(1, $mesReservation, 'Mes reservation assert');
     }
 
     /**

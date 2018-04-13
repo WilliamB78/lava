@@ -36,7 +36,7 @@ class UserControllerTest extends WebTestCase
 
         $heading = $crawler->filter('h1')->eq(0)->text();
 
-        $this->assertEquals('User index', $heading);
+        $this->assertEquals('Liste des utilisateurs', $heading);
     }
 
     public function testIndexShouldHave3User(){
@@ -56,13 +56,6 @@ class UserControllerTest extends WebTestCase
         $this->assertInternalType('array', $rooms);
     }
 
-    public function testRoomRowShouldHaveTwoButton(){
-        $crawler = $this->goToIndex();
-        $actionTd = $crawler->filter('td')->eq(6)->text();
-
-        $this->assertContains('show', $actionTd);
-        $this->assertContains('edit', $actionTd);
-    }
 
     public function testNewUser(){
         $this->logIn('Admin');
@@ -76,7 +69,7 @@ class UserControllerTest extends WebTestCase
         $form['user[lastname]'] = 'symfonyfan';
         $form['user[email]'] = 'symfonyfan@sf.com';
         $form['user[password]'] = 'test';
-        $form['user[roles]'] = 'ROLE_USER';
+        $form['user[roles]'] = 'ROLE_UTILISATEUR';
 
         // submits the given form
         $crawler = $this->client->submit($form);

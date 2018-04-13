@@ -11,20 +11,26 @@ namespace App\Twig;
 use App\Entity\Room;
 use App\Service\Calendar;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AppRuntime
 {
     /** @var EntityManager $em */
     protected $em;
 
+    /** @var TokenStorageInterface $currentUser */
+    protected $tokenStorage;
+
     /**
      * AppRuntime constructor.
      *
      * @param EntityManager $em
+     * @param TokenStorageInterface $tokenStorage
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage)
     {
         $this->em = $em;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -98,6 +104,21 @@ class AppRuntime
     public function dayInTheMonth($calendar, $day)
     {
         return $calendar->inThisMonth($day);
+    }
+
+    /**
+     * @param Calendar $calendar
+     * @param $day
+     *
+     * @return mixed
+     */
+    public function isRoleUtilisateur()
+    {
+        $user = $this->tokenStorage->getToken()->getUser();
+        if($user->getRoles() === "ROLE_UTILISATEUR"){
+            return true;
+        }
+        return false;
     }
 
     public function getRoomName($roomId)

@@ -28,6 +28,7 @@ class IndexController extends Controller
      */
     public function navUser()
     {
+        dump($this->getUser());
         $mesReservations = $this
             ->getDoctrine()
             ->getRepository(Reservation::class)
