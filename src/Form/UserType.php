@@ -17,6 +17,7 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'required' => true,
+                'label' => 'Votre prénom',
                 'attr' => [
                     'class' => 'input',
                     'placeholder' => 'Saisissez le Prénom',
@@ -24,6 +25,7 @@ class UserType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'required' => true,
+                'label' => 'Votre nom',
                 'attr' => [
                     'class' => 'input',
                     'placeholder' => 'Saisissez le Nom',
