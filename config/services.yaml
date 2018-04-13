@@ -41,5 +41,6 @@ services:
             public: false
             arguments:
                 - "@doctrine.orm.entity_manager"
+                - "@security.token_storage"
             tags:
                 - { name: twig.runtime }

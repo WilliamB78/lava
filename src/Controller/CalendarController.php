@@ -93,7 +93,7 @@ class CalendarController extends Controller
         $firstDay = $handler->getFirstDay();
 
         // Current month reservations
-        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository);
+        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository, $room);
 
         return $this->render('calendar/show.html.twig', [
             'room' => $room,
@@ -137,7 +137,7 @@ class CalendarController extends Controller
         $firstDay = $handler->getFirstDay();
 
         // Current month reservations
-        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository);
+        $monthReservationsByDay = $handler->getMonthReservations($reservationRepository, $room);
 
         return $this->render('calendar/show.html.twig', [
             'room' => $room,
