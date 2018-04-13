@@ -17,7 +17,7 @@ class Parametrage
     private $id;
 
     /**
-     * @ORM\Column(type="string", nullable=false, unique=true)
+     * @ORM\Column(type="string", nullable=false)
      */
     private $name;
 

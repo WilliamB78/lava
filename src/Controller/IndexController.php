@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Entity\Room;
+use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,8 +13,9 @@ class IndexController extends Controller
 {
     /**
      * @Route("/index", name="index")
-     * @Security("has_role('ROLE_USER')")
+     *
      */
+    //@Security("has_role('ROLE_USER')")
     public function index()
     {
         return $this->render('index/index.html.twig', [
@@ -21,6 +23,9 @@ class IndexController extends Controller
         ]);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function navUser()
     {
         $mesReservations = $this
@@ -33,6 +38,9 @@ class IndexController extends Controller
         ]);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function navSecretary()
     {
         $countHS = $this
@@ -51,8 +59,61 @@ class IndexController extends Controller
         ]);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function navAdmin()
     {
         return $this->render('navbar/navbar-admin.html.twig');
+    }
+
+    /**
+     * Show user content for ROLE_ADMIN
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function IndexContentAdmin()
+    {
+        $userRepository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(User::class);
+
+        $last5User = $userRepository->findLast5User();
+        $last5BlockedUser = $userRepository->findLast5BlockedUser();
+
+        return $this->render('index/content/admin.html.twig', [
+            'last5User' => $last5User,
+            'last5BlockedUser' => $last5BlockedUser
+        ]);
+    }
+
+    /**
+     * Show user content for ROLE_SECRETARY
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function IndexContentSecretary()
+    {
+        $reservationRepository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Reservation::class);
+
+        $roomRepository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Room::class);
+
+        return $this->render('index/content/secretary.html.twig');
+    }
+
+    public function IndexContentUser()
+    {
+//        $userRepository = $this->getDoctrine()
+//            ->getManager()
+//            ->getRepository(User::class);
+//
+//        $last5User = $userRepository->findLast5User();
+//        $last5BlockedUser = $userRepository->findLast5BlockedUser();
+        //return $this->render('index/content/user.html.twig', [
+//            'last5User' => $last5User,
+//            'last5BlockedUser' => $last5BlockedUser
+//        ]);
     }
 }

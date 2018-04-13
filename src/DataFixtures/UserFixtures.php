@@ -39,42 +39,13 @@ class UserFixtures extends Fixture
             $user->setEmail($faker->email);
             $password = $this->encoder->encodePassword($user, 'test');
             $user->setPassword($password);
+            $user->setIsBlocked(false);
             $randRole = array_rand($roles, 1);
             $user->addRole($roles[$randRole]);
             $manager->persist($user);
         }
 
         $manager->flush();
-
-        $this->fixturesEnvTest($manager);
     }
 
-    private function fixturesEnvTest(ObjectManager $manager)
-    {
-        $user = new User();
-        $user->setFirstname('user');
-        $user->setLastname('user');
-        $user->setEmail('user@lava.com');
-        $user->setPassword($this->encoder->encodePassword($user,'user'));
-        $user->addRole('ROLE_USER');
-        $manager->persist($user);
-
-        $secretaire = new User();
-        $secretaire->setFirstname('secretaire');
-        $secretaire->setLastname('secretaire');
-        $secretaire->setEmail('secretaire@lava.com');
-        $secretaire->setPassword($this->encoder->encodePassword($user,'secretaire'));
-        $secretaire->addRole('ROLE_SECRETARY');
-        $manager->persist($secretaire);
-
-        $admin = new User();
-        $admin->setFirstname('admin');
-        $admin->setLastname('admin');
-        $admin->setEmail('admin@lava.com');
-        $admin->setPassword($this->encoder->encodePassword($user,'admin'));
-        $admin->addRole('ROLE_ADMIN');
-        $manager->persist($admin);
-
-        $manager->flush();
-    }
 }

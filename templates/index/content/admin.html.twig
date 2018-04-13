@@ -1,0 +1,85 @@
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="align-self-center">
+            <div class="col m-5">
+                <h3>Derniers Utilisateurs</h3>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rôle</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in last5User %}
+                        <tr>
+                            <th scope="row">{{ user.id }}</th>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>@{{ user.roles[0] }}</td>
+                            <td>
+                                <a class="btn btn-info"
+                                    href="{{ url('user_show', {
+                                        'id': user.id
+                                    }) }}">
+                                    Voir
+                                </a>
+                                <a class="btn btn-success"
+                                   href="{{ url('user_account_status', {
+                                       'id': user.id
+                                   }) }}">Bloquer</a>
+                                <button class="btn btn-danger">Supprimer</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col m-5">
+                <h3>Derniers Utilisateurs Bloqués</h3>
+
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Prénom</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rôle</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in last5BlockedUser %}
+                        <tr>
+                            <th scope="row">{{ user.id }}</th>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.lastname }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roles[0] }}</td>
+                            <td>
+                                <a class="btn btn-info"
+                                   href="{{ url('user_show', {
+                                       'id': user.id
+                                   }) }}">Voir</a>
+                                </a>
+                                <a class="btn btn-success"
+                                   href="{{ url('user_account_status', {
+                                       'id': user.id
+                                   }) }}">
+                                    Activer
+                                </a>
+                                <button class="btn btn-danger">Supprimer</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

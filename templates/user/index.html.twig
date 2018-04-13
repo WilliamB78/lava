@@ -26,9 +26,9 @@
                         <td>
                             <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-success">Voir</a>
                             {% if user.isBlocked %}
-                                <a href="{{ path('user_change_is_blocked', {'id': user.id, 'isBlocked': 1}) }}" class="btn btn-info">Réactiver</a>
+                                <a href="{{ path('user_account_status', {'id': user.id}) }}" class="btn btn-info">Réactiver</a>
                             {% else %}
-                                <a href="{{ path('user_change_is_blocked', {'id': user.id, 'isBlocked': 0}) }}" class="btn btn-danger">Bloquer</a>
+                                <a href="{{ path('user_account_status', {'id': user.id}) }}" class="btn btn-danger">Bloquer</a>
                             {% endif %}
                         </td>
                     </tr>
