@@ -25,11 +25,7 @@
                         <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
                         <td>
                             <a href="{{ path('user_show', {'id': user.id}) }}" class="btn btn-success">Voir</a>
-                            {% if user.isBlocked %}
-                                <a href="{{ path('user_account_status', {'id': user.id}) }}" class="btn btn-info">Réactiver</a>
-                            {% else %}
-                                <a href="{{ path('user_account_status', {'id': user.id}) }}" class="btn btn-danger">Bloquer</a>
-                            {% endif %}
+                            <a href="{{ path('user_account_status', {'id': user.id}) }}" class="btn {{ user.isBlocked ? 'btn-info' : 'btn-danger' }}">{{ user | is_enabled }}</a>
                         </td>
                     </tr>
                 {% else %}

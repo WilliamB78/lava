@@ -108,4 +108,12 @@ class AppRuntime
 
         return $room->getName();
     }
+
+    public function isEnabled($user){
+        if($user->getisBlocked()){
+            return 'Activer';
+        } else {
+            return 'Bloquer';
+        }
+    }
 }
