@@ -64,12 +64,12 @@ class ReservationController extends Controller
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
-        /*$form->add('start', DateTimeType::class, array(
+        $form->add('start', DateTimeType::class, array(
             'data' => new \DateTime($date),
         ));
         $form->add('end', DateTimeType::class, array(
             'data' => new \DateTime($date),
-        ));*/
+        ));
         $form->handleRequest($request);
         $workflow = $workflows->get($reservation);
 

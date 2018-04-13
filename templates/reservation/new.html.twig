@@ -7,7 +7,9 @@
         <h1>Create new Reservation</h1>
 
         {% form_theme form 'bootstrap_4_layout.html.twig' %}
-        {{ include('reservation/_form.html.twig') }}
+        {{ form_start(form) }}
+            {{ form_row(form.start) }}
+        {{ form_end(form) }}
 
         <a href="{{ path('room_calendar_show', {"id": app.request.get('id')}) }}">back to list</a>
     </div>
