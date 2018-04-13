@@ -112,13 +112,19 @@ class AppRuntime
      *
      * @return mixed
      */
-    public function isRoleUtilisateur()
+    public function isRoleCanDoBooking()
     {
         $user = $this->tokenStorage->getToken()->getUser();
-        if($user->getRoles() === "ROLE_UTILISATEUR"){
-            return true;
+        $roles =$user->getRoles();
+        $return = null;
+        foreach($roles as $role){
+            if($role !== "ROLE_CAN_DO_BOOKING"){
+                $return = false;
+            }else{
+                $return = true;
+            }
         }
-        return false;
+        return $return;
     }
 
     public function getRoomName($roomId)
