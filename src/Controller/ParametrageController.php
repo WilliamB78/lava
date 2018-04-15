@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 13/04/2018
- * Time: 09:31
+ * Time: 09:31.
  */
 
 namespace App\Controller;
@@ -33,8 +33,9 @@ class ParametrageController extends Controller
      * @Route("/{id}/change-params", name="change")
      * @Security("has_role('ROLE_ADMIN')")
      *
-     * @param Request $request
+     * @param Request     $request
      * @param Parametrage $parametrage
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function changeParametrage(Request $request, Parametrage $parametrage)
@@ -50,4 +51,3 @@ class ParametrageController extends Controller
         return $this->redirectToRoute('parametrage_index');
     }
 }
-

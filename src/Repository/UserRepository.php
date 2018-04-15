@@ -20,7 +20,8 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retourne la liste des secretaires
+     * Retourne la liste des secretaires.
+     *
      * @return mixed
      */
     public function findSecretaires()

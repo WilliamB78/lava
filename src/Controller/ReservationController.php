@@ -42,7 +42,7 @@ class ReservationController extends Controller
             ->getDoctrine()
             ->getRepository(Reservation::class)
             ->findInProgressUser($this->getUser());
-            //->findBy(['user' => $this->getUser()]);
+        //->findBy(['user' => $this->getUser()]);
 
         return $this->render('reservation/mes-reservations.html.twig', [
             'reservations' => $reservations,
@@ -60,26 +60,27 @@ class ReservationController extends Controller
      *
      * @return Response
      */
-    //@Security("has_role('ROLE_CAN_DO_BOOKING') or has_role('ROLE_SECRETARY')")
     public function new(Request $request, Registry $workflows, Room $room, $date): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
-        $form->add('start', DateTimeType::class, array(
-            'data' => new \DateTime($date),
-        ));
-        $form->add('end', DateTimeType::class, array(
-            'data' => new \DateTime($date),
-        ));
         $form->handleRequest($request);
+
+
+        //dump($startFormat);exit;
         $workflow = $workflows->get($reservation);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //TODO setState
-            //TODO setUser
+            $startFormated = new \DateTime($reservation->getStart());
+            $endFormated = new \DateTime($reservation->getEnd());
+
+
             $reservation->setRoom($room);
             $reservation->setUser($this->getUser());
             $reservation->setState('created');
+            $reservation->setStart($startFormated);
+            $reservation->setEnd($endFormated);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();

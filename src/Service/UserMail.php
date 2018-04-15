@@ -88,7 +88,7 @@ class UserMail
         $body = $this->templating->render($template, array(
             'user' => $user,
             'lien' => $lien,
-            'subject' => $subject
+            'subject' => $subject,
         ));
 
         $this->sendMessage($from, $to, $subject, $body);
