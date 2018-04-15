@@ -1,2 +1,3 @@
-//require('jquery');
 require('./bootstrap');
+require('./gijgo.min');
+require('./datePicker');
