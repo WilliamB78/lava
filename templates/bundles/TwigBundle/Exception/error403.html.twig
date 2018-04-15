@@ -1,0 +1,12 @@
+{% extends "layout.html.twig" %}
+
+{% block page_title %}
+    Erreur {{ status_code }}
+{% endblock %}
+{% block content %}
+    <div class="container page-404 p-5">
+        <h1>Accès Refusé {{ status_code }}</h1>
+        <p>Vos droits ne sont pas suffisant !</p>
+        <a href="{{ url('index') }}" class="my-btn btn-go-home">RETOURNER VERS L'ACCUEIL</a>
+    </div>
+{% endblock %}
