@@ -136,13 +136,31 @@ class ReservationRepository extends ServiceEntityRepository
     public function findWarningReservation()
     {
         $echeance = new \DateTime();
+        $limite = new \DateTime();
         $echeance->modify('+36 hours');
+        $limite->modify('+12 hours');
 
         return $this->createQueryBuilder('r')
             ->where('r.start < :start')
-            ->andWhere('r.start > :now')
+            ->andWhere('r.start > :limite')
+            ->andWhere('r.state LIKE :state')
             ->setParameter('start', $echeance->format('Y-m-d H:m:s'))
-            ->setParameter('now', new \DateTime())
+            ->setParameter('limite', $limite->format('Y-m-d H:m:s'))
+            ->setParameter('state', '%created%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findReservationNotComplete()
+    {
+        $echeance = new \DateTime();
+        $echeance->modify('+12 hours');
+
+        return $this->createQueryBuilder('r')
+            ->where('r.start < :start')
+            ->andWhere('r.state LIKE :state')
+            ->setParameter('start', $echeance->format('Y-m-d H:m:s'))
+            ->setParameter('state', '%created%')
             ->getQuery()
             ->getResult();
     }
