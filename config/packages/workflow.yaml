@@ -27,11 +27,11 @@ framework:
             to: refused
           # Annulation de l'utilisateur qui a créer la demande car il s'est trompé
           cancel_demand:
-            guard: "is_granted('ROLE_USER')"
+            guard: "is_granted('ROLE_UTILISATEUR')"
             from: created
             to: cancelled
           cancel_after:
-            guard: "is_granted('ROLE_USER')"
+            guard: "is_granted('ROLE_UTILISATEUR')"
             from: accepted
             to: cancelled
           cancel_booking:
