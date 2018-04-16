@@ -22,7 +22,7 @@ class ReservationController extends Controller
 {
     /**
      * @Route("/", name="index", methods="GET")
-     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_SECRETARY", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
      *
      * @param ReservationRepository $reservationRepository
      *
@@ -53,8 +53,6 @@ class ReservationController extends Controller
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
      * @IsGranted("ROLE_CAN_DO_BOOKING" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
-     *
-     *
      * @param Request  $request
      * @param Registry $workflows
      * @param Room     $room
@@ -99,7 +97,6 @@ class ReservationController extends Controller
     /**
      * @Route("/{id}", name="show", methods="GET")
      * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
-     *
      * @param Reservation $reservation
      *
      * @return Response

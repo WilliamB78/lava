@@ -43,7 +43,7 @@
                                     "date": dateDay|date('Y-m-d')
                                 }) }}" class="">
                             {% endif %}
-                                <div class="calendar__day {% if equal_today(dateDay | date("d")) %}text-primary calendar__day__current__day {% endif %}">{{ dateDay|date("d")  }}</div>
+                                <div class="calendar__day {% if equal_today(dateDay | date("Y-m-d")) %}text-primary calendar__day__current__day {% endif %}">{{ dateDay|date("d")  }}</div>
                             {% if not can_book() %}
                                 </a>
                             {% endif %}

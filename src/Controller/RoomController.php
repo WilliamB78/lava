@@ -6,12 +6,12 @@ use App\Controller\Utils\Room\RoomIsFullHandler;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/room")
@@ -58,6 +58,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/new", name="room_new", methods="GET|POST")
+     * @IsGranted("ROLE_SECRETARY", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
      *
      * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
@@ -136,6 +137,7 @@ class RoomController extends Controller
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
      * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+
      */
     public function delete(Request $request, Room $room): Response
     {

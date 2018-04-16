@@ -18,7 +18,7 @@ class ReservationWorkflowController extends Controller
 {
     /**
      * @Route("/reservations/secretary/approve/{state}/{id}", name="reservation_workflow_secretary_approve")
-     *
+     *@Security("is_granted('ROLE_SECRETARY')")
      * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      * @param Request     $request
      * @param Reservation $reservation
@@ -35,6 +35,7 @@ class ReservationWorkflowController extends Controller
 
     /**
      * @Route("/reservations/user/approve/{state}/{id}", name="reservation_workflow_user_approve")
+     * @Security("is_granted('ROLE_UTILISATEUR')")
      *
      * @IsGranted("ROLE_UTILISATEUR" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      * @param Request     $request

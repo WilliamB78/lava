@@ -16,7 +16,6 @@ class IndexController extends Controller
      * @Route("/index", name="index")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    //
     public function index()
     {
         return $this->render('index/index.html.twig', [

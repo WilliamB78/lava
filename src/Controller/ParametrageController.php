@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("/parametrage", name="parametrage_")
- * @IsGranted("ROLE_ADMIN" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+ * @IsGranted("ROLE_ADMIN", statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
  */
 class ParametrageController extends Controller
 {
@@ -47,7 +47,7 @@ class ParametrageController extends Controller
         $em->persist($parametrage);
         $em->flush();
 
-        $this->addFlash('success', 'Le parametre à bien été mit à jour.');
+        $this->addFlash('success', 'Le parametre à bien été mis à jour.');
 
         return $this->redirectToRoute('parametrage_index');
     }
