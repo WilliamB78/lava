@@ -5,16 +5,18 @@ namespace App\Controller;
 use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Entity\User;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class IndexController extends Controller
 {
     /**
      * @Route("/index", name="index")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    //@Security("has_role('ROLE_USER')")
+    //
     public function index()
     {
         return $this->render('index/index.html.twig', [

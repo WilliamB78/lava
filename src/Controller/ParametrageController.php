@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Entity\Parametrage;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * @Route("/parametrage", name="parametrage_")
+ * @IsGranted("ROLE_ADMIN" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
  */
 class ParametrageController extends Controller
 {
@@ -31,7 +33,6 @@ class ParametrageController extends Controller
 
     /**
      * @Route("/{id}/change-params", name="change")
-     * @Security("has_role('ROLE_ADMIN')")
      *
      * @param Request     $request
      * @param Parametrage $parametrage

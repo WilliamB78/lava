@@ -6,6 +6,7 @@ use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -21,7 +22,7 @@ class ReservationController extends Controller
 {
     /**
      * @Route("/", name="index", methods="GET")
-     * @Security("is_granted('ROLE_SECRETARY')")
+     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @param ReservationRepository $reservationRepository
      *
@@ -34,7 +35,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
-     * @Security("is_granted('ROLE_UTILISATEUR')")
+     * @IsGranted("ROLE_UTILISATEUR" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      */
     public function mesReservations()
     {
@@ -51,7 +52,8 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
-     * @Security("has_role('ROLE_CAN_DO_BOOKING')")
+     * @IsGranted("ROLE_CAN_DO_BOOKING" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     *
      *
      * @param Request  $request
      * @param Registry $workflows
