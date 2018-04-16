@@ -24,7 +24,7 @@ class CalendarController extends Controller
 {
     /**
      * @Route("/{id}/calendar", name="calendar_show", methods="GET")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_UTILISATEUR') or is_granted('ROLE_SECRETARY')")
      *
      * @param Room                  $room
      * @param Calendar              $calendar
@@ -64,6 +64,7 @@ class CalendarController extends Controller
 
     /**
      * @Route("/{id}/calendar/{month}/{year}", name="calendar_previous", methods="GET")
+     * @Security("has_role('ROLE_UTILISATEUR') or is_granted('ROLE_SECRETARY')")
      *
      * @param Room $room
      * @param $month
@@ -108,6 +109,7 @@ class CalendarController extends Controller
 
     /**
      * @Route("/{id}/calendar/", name="calendar_next", methods="GET")
+     * @Security("has_role('ROLE_UTILISATEUR') or is_granted('ROLE_SECRETARY')")
      *
      * @param Room $room
      * @param $month

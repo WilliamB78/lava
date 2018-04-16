@@ -21,7 +21,7 @@ class ReservationController extends Controller
 {
     /**
      * @Route("/", name="index", methods="GET")
-     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SECRETARY')")
      *
      * @param ReservationRepository $reservationRepository
      *
@@ -34,7 +34,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("is_granted('ROLE_UTILISATEUR')")
      */
     public function mesReservations()
     {
@@ -136,6 +136,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")
+     *  @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
      */
     public function delete(Request $request, Reservation $reservation): Response
     {
