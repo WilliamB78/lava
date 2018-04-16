@@ -35,7 +35,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
-     * @IsGranted("ROLE_UTILISATEUR", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_UTILISATEUR" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      */
     public function mesReservations()
     {
@@ -52,8 +52,7 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
-     * @IsGranted("ROLE_CAN_DO_BOOKING", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
-     *
+     * @IsGranted("ROLE_CAN_DO_BOOKING" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      * @param Request  $request
      * @param Registry $workflows
      * @param Room     $room

@@ -41,8 +41,7 @@ class RoomController extends Controller
      * Liste des salles pour la secretaire et l'administrateur.
      *
      * @Route("/hors_service", name="room_closed", methods="GET")
-     *
-     * @IsGranted("ROLE_SECRETARY", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @param RoomRepository $roomRepository
      *
@@ -63,7 +62,7 @@ class RoomController extends Controller
      *
      * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
-     *
+     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @return Response
      */
@@ -97,7 +96,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_show", methods="GET")
-     * @Security("is_granted('ROLE_SECRETARY')")
+     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @param Room $room
      *
@@ -110,7 +109,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}/edit", name="room_edit", methods="GET|POST")
-     * @IsGranted("ROLE_SECRETARY", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @param Request $request
      * @param Room    $room
@@ -137,7 +136,8 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
-     * @IsGranted("ROLE_SECRETARY", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+
      */
     public function delete(Request $request, Room $room): Response
     {
