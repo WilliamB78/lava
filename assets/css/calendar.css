@@ -29,3 +29,9 @@
 .calendar__outOfMonth .calendar__day{
     opacity: 0.3;
 }
+
+.calendar__day__current__day{
+    color:#78C2AD;
+    font-size:x-large;
+    font-weight: bolder
+}

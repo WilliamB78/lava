@@ -24,7 +24,7 @@ class AppRuntime
     /**
      * AppRuntime constructor.
      *
-     * @param EntityManager         $em
+     * @param EntityManager $em
      * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage)
@@ -143,6 +143,30 @@ class AppRuntime
             return 'Activer';
         } else {
             return 'Bloquer';
+        }
+    }
+
+    /**
+     * @param $day
+     */
+    public function isEqualOrGreaterThanToday($day)
+    {
+        $currentDay = new \DateTime();
+        return $day >= $currentDay ? true : false;
+    }
+
+    /**
+     * @param $day
+     */
+    public function isEqualToday($day)
+    {
+        $d = null;
+        dump($day);
+        $currentDay = new \DateTime();
+        if ($day == $currentDay->format('d')){
+            return $d = true;
+        }else{
+            return $d = false;
         }
     }
 }

@@ -5,12 +5,6 @@
 {% endblock %}
 
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
-{% endblock %}
-
-
 {% block content %}
     <div class="body">
         <form action="{{ url('security_connexion') }}" method="post" class="form-signin">

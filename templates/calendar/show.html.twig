@@ -37,15 +37,15 @@
                             {% endif %}
 
                             {# Showing date of the day #}
-                            {% if can_book() %}
-                            <a href="{{ url('reservation_new', {
-                                "id": room.id,
-                                "date": dateDay|date('Y-m-d')
-                            }) }}">
+                            {% if can_book() and day_in_the_month(calendar,dateDay) and dateDay | equal_or_greater_than_today %}
+                                <a href="{{ url('reservation_new', {
+                                    "id": room.id,
+                                    "date": dateDay|date('Y-m-d')
+                                }) }}" class="">
                             {% endif %}
-                                <div class="calendar__day">{{ dateDay|date("d") }}</div>
-                            {% if not day_in_the_month(calendar,dateDay) %}
-                            </a>
+                                <div class="calendar__day {% if equal_today(dateDay | date("d")) %}text-primary calendar__day__current__day {% endif %}">{{ dateDay|date("d")  }}</div>
+                            {% if not can_book() %}
+                                </a>
                             {% endif %}
                             {% for key, reservation in day_reservations(monthReservationsByDay, dateDay|date('Y-m-d')) %}
                                 {# Showing reservation for this day #}
