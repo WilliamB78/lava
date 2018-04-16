@@ -160,13 +160,12 @@ class AppRuntime
      */
     public function isEqualToday($day)
     {
-        $d = null;
-        dump($day);
+        $value = null;
         $currentDay = new \DateTime();
-        if ($day == $currentDay->format('d')){
-            return $d = true;
+        if ($day == $currentDay->format('Y-m-d')){
+            return $value = true;
         }else{
-            return $d = false;
+            return $value = false;
         }
     }
 }
