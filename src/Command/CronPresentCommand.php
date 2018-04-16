@@ -8,8 +8,6 @@
 
 namespace App\Command;
 
-use App\Entity\Reservation;
-use App\Entity\User;
 use App\Repository\ReservationRepository;
 use App\Repository\UserRepository;
 use App\Service\CronMail;
@@ -19,6 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CronPresentCommand extends Command
 {
+    protected static $defaultName = 'cron:prevent';
+
     private $mailer;
     private $reservationRepository;
     private $userRepository;
@@ -34,7 +34,6 @@ class CronPresentCommand extends Command
     public function configure()
     {
         $this
-            ->setName('cron:prevent')
             ->setDescription('Envois pour reservation accepté ou annulé')
             ->setHelp("Envois un email pour indiquer si la reservation n'est accepté ou annulé");
     }
@@ -54,8 +53,11 @@ class CronPresentCommand extends Command
         $reservations = $this->reservationRepository->findWarningReservation();
         $secretaires = $this->userRepository->findSecretaires();
 
-        foreach ($secretaires as $secretaire) {
-            $this->mailer->mailWarning($reservations, $secretaire);
+        if ($reservations !== []) {
+            foreach ($secretaires as $secretaire)
+            {
+                $this->mailer->mailWarning($reservations, $secretaire);
+            }
         }
     }
 }

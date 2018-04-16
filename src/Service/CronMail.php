@@ -46,7 +46,33 @@ class CronMail
 
         $to = $secretaire->getEmail();
 
-        $subject = 'Reservation non traitée';
+        $subject = 'Reservation(s) non traitée(s)';
+
+        $body = $this->templating->render($template, [
+            'reservations' => $reservations,
+            'subject' => $subject,
+            'user' => $secretaire,
+        ]);
+
+        $this->sendMessage($from, $to, $subject, $body);
+    }
+
+    /**
+     * @param $reservations
+     * @param User $secretaire
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function mailReservationsDeleted($reservations, User $secretaire)
+    {
+        $template = 'email/cronDeletedReservation.html.twig';
+
+        $from = 'reservation@lava.com';
+
+        $to = $secretaire->getEmail();
+
+        $subject = 'Reservations supprimée(s)';
 
         $body = $this->templating->render($template, [
             'reservations' => $reservations,
