@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +18,8 @@ class ReservationWorkflowController extends Controller
 {
     /**
      * @Route("/reservations/secretary/approve/{state}/{id}", name="reservation_workflow_secretary_approve")
+     *@Security("is_granted('ROLE_SECRETARY')")
      *
-     * @Security("has_role('ROLE_SECRETARY')")
      * @param Request     $request
      * @param Reservation $reservation
      * @param Registry    $registry
@@ -34,8 +35,8 @@ class ReservationWorkflowController extends Controller
 
     /**
      * @Route("/reservations/user/approve/{state}/{id}", name="reservation_workflow_user_approve")
+     * @Security("is_granted('ROLE_UTILISATEUR')")
      *
-     * @Security("has_role('ROLE_UTILISATEUR')")
      * @param Request     $request
      * @param Reservation $reservation
      * @param Registry    $registry

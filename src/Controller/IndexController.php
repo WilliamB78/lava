@@ -14,7 +14,6 @@ class IndexController extends Controller
     /**
      * @Route("/index", name="index")
      */
-    //@Security("has_role('ROLE_USER')")
     public function index()
     {
         return $this->render('index/index.html.twig', [

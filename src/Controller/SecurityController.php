@@ -17,16 +17,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
  */
 class SecurityController extends Controller
 {
-//    /**
-//     * @Route("/security", name="security")
-//     */
-//    public function index()
-//    {
-//        return $this->render('security/index.html.twig', [
-//            'controller_name' => 'SecurityController',
-//        ]);
-//    }
-
     /**
      * @Route("/", name="connexion", methods={"GET", "POST"})
      * @Security("not is_granted('IS_AUTHENTICATED_FULLY')")
