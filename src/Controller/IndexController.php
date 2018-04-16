@@ -104,6 +104,11 @@ class IndexController extends Controller
         return $this->render('index/content/secretary.html.twig');
     }
 
+    /**
+     * Show user content for ROLE_UTILISATEUR.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function IndexContentUser()
     {
         $reservationRepository = $this->getDoctrine()
