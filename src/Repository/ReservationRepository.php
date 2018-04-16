@@ -87,9 +87,11 @@ class ReservationRepository extends ServiceEntityRepository
             ->where('r.start > :start')
             ->andWhere('r.end < :end')
             ->andWhere('r.room = :roomId')
+            ->andWhere('r.state LIKE :state')
             ->setParameter('start', $start->format('Y-m-d 00:00:00'))
             ->setParameter('end', $end->format('Y-m-d 23:59:59'))
             ->setParameter('roomId', $roomId)
+            ->setParameter('state', '%accepted%')
             ->getQuery()
             ->getResult();
     }
