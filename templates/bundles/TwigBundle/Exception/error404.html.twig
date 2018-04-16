@@ -1,0 +1,16 @@
+{% extends "layout.html.twig" %}
+
+{% block page_title %}
+    Erreur {{ status_code }}
+{% endblock %}
+{% block body %}
+    <div class="container page-404 p-5">
+        <h1>Page not found {{ status_code }}</h1>
+
+        <p>
+            The requested page couldn't be located. Checkout for any URL
+            misspelling or <a href="{{ path('index') }}">return to the homepage</a>.
+        </p>
+        <a href="{{ url('index') }}" class="my-btn btn-go-home">RETOURNER VERS L'ACCUEIL</a>
+    </div>
+{% endblock %}
