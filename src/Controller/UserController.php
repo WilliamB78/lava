@@ -21,7 +21,6 @@ class UserController extends Controller
 {
     /**
      * @Route("/", name="index", methods="GET")
-     *
      */
     public function index(UserRepository $userRepository): Response
     {
@@ -31,12 +30,11 @@ class UserController extends Controller
     /**
      * @Route("/new", name="new", methods="GET|POST")
      *
-     * @param Request $request
-     * @param NewUserHandler $handler
+     * @param Request                      $request
+     * @param NewUserHandler               $handler
      * @param UserPasswordEncoderInterface $passwordEncoder
      *
      * @return Response
-     *
      */
     public function new(Request $request, NewUserHandler $handler): Response
     {
@@ -57,7 +55,6 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="show", methods="GET")
-     *
      */
     public function show(User $user): Response
     {
@@ -67,9 +64,8 @@ class UserController extends Controller
     /**
      * @Route("/{id}/edit", name="edit", methods="GET|POST")
      *
-     *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
      *
      * @return Response
      */
@@ -92,11 +88,10 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")
-     *
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($user);
             $em->flush();
@@ -108,15 +103,15 @@ class UserController extends Controller
     /**
      * @Route("/{id}/status", name="account_status", methods={"GET"})
      *
-     *
      * @param User $user
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function changeIsBlocked(User $user)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(!$user->getisBlocked()){
+        if (!$user->getisBlocked()) {
             $user->setIsBlocked(1);
         } else {
             $user->setIsBlocked(0);
@@ -124,6 +119,7 @@ class UserController extends Controller
         $em->persist($user);
         //dump($user);exit;
         $em->flush();
+
         return $this->redirectToRoute('user_index');
     }
 }

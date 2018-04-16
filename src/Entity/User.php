@@ -209,6 +209,7 @@ class User implements AdvancedUserInterface
         if ($this->isBlocked) {
             return false;
         }
+
         return true;
     }
 

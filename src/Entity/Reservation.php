@@ -141,11 +141,21 @@ class Reservation
      */
     public function validate(ExecutionContextInterface $context, $payload)
     {
-        if ($this->getEnd() < $this->getStart())
-        {
-           $context->buildViolation('Vous ne pouvez pas entrer une fin supérieur à un début')
+        $currentDay = new \DateTime('now');
+        $startDay = new \DateTime($this->getStart());
+        $endDay = new \DateTime($this->getEnd());
+
+        if ($endDay->format("Y-m-d") < $startDay->format("Y-m-d")) {
+            $context->buildViolation('Vous ne pouvez pas entrer une date de fin supérieur à la date de début de réservation')
                ->atPath('end')
                ->addViolation();
+        }
+
+        if ($startDay->format("Y-m-d") < $currentDay->format("Y-m-d")){
+            dump($this->getStart());
+            $context->buildViolation('Vous ne pouvez pas entrer une date de debut de réservation, antérieur à la date du jour')
+                ->atPath('start')
+                ->addViolation();
         }
     }
 }

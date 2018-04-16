@@ -78,6 +78,7 @@ class ReservationRepository extends ServiceEntityRepository
      * @param $start
      * @param $end
      * @param $roomId
+     *
      * @return mixed
      */
     public function findBetween($start, $end, $roomId)
@@ -110,8 +111,10 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retourne la liste des réservations d'un utilisateur
+     * Retourne la liste des réservations d'un utilisateur.
+     *
      * @param $user
+     *
      * @return mixed
      */
     public function findInProgressUser($user)
@@ -120,21 +123,20 @@ class ReservationRepository extends ServiceEntityRepository
             ->where('r.state LIKE :created')
             ->setParameter('created', '%created%')
             ->orWhere('r.state LIKE :accepted')
-            ->setParameter('accepted' , '%accepted%')
+            ->setParameter('accepted', '%accepted%')
             ->andWhere('r.user = :user')
             ->setParameter('user', $user)
             ->getQuery()
             ->getResult();
-
     }
 
     /**
-     * Retourne la liste des reservations qui sont a l'état de création 36h avant la date d'écheance
+     * Retourne la liste des reservations qui sont a l'état de création 36h avant la date d'écheance.
      */
     public function findWarningReservation()
     {
         $echeance = new \DateTime();
-        $echeance->modify("+36 hours");
+        $echeance->modify('+36 hours');
 
         return $this->createQueryBuilder('r')
             ->where('r.start < :start')

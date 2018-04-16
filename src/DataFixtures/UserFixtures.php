@@ -30,7 +30,6 @@ class UserFixtures extends Fixture
         $faker = Factory::create();
         $roles = ['ROLE_SECRETARY', 'ROLE_ADMIN'];
 
-
         // On ajoute 10 room avec les fixtures
         for ($i = 0; $i < 10; ++$i) {
             //Création de la room avec faker
@@ -61,5 +60,4 @@ class UserFixtures extends Fixture
         }
         $manager->flush();
     }
-
 }

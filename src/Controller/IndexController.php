@@ -13,7 +13,6 @@ class IndexController extends Controller
 {
     /**
      * @Route("/index", name="index")
-     *
      */
     //@Security("has_role('ROLE_USER')")
     public function index()
@@ -68,7 +67,8 @@ class IndexController extends Controller
     }
 
     /**
-     * Show user content for ROLE_ADMIN
+     * Show user content for ROLE_ADMIN.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function IndexContentAdmin()
@@ -82,12 +82,13 @@ class IndexController extends Controller
 
         return $this->render('index/content/admin.html.twig', [
             'last5User' => $last5User,
-            'last5BlockedUser' => $last5BlockedUser
+            'last5BlockedUser' => $last5BlockedUser,
         ]);
     }
 
     /**
-     * Show user content for ROLE_SECRETARY
+     * Show user content for ROLE_SECRETARY.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function IndexContentSecretary()
@@ -114,7 +115,7 @@ class IndexController extends Controller
 
         return $this->render('index/content/user.html.twig', [
             'userReservation' => $userReservation,
-            'userReservationAccepted' => $userReservationAccepted
+            'userReservationAccepted' => $userReservationAccepted,
         ]);
     }
 }

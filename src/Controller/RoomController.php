@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoomController extends Controller
 {
     /**
-     * Liste des salles
+     * Liste des salles.
      *
      * @Route("/", name="room_index", methods="GET")
      * @Security("has_role('ROLE_USER')")
@@ -110,7 +110,7 @@ class RoomController extends Controller
      * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
      *
      * @param Request $request
-     * @param Room $room
+     * @param Room    $room
      *
      * @return Response
      */

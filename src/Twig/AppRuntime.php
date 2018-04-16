@@ -24,7 +24,7 @@ class AppRuntime
     /**
      * AppRuntime constructor.
      *
-     * @param EntityManager $em
+     * @param EntityManager         $em
      * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(EntityManager $em, TokenStorageInterface $tokenStorage)
@@ -115,15 +115,16 @@ class AppRuntime
     public function isRoleCanDoBooking()
     {
         $user = $this->tokenStorage->getToken()->getUser();
-        $roles =$user->getRoles();
+        $roles = $user->getRoles();
         $return = null;
-        foreach($roles as $role){
-            if($role !== "ROLE_CAN_DO_BOOKING"){
+        foreach ($roles as $role) {
+            if ('ROLE_CAN_DO_BOOKING' !== $role) {
                 $return = false;
-            }else{
+            } else {
                 $return = true;
             }
         }
+
         return $return;
     }
 
@@ -136,8 +137,9 @@ class AppRuntime
         return $room->getName();
     }
 
-    public function isEnabled($user){
-        if($user->getisBlocked()){
+    public function isEnabled($user)
+    {
+        if ($user->getisBlocked()) {
             return 'Activer';
         } else {
             return 'Bloquer';

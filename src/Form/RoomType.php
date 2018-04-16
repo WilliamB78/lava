@@ -18,14 +18,14 @@ class RoomType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom'
+                'label' => 'Nom',
             ])
             ->add('nbPlaces', IntegerType::class, [
                 'label' => 'Nombre de place',
                 'invalid_message' => 'Veuillez selectionner un chiffre correct.',
                 'attr' => [
                     'min' => 0,
-                ]
+                ],
             ])
 
             // Permet d'afficher les attributs si c'est pas un ajout
@@ -36,10 +36,10 @@ class RoomType extends AbstractType
                 if ($room && $room->getId()) {
                     $form
                         ->add('state')
-                        ->add('commentState', TextType::class,[
+                        ->add('commentState', TextType::class, [
                             'constraints' => [
-                                new NotBlank()
-                            ]
+                                new NotBlank(),
+                            ],
                         ]);
                 }
             })

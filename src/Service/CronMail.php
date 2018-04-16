@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 09/04/2018
- * Time: 23:03
+ * Time: 23:03.
  */
 
 namespace App\Service;
 
 use App\Entity\User;
 use Twig_Environment;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class CronMail
 {
@@ -30,7 +29,7 @@ class CronMail
     }
 
     /**
-     * Email
+     * Email.
      *
      * @param $reservations
      * @param User $secretaire
@@ -39,7 +38,7 @@ class CronMail
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function mailWarning($reservations,User $secretaire)
+    public function mailWarning($reservations, User $secretaire)
     {
         $template = 'email/cronWarningReservation.html.twig';
 
@@ -52,7 +51,7 @@ class CronMail
         $body = $this->templating->render($template, [
             'reservations' => $reservations,
             'subject' => $subject,
-            'user' => $secretaire
+            'user' => $secretaire,
         ]);
 
         $this->sendMessage($from, $to, $subject, $body);
