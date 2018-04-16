@@ -21,7 +21,7 @@ class RoomController extends Controller
      * Liste des salles.
      *
      * @Route("/", name="room_index", methods="GET")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_UTILISATEUR') or is_granted('ROLE_SECRETARY')")
      *
      * @param RoomRepository $roomRepository
      *
@@ -40,7 +40,7 @@ class RoomController extends Controller
      * Liste des salles pour la secretaire et l'administrateur.
      *
      * @Route("/hors_service", name="room_closed", methods="GET")
-     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SECRETARY')")
      *
      * @param RoomRepository $roomRepository
      *
@@ -60,7 +60,7 @@ class RoomController extends Controller
      *
      * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
-     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SECRETARY')")
      *
      * @return Response
      */
@@ -107,7 +107,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}/edit", name="room_edit", methods="GET|POST")
-     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SECRETARY')")
      *
      * @param Request $request
      * @param Room    $room
@@ -134,7 +134,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
-     * @Security("is_granted('ROLE_SECRETARY') or is_granted('ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_SECRETARY')")
      */
     public function delete(Request $request, Room $room): Response
     {
