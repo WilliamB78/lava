@@ -29,6 +29,12 @@
                     {{ reservation_state(reservation.state) }}
                 </td>
                 <td>
+                    <a class="btn btn-info"
+                       href="{{ url('reservation_show', {
+                           'id': reservation.id
+                       }) }}">
+                        Voir
+                    </a>
                     {% if workflow_can(reservation, 'demand_validation') %}
                         <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
                     {% endif %}
@@ -38,7 +44,6 @@
                     {% if workflow_can(reservation, 'cancel_booking') %}
                         <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
                     {% endif %}
-                    <a href="#"></a>
                 </td>
             </tr>
         {% else %}

@@ -108,7 +108,7 @@ class IndexController extends Controller
             ->getManager()
             ->getRepository(Room::class)
             ->findTotalRoomClosed();
-        
+
         return $this->render('index/content/secretary.html.twig', [
             'demandeReservation' => $demandeReservation,
             'openedRooms' => $openedRooms,
