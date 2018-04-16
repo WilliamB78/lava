@@ -1,13 +1,25 @@
 $('#reservation_start').datetimepicker({
     format: 'yyyy-mm-d HH:MM',
-    width: 312,
     uiLibrary: 'bootstrap4',
-    modal: true
+    modal: true,
+    datepicker: {
+        minDate: function() {
+            var date = new Date();
+            date.setDate(date.getDate()-1);
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        }
+    }
 });
 
 $('#reservation_end').datetimepicker({
     format: 'yyyy-mm-d HH:MM',
-    width: 312,
     uiLibrary: 'bootstrap4',
-    modal: true
+    modal: true,
+    datepicker: {
+        minDate: function() {
+            var date = new Date();
+            date.setDate(date.getDate()-1);
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        }
+    }
 });

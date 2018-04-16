@@ -3,14 +3,24 @@
 {% block title %}Nouvelle réservation{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Nouvelle Reservation</h1>
-
-        {% form_theme form 'bootstrap_4_layout.html.twig' %}
-        {{ form_start(form) }}
-            {{ form_row(form.start)}}
-        {{ form_end(form) }}
-
-        <a href="{{ path('room_calendar_show', {"id": app.request.get('id')}) }}">back to list</a>
+    <div class="row">
+        <div class="col-10 offset-1">
+            <h1 class="text-center">Nouvelle Reservation</h1>
+            <div class="col-12">
+                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                {{ form_start(form,{'attr': {'class': 'row'}}) }}
+                    <div class="col-4 offset-4">
+                        {{ form_row(form.start)}}
+                    </div>
+                    <div class="col-4 offset-4">
+                        {{ form_row(form.end)}}
+                    </div>
+                    <div class="col-4 offset-4">
+                        {{ form_row(form.submit) }}
+                        <a href="{{ path('room_calendar_show', {"id": app.request.get('id')}) }}">back to list</a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
