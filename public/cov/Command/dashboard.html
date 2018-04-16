@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for C:\xampp\htdocs\TD\LAVA_project2\lava\src/Twig</title>
+  <title>Dashboard for C:\xampp\htdocs\TD\LAVA_project2\lava\src/Command</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../.css/bootstrap.min.css" rel="stylesheet" type="text/css">
   <link href="../.css/nv.d3.min.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,7 @@
      <div class="col-md-12">
       <ol class="breadcrumb">
         <li><a href="../index.html">C:\xampp\htdocs\TD\LAVA_project2\lava\src</a></li>
-        <li><a href="index.html">Twig</a></li>
+        <li><a href="index.html">Command</a></li>
         <li class="active">(Dashboard)</li>
 
       </ol>
@@ -59,7 +59,8 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="AppExtension.php.html#15">App\Twig\AppExtension</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#16">App\Command\CronDeleteCommand</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#18">App\Command\CronPresentCommand</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -76,6 +77,8 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="CronDeleteCommand.php.html#16">App\Command\CronDeleteCommand</a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#18">App\Command\CronPresentCommand</a></td><td class="text-right">42</td></tr>
 
        </tbody>
       </table>
@@ -113,11 +116,13 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="AppExtension.php.html#17"><abbr title="App\Twig\AppExtension::getFilters">getFilters</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="AppExtension.php.html#30"><abbr title="App\Twig\AppExtension::getFunctions">getFunctions</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="AppRuntime.php.html#89"><abbr title="App\Twig\AppRuntime::dayReservations">dayReservations</abbr></a></td><td class="text-right">66%</td></tr>
-       <tr><td><a href="AppRuntime.php.html#140"><abbr title="App\Twig\AppRuntime::isEnabled">isEnabled</abbr></a></td><td class="text-right">66%</td></tr>
-       <tr><td><a href="AppRuntime.php.html#41"><abbr title="App\Twig\AppRuntime::statesSwitcher">statesSwitcher</abbr></a></td><td class="text-right">81%</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#28"><abbr title="App\Command\CronDeleteCommand::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#37"><abbr title="App\Command\CronDeleteCommand::configure">configure</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#51"><abbr title="App\Command\CronDeleteCommand::execute">execute</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#66"><abbr title="App\Command\CronDeleteCommand::deleteReservations">deleteReservations</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#26"><abbr title="App\Command\CronPresentCommand::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#34"><abbr title="App\Command\CronPresentCommand::configure">configure</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#51"><abbr title="App\Command\CronPresentCommand::execute">execute</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -134,9 +139,11 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="AppRuntime.php.html#41"><abbr title="App\Twig\AppRuntime::statesSwitcher">statesSwitcher</abbr></a></td><td class="text-right">6</td></tr>
-       <tr><td><a href="AppRuntime.php.html#89"><abbr title="App\Twig\AppRuntime::dayReservations">dayReservations</abbr></a></td><td class="text-right">2</td></tr>
-       <tr><td><a href="AppRuntime.php.html#140"><abbr title="App\Twig\AppRuntime::isEnabled">isEnabled</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#51"><abbr title="App\Command\CronDeleteCommand::execute">execute</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#51"><abbr title="App\Command\CronPresentCommand::execute">execute</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#28"><abbr title="App\Command\CronDeleteCommand::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="CronDeleteCommand.php.html#66"><abbr title="App\Command\CronDeleteCommand::deleteReservations">deleteReservations</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="CronPresentCommand.php.html#26"><abbr title="App\Command\CronPresentCommand::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
 
        </tbody>
       </table>
@@ -167,7 +174,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,0,0,0,1,0], "Class Coverage"))
+      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -185,7 +192,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([2,0,0,0,0,0,0,2,0,1,0,8], "Method Coverage"))
+      .datum(getCoverageDistributionData([7,0,0,0,0,0,0,0,0,0,0,0], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -235,7 +242,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[0,2,"<a href=\"AppExtension.php.html#15\">App\\Twig\\AppExtension<\/a>"],[90.47619047619048,22,"<a href=\"AppRuntime.php.html#16\">App\\Twig\\AppRuntime<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[0,8,"<a href=\"CronDeleteCommand.php.html#16\">App\\Command\\CronDeleteCommand<\/a>"],[0,6,"<a href=\"CronPresentCommand.php.html#18\">App\\Command\\CronPresentCommand<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -259,7 +266,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[0,1,"<a href=\"AppExtension.php.html#17\">App\\Twig\\AppExtension::getFilters<\/a>"],[0,1,"<a href=\"AppExtension.php.html#30\">App\\Twig\\AppExtension::getFunctions<\/a>"],[100,1,"<a href=\"AppRuntime.php.html#30\">App\\Twig\\AppRuntime::__construct<\/a>"],[81.81818181818183,6,"<a href=\"AppRuntime.php.html#41\">App\\Twig\\AppRuntime::statesSwitcher<\/a>"],[100,1,"<a href=\"AppRuntime.php.html#67\">App\\Twig\\AppRuntime::cloneVar<\/a>"],[100,1,"<a href=\"AppRuntime.php.html#78\">App\\Twig\\AppRuntime::dayNextValue<\/a>"],[66.66666666666666,2,"<a href=\"AppRuntime.php.html#89\">App\\Twig\\AppRuntime::dayReservations<\/a>"],[100,1,"<a href=\"AppRuntime.php.html#104\">App\\Twig\\AppRuntime::dayInTheMonth<\/a>"],[100,3,"<a href=\"AppRuntime.php.html#115\">App\\Twig\\AppRuntime::isRoleCanDoBooking<\/a>"],[100,1,"<a href=\"AppRuntime.php.html#131\">App\\Twig\\AppRuntime::getRoomName<\/a>"],[66.66666666666666,2,"<a href=\"AppRuntime.php.html#140\">App\\Twig\\AppRuntime::isEnabled<\/a>"],[100,2,"<a href=\"AppRuntime.php.html#152\">App\\Twig\\AppRuntime::isEqualOrGreaterThanToday<\/a>"],[100,2,"<a href=\"AppRuntime.php.html#161\">App\\Twig\\AppRuntime::isEqualToday<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[0,2,"<a href=\"CronDeleteCommand.php.html#28\">App\\Command\\CronDeleteCommand::__construct<\/a>"],[0,1,"<a href=\"CronDeleteCommand.php.html#37\">App\\Command\\CronDeleteCommand::configure<\/a>"],[0,3,"<a href=\"CronDeleteCommand.php.html#51\">App\\Command\\CronDeleteCommand::execute<\/a>"],[0,2,"<a href=\"CronDeleteCommand.php.html#66\">App\\Command\\CronDeleteCommand::deleteReservations<\/a>"],[0,2,"<a href=\"CronPresentCommand.php.html#26\">App\\Command\\CronPresentCommand::__construct<\/a>"],[0,1,"<a href=\"CronPresentCommand.php.html#34\">App\\Command\\CronPresentCommand::configure<\/a>"],[0,3,"<a href=\"CronPresentCommand.php.html#51\">App\\Command\\CronPresentCommand::execute<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
