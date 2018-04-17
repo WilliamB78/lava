@@ -82,20 +82,12 @@ class ReservationControllerTest extends WebTestCase
         $this->logIn('User');
         $crawler = $this->client->request('GET', '/reservation/1/new/2018-04-05');
         $form = $crawler->filter('form')->form();
+        // date
+        $form['reservation[date]'] = "2018-04-18";
         // start
-        $form['reservation[start]'] = "2018-04-18 08:00";
-//        $form['reservation[start][date][month]'] = '4';
-//        $form['reservation[start][date][day]'] = '5';
-//        $form['reservation[start][date][year]'] = '2018';
-//        $form['reservation[start][time][hour]'] = '11';
-//        $form['reservation[start][time][minute]'] = '0';
+        $form['reservation[start]'] = "08:00";
         // end
-        $form['reservation[end]'] = "2018-04-19 08:00";
-//        $form['reservation[end][date][month]'] = '4';
-//        $form['reservation[end][date][day]'] = '5';
-//        $form['reservation[end][date][year]'] = '2018';
-//        $form['reservation[end][time][hour]'] = '12';
-//        $form['reservation[end][time][minute]'] = '0';
+        $form['reservation[end]'] = "17:00";
 
         $this->client->submit($form);
         $this->client->followRedirect();
