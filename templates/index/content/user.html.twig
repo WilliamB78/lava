@@ -7,6 +7,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Start</th>
                         <th scope="col">End</th>
                         <th scope="col">Status</th>
@@ -19,7 +20,8 @@
                         <tr>
                             <th scope="row">{{ reservation.id }}</th>
                             <td>{{ reservation.start | date('Y-m-d') }}</td>
-                            <td>{{ reservation.end | date('Y-m-d') }}</td>
+                            <td>{{ reservation.start | date('H:i') }}</td>
+                            <td>{{ reservation.end | date('H:i') }}</td>
                             <td>{{ reservation.state }}</td>
                             <td>{{ reservation.room.id | room_name }}</td>
                             <td>
@@ -47,6 +49,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Start</th>
                         <th scope="col">End</th>
                         <th scope="col">Status</th>
@@ -59,7 +62,8 @@
                         <tr>
                             <th scope="row">{{ reservation.id }}</th>
                             <td>{{ reservation.start | date('Y-m-d') }}</td>
-                            <td>{{ reservation.end | date('Y-m-d') }}</td>
+                            <td>{{ reservation.start | date('H:i') }}</td>
+                            <td>{{ reservation.end | date('H:i') }}</td>
                             <td>{{ reservation.state }}</td>
                             <td>{{ reservation.room.id | room_name }}</td>
                             <td>

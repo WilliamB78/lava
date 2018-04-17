@@ -33,6 +33,11 @@ class Reservation
     /**
      * @ORM\Column(type="datetime")
      */
+    private $date;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
     private $start;
 
     /**
@@ -51,6 +56,22 @@ class Reservation
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date): void
+    {
+        $this->date = $date;
     }
 
     /**
@@ -142,14 +163,14 @@ class Reservation
     public function validate(ExecutionContextInterface $context, $payload)
     {
         $currentDay = new \DateTime('now');
-        $startDay = new \DateTime($this->getStart());
+        $startDay = new \DateTime($this->getDate());
         $endDay = new \DateTime($this->getEnd());
 
-        if ($endDay->format("Y-m-d") < $startDay->format("Y-m-d")) {
-            $context->buildViolation('Vous ne pouvez pas entrer une date de fin supérieur à la date de début de réservation')
-               ->atPath('end')
-               ->addViolation();
-        }
+//        if ($endDay->format("Y-m-d") < $startDay->format("Y-m-d")) {
+//            $context->buildViolation('Vous ne pouvez pas entrer une date de fin supérieur à la date de début de réservation')
+//               ->atPath('end')
+//               ->addViolation();
+//        }
 
         if ($startDay->format("Y-m-d") < $currentDay->format("Y-m-d")){
             dump($this->getStart());

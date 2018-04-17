@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,6 +65,9 @@ class ReservationController extends Controller
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
+        $form->add('date', HiddenType::class, array(
+            'data' => $date,
+        ));
         $form->handleRequest($request);
 
 
@@ -71,10 +75,13 @@ class ReservationController extends Controller
         $workflow = $workflows->get($reservation);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $startFormated = new \DateTime($reservation->getStart());
-            $endFormated = new \DateTime($reservation->getEnd());
+            $dateFormated = new \DateTime($reservation->getDate());
+            $startFormated = new \DateTime($reservation->getDate() . $reservation->getStart());
+            $endFormated = new \DateTime($reservation->getDate(). $reservation->getEnd());
 
+            //dump($reservation);exit;
 
+            $reservation->setDate($dateFormated);
             $reservation->setRoom($room);
             $reservation->setUser($this->getUser());
             $reservation->setState('created');
@@ -89,6 +96,7 @@ class ReservationController extends Controller
         }
 
         return $this->render('reservation/new.html.twig', [
+            'date' => $date,
             'reservation' => $reservation,
             'form' => $form->createView(),
         ]);

@@ -13,11 +13,11 @@
                     </i>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title">Réservation du {{ reservation.start | date('d/m/Y') }}</h4>
+                    <h4 class="card-title">Réservation du {{ reservation.date | date('d/m/Y') }}</h4>
                     <p class="card-text">
                         Demmandeur: <b>{{ reservation.user.firstName  }} {{ reservation.user.lastName }}</b><br>
-                        Date: <b>{{ reservation.start | date('d/m/Y') }}</b><br>
-                        Créneau: <b>{{ reservation.start | date('H:m') }} - {{ reservation.end | date('H:m') }}</b><br>
+                        Date: <b>{{ reservation.date | date('d/m/Y') }}</b><br>
+                        Créneau: <b>{{ reservation.start | date('H:i') }} - {{ reservation.end | date('H:i') }}</b><br>
                     </p>
                     <p>
                         <a href="{{ url('room_calendar_show', {"id": reservation.room.id}) }}" class="btn btn-primary">Retour</a>
