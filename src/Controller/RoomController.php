@@ -28,6 +28,7 @@ class RoomController extends Controller
      *
      * @return Response
      */
+    //
     public function index(RoomRepository $roomRepository): Response
     {
         $rooms = $roomRepository->findTotalRoomOpen();
@@ -41,7 +42,7 @@ class RoomController extends Controller
      * Liste des salles pour la secretaire et l'administrateur.
      *
      * @Route("/hors_service", name="room_closed", methods="GET")
-     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     * @Security("has_role('ROLE_ADMIN') or is_granted('ROLE_SECRETARY')")
      *
      * @param RoomRepository $roomRepository
      *
@@ -62,7 +63,6 @@ class RoomController extends Controller
      *
      * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
-     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @return Response
      */
@@ -136,17 +136,24 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
-     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_ADMIN" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
 
      */
     public function delete(Request $request, Room $room): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($room);
-            $em->flush();
-        }
 
-        return $this->redirectToRoute('room_index');
+        if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
+            if(count($room->getReservations()) == 0){
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($room);
+                $em->flush();
+                return $this->redirectToRoute('room_closed');
+
+            }else{
+                $this->addFlash('error', 'Vous ne pouvez pas supprimer une salle qui a des réservations');
+                return $this->redirectToRoute('room_closed');
+            }
+
+        }
     }
 }
