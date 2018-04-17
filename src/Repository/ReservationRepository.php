@@ -84,8 +84,8 @@ class ReservationRepository extends ServiceEntityRepository
     public function findBetween($start, $end, $roomId)
     {
         return $this->createQueryBuilder('r')
-            ->where('r.start > :start')
-            ->andWhere('r.end < :end')
+            ->where('r.date > :start')
+            ->andWhere('r.date < :end')
             ->andWhere('r.room = :roomId')
             ->andWhere('r.state LIKE :state')
             ->setParameter('start', $start->format('Y-m-d 00:00:00'))

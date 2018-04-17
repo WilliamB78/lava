@@ -49,11 +49,11 @@
                             {% endif %}
                             {% for key, reservation in day_reservations(monthReservationsByDay, dateDay|date('Y-m-d')) %}
                                 {# Showing reservation for this day #}
-                                <div calendar__reservation>
+                                <div class="calendar__reservation">
                                     <a href="{{ url('reservation_show', {
                                         'id': reservation.id
                                     }) }}">
-                                        From {{ reservation.start|date('H:i')  }} To {{ reservation.end|date('H:i')  }}
+                                        {{ reservation.start|date('H:i')  }} à {{ reservation.end|date('H:i')  }}
                                     </a>
                                 </div>
                             {% endfor %}
