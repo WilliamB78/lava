@@ -23,7 +23,7 @@ trait UserLogger
     private $client;
     private $doctrine;
 
-    private function logIn($role)
+    private function logIn($role = null, $id = null)
     {
         AbstractDbSetUp::prime();
         /** @var Session $session */
@@ -36,6 +36,9 @@ trait UserLogger
         }
         if ($role == 'Admin') {
             $user = $this->getAdmin();
+        }
+        if ($role === null) {
+            $user = $this->getSpecifique($id);
         }
         $firewallContext = 'main';
 
@@ -69,6 +72,13 @@ trait UserLogger
         //dump($doctrine->getRepository(User::class)->findByFirstname('ADMIN'));
 
         return $doctrine->getRepository(User::class)->findOneBy(array('firstname' => 'ADMIN'));
+    }
+
+    private function getSpecifique($id): User
+    {
+        $doctrine = AbstractDbSetUp::getEntityManager();
+
+        return $doctrine->getRepository(User::class)->find($id);
     }
 
 }

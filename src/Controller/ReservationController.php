@@ -70,16 +70,12 @@ class ReservationController extends Controller
         ));
         $form->handleRequest($request);
 
-
-        //dump($startFormat);exit;
         $workflow = $workflows->get($reservation);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dateFormated = new \DateTime($reservation->getDate());
-            $startFormated = new \DateTime($reservation->getDate() . $reservation->getStart());
-            $endFormated = new \DateTime($reservation->getDate(). $reservation->getEnd());
-
-            //dump($reservation);exit;
+            $startFormated = new \DateTime($reservation->getStart());
+            $endFormated = new \DateTime($reservation->getEnd());
 
             $reservation->setDate($dateFormated);
             $reservation->setRoom($room);
@@ -133,10 +129,20 @@ class ReservationController extends Controller
 
 
         $form = $this->createForm(ReservationType::class, $reservation);
-
+        $form->add('date', HiddenType::class, array(
+            'data' => $reservation->getDate()->format('Y-m-d'),
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $dateFormated = new \DateTime($reservation->getDate());
+            $startFormated = new \DateTime($reservation->getStart());
+            $endFormated = new \DateTime($reservation->getEnd());
+
+            $reservation->setStart($startFormated);
+            $reservation->setEnd($endFormated);
+            $reservation->setDate($dateFormated);
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('reservation_edit', ['id' => $reservation->getId()]);

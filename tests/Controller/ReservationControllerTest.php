@@ -9,8 +9,10 @@
 namespace App\Tests\Controller;
 
 
+use App\Entity\Reservation;
 use App\Tests\Traits\UserLogger;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class ReservationControllerTest extends WebTestCase
@@ -104,21 +106,23 @@ class ReservationControllerTest extends WebTestCase
     }
 
 // TODO refaire ce test le resultat est un exeption?? chercher la cause
-    //    public function testReservationEdit()
-//    {
-//        $this->logIn('User');
-//        $crawler = $this->client->request('GET', '/reservation/5/edit');
-//
-//        $titre = $crawler->filter('h1');
-//        $this->assertEquals('Edit Reservation', $titre->text());
-//
-//        $form = $crawler->filter('form');
-//        $this->assertEquals(2,$form->count());
-//        $form = $form->first()->form();
-//        $this->client->submit($form);
-//        $this->client->followRedirect();
-//        $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
-//    }
+    public function testReservationEdit()
+    {
+        $user = $this->repository->getRepository(Reservation::class)->find(5)->getUser();
+        $this->logIn(null,$user->getId());
+
+        $crawler = $this->client->request('GET', '/reservation/5/edit');
+
+        $titre = $crawler->filter('h1');
+        $this->assertEquals('Edit Reservation', $titre->text());
+
+        $form = $crawler->filter('form');
+        $this->assertEquals(1,$form->count());
+
+        $form = $form->first()->form();
+        $this->client->submit($form);
+        $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
+    }
 
 // TODO refaire ce test
 //    public function testDeleteReservation()
@@ -135,6 +139,7 @@ class ReservationControllerTest extends WebTestCase
 
     public function setUp()
     {
+        /** @var Client client */
         $this->client = static::createClient();
         //$this->client->enableProfiler();
         $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
