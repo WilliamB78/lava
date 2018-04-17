@@ -4,4 +4,4 @@ swiftmailer:
     #delivery_addresses: ['me@example.com']
     disable_delivery: true
 web_profiler:
-    intercept_redirects: true
+    intercept_redirects: false

@@ -1,6 +1,7 @@
 <div class="container">
     <div class="d-flex justify-content-center">
         <div class="align-self-center">
+            {% if last5User is not empty  %}
             <div class="col">
                 <h3>Derniers Utilisateurs</h3>
                 <table class="table">
@@ -39,7 +40,8 @@
                     </tbody>
                 </table>
             </div>
-            {% if last5BlockedUser|length is not empty  %}
+            {% endif %}
+            {% if last5BlockedUser is not empty  %}
                 <div class="col">
                 <h3>Derniers Utilisateurs Bloqués</h3>
 
