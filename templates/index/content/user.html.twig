@@ -1,7 +1,7 @@
 <div class="container">
     <div class="d-flex justify-content-center">
         <div class="align-self-center">
-            {% if userReservation | length is empty  %}
+            {% if userReservation | length is not empty  %}
             <div class="col">
                 <h3>Derniers Reservations</h3>
                 <table class="table">
@@ -46,7 +46,7 @@
             </div>
             {% endif %}
 
-            {% if userReservationAccepted | length is empty  %}
+            {% if userReservationAccepted | length is not empty  %}
             <div class="col">
                 <h3>Réservations Confirmées</h3>
                 <table class="table">
