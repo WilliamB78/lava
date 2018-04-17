@@ -32,7 +32,7 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 10; ++$i) {
             $reservation = new Reservation();
             $reservation->setState('created');
-            $reservation->setDate($faker->dateTime('now'));
+            $reservation->setDate($faker->dateTimeThisMonth('now'));
             $start = new \DateTime(date('H:i', gmdate('U')));
             $end = new \DateTime(date('H:i', mktime(17,30)));
             $reservation->setStart($start);
