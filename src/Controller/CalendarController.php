@@ -34,6 +34,7 @@ class CalendarController extends Controller
      */
     public function show(Room $room, Calendar $calendar, ReservationRepository $reservationRepository): Response
     {
+        dump($this->getUser());
         $handler = new CalendarHandler($calendar);
 
         // Month and year in string
