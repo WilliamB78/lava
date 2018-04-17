@@ -35,3 +35,7 @@ yarn-error.log
 ###> symfony fixer cache ###
 .php_cs.cache
 ###> symfony fixer cache ###
+
+###> Code coverage ###
+/public/cov/
+###> Code coverage ###
