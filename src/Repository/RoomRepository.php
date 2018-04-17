@@ -71,7 +71,7 @@ class RoomRepository extends ServiceEntityRepository
     }
 
     /**
-     * Retourne un array de salles ouvertes.
+     * Retourne un array de salles fermés.
      *
      * @return int|mixed
      */

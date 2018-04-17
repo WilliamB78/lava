@@ -94,15 +94,26 @@ class IndexController extends Controller
      */
     public function IndexContentSecretary()
     {
-        $reservationRepository = $this->getDoctrine()
+        $demandeReservation = $this->getDoctrine()
             ->getManager()
-            ->getRepository(Reservation::class);
+            ->getRepository(Reservation::class)
+            ->findInProgress();
 
-        $roomRepository = $this->getDoctrine()
+        $openedRooms = $this->getDoctrine()
             ->getManager()
-            ->getRepository(Room::class);
+            ->getRepository(Room::class)
+            ->findTotalRoomOpen();
 
-        return $this->render('index/content/secretary.html.twig');
+        $closedRooms = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Room::class)
+            ->findTotalRoomClosed();
+
+        return $this->render('index/content/secretary.html.twig', [
+            'demandeReservation' => $demandeReservation,
+            'openedRooms' => $openedRooms,
+            'closedRooms' => $closedRooms
+        ]);
     }
 
     /**
