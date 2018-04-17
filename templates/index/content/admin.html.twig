@@ -39,7 +39,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col">
+            {% if last5BlockedUser|length is empty  %}
+                <div class="col">
                 <h3>Derniers Utilisateurs Bloqués</h3>
 
                 <table class="table">
@@ -78,6 +79,7 @@
                     </tbody>
                 </table>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
