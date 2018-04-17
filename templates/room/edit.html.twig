@@ -3,25 +3,26 @@
 {% block title %}Edition {{ room.name }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Room</h1>
+    <div class="flex">
+        <div class="col-4 offset-4">
+            <h2>{{ room.name }}</h2>
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            {{ form_start(form) }}
+                {{ form_errors(form) }}
 
-    {{ form_start(form) }}
-        {{ form_errors(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.nbPlaces) }}
+                {{ form_row(form.state) }}
 
-        {{ form_row(form.name) }}
-        {{ form_row(form.nbPlaces) }}
-        {{ form_row(form.state) }}
+                <div id="commentState">
+                    {{ form_row(form.commentState) }}
+                </div>
 
-        <div id="commentState">
-            {{ form_row(form.commentState) }}
+                <button class="btn btn-primary">{{ button_label|default('Mettre à jour') }}</button>
+            {{ form_end(form) }}
+            {{ include('room/_delete_form.html.twig') }}
         </div>
-
-        <button class="btn">{{ button_label|default('Update') }}</button>
-    {{ form_end(form) }}
-
-    <a href="{{ path('room_index') }}">back to list</a>
-
-    {{ include('room/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
