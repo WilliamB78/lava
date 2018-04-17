@@ -52,6 +52,7 @@ class ReservationRepository extends ServiceEntityRepository
     {
         try {
             return $this->byState($state)
+                ->orderBy('r.start', 'DESC')
                 ->getQuery()
                 ->getSingleScalarResult();
         } catch (NonUniqueResultException $e) {
@@ -128,6 +129,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('accepted', '%accepted%')
             ->andWhere('r.user = :user')
             ->setParameter('user', $user)
+            ->orderBy('r.start', 'DESC')
             ->getQuery()
             ->getResult();
     }
