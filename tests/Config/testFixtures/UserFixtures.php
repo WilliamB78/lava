@@ -23,6 +23,8 @@ class UserFixtures extends Fixture
         $user1->setEmail('secretaire@lava.com');
         $user1->setPassword('test');
         $user1->addRole('ROLE_SECRETARY');
+        $user1->addRole('ROLE_CAN_EDIT_ROOM');
+        $user1->addRole('ROLE_CAN_SEE_CALENDAR');
         $manager->persist($user1);
 
         // User 2
@@ -33,6 +35,7 @@ class UserFixtures extends Fixture
         $user2->setPassword('test');
         $user2->addRole('ROLE_UTILISATEUR');
         $user2->addRole('ROLE_CAN_DO_BOOKING');
+        $user2->addRole('ROLE_CAN_SEE_CALENDAR');
         $manager->persist($user2);
 
         // User 4
@@ -42,6 +45,8 @@ class UserFixtures extends Fixture
         $user3->setEmail('admin@lava.com');
         $user3->setPassword('test');
         $user3->addRole('ROLE_ADMIN');
+        $user3->addRole('ROLE_CAN_ADD_ROOM');
+        $user3->addRole('ROLE_CAN_REMOVE_ROOM');
         $manager->persist($user3);
 
         $manager->flush();

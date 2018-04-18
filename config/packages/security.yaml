@@ -43,8 +43,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     role_hierarchy:
         ROLE_UTILISATEUR: [ROLE_USER, ROLE_CAN_DO_BOOKING, ROLE_CAN_SEE_CALENDAR]
-        ROLE_SECRETARY:   [ROLE_USER, ROLE_CAN_SEE_CALENDAR]
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_SECRETARY:   [ROLE_USER, ROLE_CAN_SEE_CALENDAR, ROLE_CAN_EDIT_ROOM]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_CAN_ADD_ROOM, ROLE_CAN_REMOVE_ROOM]
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

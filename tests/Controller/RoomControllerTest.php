@@ -89,7 +89,7 @@ class RoomControllerTest extends WebTestCase
      */
     public function testNewRoomLoaded()
     {
-        $this->logIn('Secretaire');
+        $this->logIn('Admin');
         $crawler = $this->client->request('GET', '/room/new');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
@@ -101,7 +101,7 @@ class RoomControllerTest extends WebTestCase
      */
     public function testNewRoomFailed()
     {
-        $this->logIn('Secretaire');
+        $this->logIn('Admin');
         $crawler = $this->client->request('GET', '/room/new');
 
         $form = $crawler->filter('form')->form();
@@ -122,7 +122,7 @@ class RoomControllerTest extends WebTestCase
      */
     public function testNewRoomSuccess()
     {
-        $this->logIn('Secretaire');
+        $this->logIn('Admin');
         $crawler = $this->client->request('GET', '/room/new');
 
         $form = $crawler->filter('form')->form();
@@ -163,7 +163,7 @@ class RoomControllerTest extends WebTestCase
      */
     public function testEditRoomAsUser()
     {
-        $this->logIn('Admin');
+        $this->logIn('User');
         $this->client->request('GET', '/room/1/edit');
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
