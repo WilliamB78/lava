@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  * Created by PhpStorm.
  * User: hello
  * Date: 10/04/2018
- * Time: 15:16
+ * Time: 15:16.
  */
 class CalendarHandlerTest extends TestCase
 {
@@ -36,7 +36,6 @@ class CalendarHandlerTest extends TestCase
         $this->calendar = new Calendar($this->month, $this->year);
         $this->calendarHandler = new CalendarHandler($this->calendar);
         $this->em = AbstractDbSetUp::getEntityManager();
-
     }
 
     public function testCalendarHandlerCanBeCreated()
@@ -45,7 +44,6 @@ class CalendarHandlerTest extends TestCase
             CalendarHandler::class,
             new CalendarHandler($this->calendar)
         );
-
     }
 
     public function testGetMonthToSTring()

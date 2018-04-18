@@ -113,10 +113,10 @@ class UserController extends Controller
 
         if (!$user->getisBlocked()) {
             $user->setIsBlocked(1);
-            $this->addFlash('success', 'Le compte de l\'utilisateur : '. $user->getId(). " - " .$user->getLastname() .' à été bloqué.');
+            $this->addFlash('success', 'Le compte de l\'utilisateur : '.$user->getId().' - '.$user->getLastname().' à été bloqué.');
         } else {
             $user->setIsBlocked(0);
-            $this->addFlash('success', 'Le compte de l\'utilisateur : '. $user->getId(). " - " .$user->getLastname() .' à été activé.');
+            $this->addFlash('success', 'Le compte de l\'utilisateur : '.$user->getId().' - '.$user->getLastname().' à été activé.');
         }
         $em->persist($user);
         //dump($user);exit;

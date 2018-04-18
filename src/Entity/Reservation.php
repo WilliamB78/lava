@@ -172,7 +172,7 @@ class Reservation
 //               ->addViolation();
 //        }
 
-        if ($startDay->format("Y-m-d") < $currentDay->format("Y-m-d")){
+        if ($startDay->format('Y-m-d') < $currentDay->format('Y-m-d')) {
             dump($this->getStart());
             $context->buildViolation('Vous ne pouvez pas entrer une date de debut de réservation, antérieur à la date du jour')
                 ->atPath('start')

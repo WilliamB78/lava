@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 09/04/2018
- * Time: 14:18
+ * Time: 14:18.
  */
 
 namespace App\Tests\Controller;
@@ -13,37 +13,33 @@ use App\Tests\Traits\UserLogger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\StringInput;
 
 class RoomControllerTest extends WebTestCase
 {
     use UserLogger;
 
-    /** @var Client $client  */
+    /** @var Client $client */
     private $client = null;
     /** @var EntityManager $repository */
     private $repository;
 
     /**
-     * Test de la liste des salles disponible
+     * Test de la liste des salles disponible.
      */
     public function testIndex()
     {
         $this->logIn('Secretaire');
 
         $crawler = $this->client->request('GET', '/room/');
-        $title = $crawler->filter('title:contains("Liste des salles")')->count();
 
         $reservations = $this->repository->getRepository(Room::class)->findAll();
 
         $this->assertCount(10, $reservations);
         $this->assertInternalType('array', $reservations);
-        $this->assertEquals(1, $title);
     }
 
     /**
-     * Test bouton calendrier
+     * Test bouton calendrier.
      */
     public function testIndexCalendar()
     {
@@ -51,15 +47,14 @@ class RoomControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/room/');
         $calendar = $crawler->filter('.btn-info');
-        $this->assertEquals("Calendrier", $calendar->text());
+        $this->assertEquals('Calendrier', $calendar->text());
 
         $this->client->click($calendar->link());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-
     }
 
     /**
-     * Test bouton indisponible
+     * Test bouton indisponible.
      */
     public function testIndexBtnIndispo()
     {
@@ -68,14 +63,14 @@ class RoomControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/room/');
         $indispo = $crawler->filter('.btn-warning');
 
-        $this->assertEquals("Rendre indispo.", $indispo->text());
+        $this->assertEquals('Rendre indispo.', $indispo->text());
 
         $this->client->click($indispo->link());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
-     * Test bouton disponible dans les salle hors service
+     * Test bouton disponible dans les salle hors service.
      */
     public function testIndexBtnDispo()
     {
@@ -83,14 +78,14 @@ class RoomControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/room/hors_service');
         $dispo = $crawler->filter('.btn-warning');
-        $this->assertEquals("Rendre dispo.", $dispo->text());
+        $this->assertEquals('Rendre dispo.', $dispo->text());
 
         $this->client->click($dispo->link());
-        $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     /**
-     * Test le bon chargement du formulaire d'ajout d'une room
+     * Test le bon chargement du formulaire d'ajout d'une room.
      */
     public function testNewRoomLoaded()
     {
@@ -102,7 +97,7 @@ class RoomControllerTest extends WebTestCase
     }
 
     /**
-     * Test la validation du formulaire invalide
+     * Test la validation du formulaire invalide.
      */
     public function testNewRoomFailed()
     {
@@ -115,15 +110,15 @@ class RoomControllerTest extends WebTestCase
 
         $crawler = $this->client->submit($form);
 
-        $errorName = explode(' ',$crawler->filter('#room_name')->attr('class'));
-        $errorNbPlace = explode(' ',$crawler->filter('#room_nbPlaces')->attr('class'));
+        $errorName = explode(' ', $crawler->filter('#room_name')->attr('class'));
+        $errorNbPlace = explode(' ', $crawler->filter('#room_nbPlaces')->attr('class'));
 
         $this->assertEquals(true, in_array('is-invalid', $errorName));
         $this->assertEquals(true, in_array('is-invalid', $errorNbPlace));
     }
 
     /**
-     * Test la validation d'un formulaire valide
+     * Test la validation d'un formulaire valide.
      */
     public function testNewRoomSuccess()
     {
@@ -140,7 +135,7 @@ class RoomControllerTest extends WebTestCase
     }
 
     /**
-     * Test l'acces a une room pour un user
+     * Test l'acces a une room pour un user.
      */
     public function testShowRoomAsUser()
     {
@@ -150,7 +145,7 @@ class RoomControllerTest extends WebTestCase
     }
 
     /**
-     * Test l'acces et la bonne vue d'une room pour une secretaire
+     * Test l'acces et la bonne vue d'une room pour une secretaire.
      */
     public function testShowRoomAsSecretary()
     {
@@ -164,17 +159,17 @@ class RoomControllerTest extends WebTestCase
     }
 
     /**
-     * Test la redirection pour un user qui souhaite modifier une salle
+     * Test la redirection pour un user qui souhaite modifier une salle.
      */
     public function testEditRoomAsUser()
     {
-        $this->logIn('User');
+        $this->logIn('Admin');
         $this->client->request('GET', '/room/1/edit');
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
 
     /**
-     * Test l'acces et la bonne vue du formulaire d'edition pour une secretaire
+     * Test l'acces et la bonne vue du formulaire d'edition pour une secretaire.
      */
     public function testEditRoomAsSecretary()
     {
@@ -187,11 +182,11 @@ class RoomControllerTest extends WebTestCase
         $this->assertEquals('Edition '.$room->getName(), $title);
         // On vérifie que le formulaire est bien présent
         $form = $crawler->filter('form');
-        $this->assertEquals(2,$form->count());
+        $this->assertEquals(2, $form->count());
         $form = $form->first()->form();
         $this->client->submit($form);
         $this->client->followRedirect();
-        $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
     public function testDeleteRoom()

@@ -3,21 +3,19 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 11/04/2018
- * Time: 11:07
+ * Time: 11:07.
  */
 
 namespace App\Tests\Controller;
 
 use App\Tests\Traits\UserLogger;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Client;
-use Symfony\Component\Console\Input\StringInput;
 
 class ReservationWorkflowControllerTest extends WebTestCase
 {
     use UserLogger;
-    /** @var Client $client  */
+    /** @var Client $client */
     private $client = null;
 
     public function testReservationSecretaryApprove()

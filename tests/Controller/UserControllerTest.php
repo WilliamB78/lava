@@ -3,14 +3,11 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 11/04/2018
- * Time: 14:11
+ * Time: 14:11.
  */
 
 namespace App\Tests\Controller;
 
-
-
-use App\Entity\Room;
 use App\Entity\User;
 use App\Tests\Config\AbstractDbSetUp;
 use App\Tests\Traits\UserLogger;
@@ -20,18 +17,20 @@ class UserControllerTest extends WebTestCase
 {
     use UserLogger;
 
-    /** @var Client $client  */
+    /** @var Client $client */
     private $client;
 
     /** @var $repository */
     private $repository;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->client = static::createClient();
         $this->repository = AbstractDbSetUp::getEntityManager();
     }
 
-    public function testIndexShouldHaveH1(){
+    public function testIndexShouldHaveH1()
+    {
         $crawler = $this->goToIndex();
 
         $heading = $crawler->filter('h1')->eq(0)->text();
@@ -39,16 +38,17 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals('Liste des utilisateurs', $heading);
     }
 
-    public function testIndexShouldHave3User(){
+    public function testIndexShouldHave3User()
+    {
         $crawler = $this->goToIndex();
 
         $users = $this->getUsers();
 
         $this->assertCount(3, $users);
-
     }
 
-    public function testIndexShouldHaveRoomArray(){
+    public function testIndexShouldHaveRoomArray()
+    {
         $crawler = $this->goToIndex();
 
         $rooms = $this->getUsers();
@@ -56,8 +56,8 @@ class UserControllerTest extends WebTestCase
         $this->assertInternalType('array', $rooms);
     }
 
-
-    public function testNewUser(){
+    public function testNewUser()
+    {
         $this->logIn('Admin');
         $crawler = $this->client->request('GET', '/user/new');
         // enables the profiler for the next request (it does nothing if the profiler is not available)
@@ -87,7 +87,8 @@ class UserControllerTest extends WebTestCase
         $this->assertSame('symfonyfan@sf.com', key($message->getTo()));
     }
 
-    public function testShowUserDetail(){
+    public function testShowUserDetail()
+    {
         $this->logIn('Admin');
         $user = $this->getUsers();
         $crawler = $this->client->request('GET', '/user/'.$user[0]->getId());
@@ -95,12 +96,15 @@ class UserControllerTest extends WebTestCase
         $this->assertInstanceOf('App\Entity\User', $user[0]);
     }
 
-    public function goToIndex(){
+    public function goToIndex()
+    {
         $this->logIn('Admin');
+
         return $crawler = $this->client->request('GET', '/user/');
     }
 
-    public function getUsers(){
+    public function getUsers()
+    {
         return $this->repository->getRepository(User::class)->findAll();
     }
 }

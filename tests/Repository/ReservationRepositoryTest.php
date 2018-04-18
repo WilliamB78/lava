@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 10/04/2018
- * Time: 11:03
+ * Time: 11:03.
  */
 
 namespace App\Tests\Repository;
-
 
 use App\Entity\Reservation;
 use App\Entity\User;
@@ -17,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 class ReservationRepositoryTest extends TestCase
 {
     private $em;
-
 
     public function setUp()
     {

@@ -54,8 +54,7 @@ class CronPresentCommand extends Command
         $secretaires = $this->userRepository->findSecretaires();
 
         if ($reservations !== []) {
-            foreach ($secretaires as $secretaire)
-            {
+            foreach ($secretaires as $secretaire) {
                 $this->mailer->mailWarning($reservations, $secretaire);
             }
         }

@@ -3,14 +3,12 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 12/04/2018
- * Time: 11:45
+ * Time: 11:45.
  */
 
 namespace App\Tests\Controller;
 
-
 use App\Controller\Utils\Calendar\CalendarHandler;
-use App\Entity\Reservation;
 use App\Service\Calendar;
 use App\Tests\Config\AbstractDbSetUp;
 use App\Tests\Traits\UserLogger;

@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 10/04/2018
- * Time: 16:43
+ * Time: 16:43.
  */
 
 namespace App\tests\Service;
-
 
 use App\Service\Calendar;
 use App\Tests\Config\AbstractDbSetUp;
@@ -28,7 +27,6 @@ class CalendarTest extends TestCase
         AbstractDbSetUp::prime();
 
         $this->em = AbstractDbSetUp::getEntityManager();
-
     }
 
     /**
@@ -40,14 +38,14 @@ class CalendarTest extends TestCase
             Calendar::class,
             new Calendar($this->month, $this->year)
         );
-
     }
 
     /**
      * @throws \Exception
      */
-    public function testInThisMonth(){
-        $this->month =  date('n');
+    public function testInThisMonth()
+    {
+        $this->month = date('n');
         $this->year = date('Y');
         $this->calendar = new Calendar($this->month, $this->year);
 
@@ -59,21 +57,26 @@ class CalendarTest extends TestCase
     /**
      * @throws \Exception
      */
-    public function testGetWeeks(){
+    public function testGetWeeks()
+    {
         $this->calendar = new Calendar($this->month, $this->year);
         $this->assertInternalType('int', $this->calendar->getWeeks());
     }
+
     /**
      * @throws \Exception
      */
-    public function testGetMonth(){
+    public function testGetMonth()
+    {
         $this->calendar = new Calendar($this->month, $this->year);
         $this->assertInternalType('int', $this->calendar->getMonth());
     }
+
     /**
      * @throws \Exception
      */
-    public function testGetFirstDay(){
+    public function testGetFirstDay()
+    {
         $this->calendar = new Calendar($this->month, $this->year);
         $this->assertInstanceOf('Datetime', $this->calendar->getFirstDay());
     }
@@ -81,7 +84,8 @@ class CalendarTest extends TestCase
     /**
      * @throws \Exception
      */
-    public function testPreviousMonth(){
+    public function testPreviousMonth()
+    {
         $this->calendar = new Calendar($this->month + 1, $this->year + 1);
         $this->assertInstanceOf(
             Calendar::class,
@@ -92,7 +96,8 @@ class CalendarTest extends TestCase
     /**
      * @throws \Exception
      */
-    public function testNextMonth(){
+    public function testNextMonth()
+    {
         $this->calendar = new Calendar($this->month - 1, $this->year - 1);
         $this->assertInstanceOf(
             Calendar::class,
