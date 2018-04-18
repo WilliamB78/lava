@@ -33,8 +33,9 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
             $reservation = new Reservation();
             $reservation->setState('created');
             $reservation->setDate($faker->dateTimeThisMonth('now'));
-            $start = new \DateTime(date('H:i', gmdate('U')));
-            $end = new \DateTime(date('H:i', mktime(17, 30)));
+            $date = $reservation->getDate()->format('Y-m-d');
+            $start = new \DateTime($date . date('H:i', gmdate('U')));
+            $end = new \DateTime($date . date('H:i', mktime(17, 30)));
             $reservation->setStart($start);
             $reservation->setEnd($end);
             // Permet de selectionner aléatoirement une room et user
