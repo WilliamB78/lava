@@ -38,7 +38,7 @@ class ReservationRepositoryTest extends TestCase
     {
         $state = 'refused';
         $repository = $this->em->getRepository(Reservation::class);
-        $this->assertEquals(0, $repository->findByState($state));
+        $this->assertEquals([], $repository->findByState($state));
     }
 
     public function testByState()

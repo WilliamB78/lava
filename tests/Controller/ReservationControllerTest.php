@@ -104,10 +104,10 @@ class ReservationControllerTest extends WebTestCase
         $this->assertEquals(1, $card->count());
     }
 
-    // TODO refaire ce test le resultat est un exeption?? chercher la cause
+
     public function testReservationEdit()
     {
-        $user = $this->repository->getRepository(Reservation::class)->find(5)->getUser();
+        $user = $this->repository->getRepository(Reservation::class)->findOneBy(['user' => 1])->getUser();
         $this->logIn(null, $user->getId());
 
         $crawler = $this->client->request('GET', '/reservation/5/edit');

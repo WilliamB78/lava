@@ -50,7 +50,7 @@ class IndexController extends Controller
         $demReservation = $this
             ->getDoctrine()
             ->getRepository(Reservation::class)
-            ->findByState('created');
+            ->countByState('created');
 
         return $this->render('navbar/navbar-secretary.html.twig', [
             'countHS' => $countHS,
@@ -128,6 +128,8 @@ class IndexController extends Controller
 
         $userReservation = $reservationRepository->findInProgressUser($this->getUser());
         $userReservationAccepted = $reservationRepository->findByState('accepted');
+
+        dump($userReservationAccepted);
 
         return $this->render('index/content/user.html.twig', [
             'userReservation' => $userReservation,

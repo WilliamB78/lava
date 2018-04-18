@@ -45,7 +45,6 @@
                 </table>
             </div>
             {% endif %}
-
             {% if userReservationAccepted is not empty  %}
             <div class="col">
                 <h3>Réservations Confirmées</h3>
@@ -72,7 +71,7 @@
                             <td>{{ acceptedReservation.room.id | room_name }}</td>
                             <td>
                                 <a class="btn btn-info"
-                                   href="{{ url('user_show', {
+                                   href="{{ url('reservation_show', {
                                        'id': acceptedReservation.id
                                    }) }}">Voir</a>
                                 </a>

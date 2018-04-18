@@ -28,10 +28,8 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $roles = ['ROLE_SECRETARY', 'ROLE_ADMIN'];
 
-        // On ajoute 10 room avec les fixtures
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 4; ++$i) {
             //Création de la room avec faker
             $user = new User();
             $user->setFirstname($faker->firstName);
@@ -40,8 +38,24 @@ class UserFixtures extends Fixture
             $password = $this->encoder->encodePassword($user, 'test');
             $user->setPassword($password);
             $user->setIsBlocked(false);
-            $randRole = array_rand($roles, 1);
-            $user->addRole($roles[$randRole]);
+            $user->addRole('ROLE_ADMIN');
+            $user->addRole('ROLE_CAN_ADD_ROOM');
+            $user->addRole('ROLE_CAN_REMOVE_ROOM');
+            $manager->persist($user);
+        }
+
+        for ($i = 0; $i < 4; ++$i) {
+            //Création de la room avec faker
+            $user = new User();
+            $user->setFirstname($faker->firstName);
+            $user->setLastname($faker->lastName);
+            $user->setEmail($faker->email);
+            $password = $this->encoder->encodePassword($user, 'test');
+            $user->setPassword($password);
+            $user->setIsBlocked(false);
+            $user->addRole('ROLE_SECRETARY');
+            $user->addRole('ROLE_CAN_EDIT_ROOM');
+            $user->addRole('ROLE_CAN_SEE_CALENDAR');
             $manager->persist($user);
         }
         for ($i = 0; $i < 4; ++$i) {
@@ -53,9 +67,9 @@ class UserFixtures extends Fixture
             $password = $this->encoder->encodePassword($user, 'test');
             $user1->setPassword($password);
             $user1->setIsBlocked(false);
-            //$randRole = array_rand($roles, 1);
             $user1->addRole('ROLE_UTILISATEUR');
             $user1->addRole('ROLE_CAN_DO_BOOKING');
+            $user1->addRole('ROLE_CAN_SEE_CALENDAR');
             $manager->persist($user1);
         }
         $manager->flush();
