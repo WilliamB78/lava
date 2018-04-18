@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 09/04/18
- * Time: 18:56
+ * Time: 18:56.
  */
 
 namespace App\Tests\Repository;
-
 
 use App\Entity\Room;
 use App\Tests\Config\AbstractDbSetUp;
@@ -17,13 +16,11 @@ class RoomRepositoryTest extends TestCase
 {
     private $em;
 
-
     public function setUp()
     {
         AbstractDbSetUp::prime();
         $this->em = AbstractDbSetUp::getEntityManager();
     }
-
 
     /**
      * @throws \Exception

@@ -6,11 +6,9 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
-
     /**
      * @param ObjectManager $manager
      */
@@ -26,7 +24,6 @@ class UserFixtures extends Fixture
         $user1->setPassword('test');
         $user1->addRole('ROLE_SECRETARY');
         $manager->persist($user1);
-
 
         // User 2
         $user2 = new User();

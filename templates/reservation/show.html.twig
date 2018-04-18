@@ -21,7 +21,9 @@
                     </p>
                     <p>
                         <a href="{{ url('room_calendar_show', {"id": reservation.room.id}) }}" class="btn btn-primary">Retour</a>
-                        <a href="{{ path('reservation_edit', {'id': reservation.id}) }}" class="btn btn-warning">Modifier</a>
+                        {% if (reservation.state != "accepted" and reservation.state != "cancelled") %}
+                            <a href="{{ path('reservation_edit', {'id': reservation.id}) }}" class="btn btn-warning">Modifier</a>
+                        {% endif %}
                     </p>
                 </div>
             </div>

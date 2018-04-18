@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 12/04/2018
- * Time: 15:38
+ * Time: 15:38.
  */
 
 namespace App\Tests\Controller\Utils\User;
-
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -15,18 +14,15 @@ use App\Service\UserMail;
 use App\Tests\Config\AbstractDbSetUp;
 use App\Tests\Traits\UserLogger;
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\Forms;
 
 class NewUserHandlerTest extends WebTestCase
 {
     use UserLogger;
-    /** @var Client $client  */
+    /** @var Client $client */
     private $client;
     /** @var EntityManagerInterface $em */
     private $em;
@@ -48,7 +44,6 @@ class NewUserHandlerTest extends WebTestCase
         $this->em = AbstractDbSetUp::getEntityManager();
         $this->client = static::createClient();
     }
-
 
     public function testCreateForm()
     {

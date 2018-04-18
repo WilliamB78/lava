@@ -11,8 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Workflow\Registry;
 
 /**
- * Class ReservationWorkflowController
- * @package App\Controller
+ * Class ReservationWorkflowController.
  */
 class ReservationWorkflowController extends Controller
 {
@@ -20,6 +19,7 @@ class ReservationWorkflowController extends Controller
      * @Route("/reservations/secretary/approve/{state}/{id}", name="reservation_workflow_secretary_approve")
      *@Security("is_granted('ROLE_SECRETARY')")
      * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     *
      * @param Request     $request
      * @param Reservation $reservation
      * @param Registry    $registry
@@ -38,6 +38,7 @@ class ReservationWorkflowController extends Controller
      * @Security("is_granted('ROLE_UTILISATEUR')")
      *
      * @IsGranted("ROLE_UTILISATEUR" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     *
      * @param Request     $request
      * @param Reservation $reservation
      * @param Registry    $registry

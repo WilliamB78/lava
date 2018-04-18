@@ -7,9 +7,7 @@ use App\Entity\Room;
 use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class IndexController extends Controller
 {
@@ -113,7 +111,7 @@ class IndexController extends Controller
         return $this->render('index/content/secretary.html.twig', [
             'demandeReservation' => $demandeReservation,
             'openedRooms' => $openedRooms,
-            'closedRooms' => $closedRooms
+            'closedRooms' => $closedRooms,
         ]);
     }
 

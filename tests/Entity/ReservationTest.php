@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 07/04/2018
- * Time: 21:06
+ * Time: 21:06.
  */
 
 namespace App\Tests\Entity;
-
 
 use App\Entity\Reservation;
 use App\Entity\Room;
@@ -17,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class ReservationTest extends TestCase
 {
     /** @var $reservation Reservation */
-    protected  $reservation;
+    protected $reservation;
     /** @var $room Room */
     protected $room;
     /** @var $user User */
@@ -28,14 +27,14 @@ class ReservationTest extends TestCase
         $this->room = new Room();
         $this->user = new User();
 
-       $this->reservation = new Reservation();
-       $this->reservation->setStart(new \DateTime('2011-01-01 11:00:00'));
-       $this->reservation->setEnd(new \DateTime('2011-01-01 12:00:00'));
-       $this->reservation->setState(true);
-       $this->reservation->setRoom($this->room);
-       $this->reservation->setRoom($this->room);
-       $this->reservation->setUser($this->user);
-       $this->reservation->setRoom($this->room);
+        $this->reservation = new Reservation();
+        $this->reservation->setStart(new \DateTime('2011-01-01 11:00:00'));
+        $this->reservation->setEnd(new \DateTime('2011-01-01 12:00:00'));
+        $this->reservation->setState(true);
+        $this->reservation->setRoom($this->room);
+        $this->reservation->setRoom($this->room);
+        $this->reservation->setUser($this->user);
+        $this->reservation->setRoom($this->room);
     }
 
     public function testCanBeCreate()
@@ -48,7 +47,7 @@ class ReservationTest extends TestCase
 
     public function testReservationUser()
     {
-        $this->assertEquals($this->user,$this->reservation->getUser());
+        $this->assertEquals($this->user, $this->reservation->getUser());
     }
 
     public function testReservationRoom()
@@ -68,7 +67,6 @@ class ReservationTest extends TestCase
 
     public function testReservationState()
     {
-        $this->assertEquals(true,$this->reservation->getState());
+        $this->assertEquals(true, $this->reservation->getState());
     }
-
 }

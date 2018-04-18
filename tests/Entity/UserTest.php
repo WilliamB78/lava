@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 07/04/2018
- * Time: 18:59
+ * Time: 18:59.
  */
 
 namespace App\Tests\Entity;
@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
-
     public function testUserCanBeCreate()
     {
         $this->assertInstanceOf(
@@ -70,7 +69,7 @@ class UserTest extends TestCase
 
         $user->addReservations($reservation);
 
-        $this->assertContains($reservation,$user->getReservations());// aps sur ici
+        $this->assertContains($reservation, $user->getReservations()); // aps sur ici
     }
 
     public function testUserHasToken()
@@ -88,5 +87,4 @@ class UserTest extends TestCase
 
         $this->assertEquals(new \DateTime('2011-01-01'), $user->getTokenExpire());
     }
-
 }
