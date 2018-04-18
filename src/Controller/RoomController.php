@@ -22,7 +22,7 @@ class RoomController extends Controller
      * Liste des salles.
      *
      * @Route("/", name="room_index", methods="GET")
-     * @Security("has_role('ROLE_UTILISATEUR') or is_granted('ROLE_SECRETARY')")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
      * @param RoomRepository $roomRepository
      *
@@ -58,7 +58,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/new", name="room_new", methods="GET|POST")
-     * @IsGranted("ROLE_SECRETARY", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_CAN_ADD_ROOM", statusCode=403, message="Accès Refusé!Vos droits ne sont pas suffisant !")
      *
      * @param Request           $request
      * @param RoomIsFullHandler $fullHandler
@@ -77,7 +77,7 @@ class RoomController extends Controller
                 $em->persist($room);
                 $em->flush();
 
-                $this->addFlash('success', 'Vous venez de créer une nouvelle salle');
+                $this->addFlash('success', 'Vous venez de créer une nouvelle salle : ['.$room->getName().']');
 
                 return $this->redirectToRoute('room_index');
             }
@@ -108,7 +108,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}/edit", name="room_edit", methods="GET|POST")
-     * @IsGranted("ROLE_SECRETARY" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_CAN_EDIT_ROOM" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      *
      * @param Request $request
      * @param Room    $room
@@ -135,7 +135,7 @@ class RoomController extends Controller
 
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
-     * @IsGranted("ROLE_ADMIN" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     * @IsGranted("ROLE_CAN_REMOVE_ROOM" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      */
     public function delete(Request $request, Room $room): Response
     {
@@ -145,11 +145,12 @@ class RoomController extends Controller
                 $em->remove($room);
                 $em->flush();
 
-                return $this->redirectToRoute('room_closed');
+                $this->addFlash('success', 'Salle ['.$room->getName(). '] à été supprimée');
+                return $this->redirectToRoute('room_index');
             } else {
                 $this->addFlash('error', 'Vous ne pouvez pas supprimer une salle qui a des réservations');
 
-                return $this->redirectToRoute('room_closed');
+                return $this->redirectToRoute('room_index');
             }
         }
     }
