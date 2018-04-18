@@ -44,7 +44,7 @@
                                 <p class="card-text">
                                     Places : <b>{{ room.nbPlaces }}</b>
                                 </p>
-                                {% if is_granted('ROLE_UTILISATEUR') %}
+                                {% if is_granted('ROLE_USER') %}
                                 <p class="card-text">
                                     <a href="{{ url('room_calendar_show', {'id': room.id}) }}" class="btn btn-info">Calendrier</a>
                                 </p>

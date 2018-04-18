@@ -74,8 +74,8 @@ class ReservationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dateFormated = new \DateTime($reservation->getDate());
-            $startFormated = new \DateTime($reservation->getStart());
-            $endFormated = new \DateTime($reservation->getEnd());
+            $startFormated = new \DateTime($reservation->getDate() . $reservation->getStart());
+            $endFormated = new \DateTime($reservation->getDate() . $reservation->getEnd());
 
             $reservation->setDate($dateFormated);
             $reservation->setRoom($room);

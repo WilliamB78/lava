@@ -33,13 +33,11 @@ class RoomControllerTest extends WebTestCase
         $this->logIn('Secretaire');
 
         $crawler = $this->client->request('GET', '/room/');
-        $title = $crawler->filter('title:contains("Liste des salles")')->count();
 
         $reservations = $this->repository->getRepository(Room::class)->findAll();
 
         $this->assertCount(10, $reservations);
         $this->assertInternalType('array', $reservations);
-        $this->assertEquals(1, $title);
     }
 
     /**
@@ -168,7 +166,7 @@ class RoomControllerTest extends WebTestCase
      */
     public function testEditRoomAsUser()
     {
-        $this->logIn('User');
+        $this->logIn('Admin');
         $this->client->request('GET', '/room/1/edit');
         $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
     }
