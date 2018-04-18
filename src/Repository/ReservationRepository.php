@@ -109,6 +109,7 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('cancelled', '%cancelled%')
             ->andWhere('r.state NOT LIKE :cancelled_ok')
             ->setParameter('cancelled_ok', '%cancelled_ok%')
+            ->orderBy('r.start', 'desc')
             ->getQuery()
             ->getResult();
     }
