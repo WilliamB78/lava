@@ -113,35 +113,43 @@ class ReservationControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/reservation/5/edit');
 
-        $titre = $crawler->filter('h1');
-        $this->assertEquals('Edit Reservation', $titre->text());
+        $titre = $crawler->filter('title');
+        $this->assertEquals('Edition réservation', $titre->text());
 
         $form = $crawler->filter('form');
         $this->assertEquals(1,$form->count());
 
         $form = $form->first()->form();
+
+        // date
+        $form['reservation[date]'] = "2018-04-18";
+        // start
+        $form['reservation[start]'] = "08:00";
+        // end
+        $form['reservation[end]'] = "17:00";
+
         $this->client->submit($form);
+        $this->client->followRedirect();
         $this->assertEquals(200,$this->client->getResponse()->getStatusCode());
     }
 
 // TODO refaire ce test
-//    public function testDeleteReservation()
-//    {
-//        $this->logIn('Secretary');
-//        $crawler = $this->client->request('DELETE', '/reservation/5/delete');
-//        $form = $crawler->filter('form')->form();
-//        dump($form);
-//        $this->client->submit($form);
-//        $crawler = $this->client->followRedirect();
-//        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-//    }
+    /*public function testDeleteReservation()
+    {
+        $this->logIn('Admin');
+        $crawler = $this->client->request('DELETE', '/reservation/5/delete');
+        $form = $crawler->filter('form')->form();
+        dump($form);
+        $this->client->submit($form);
+        $crawler = $this->client->followRedirect();
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+    }*/
 
 
     public function setUp()
     {
         /** @var Client client */
         $this->client = static::createClient();
-        //$this->client->enableProfiler();
         $this->repository = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
 }

@@ -3,9 +3,30 @@
 {% block title %}Edition réservation{% endblock %}
 
 {% block body %}
-    <h1>Edit Reservation</h1>
+    <div class="flex">
+        <div class="col-4 offset-4">
+            <h1>Edit Reservation</h1>
+            {% form_theme form 'bootstrap_4_layout.html.twig' %}
+            <div class="col-12">
+                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                {{ form_start(form,{'attr': {'class': 'row reservation_new'}}) }}
+                <div class="col-4 offset-4">
+                    {{ form_row(form.date)}}
+                </div>
+                <div class="col-4 offset-4">
+                    {{ form_row(form.start)}}
+                </div>
+                <div class="col-4 offset-4">
+                    {{ form_row(form.end)}}
+                </div>
+                <div class="col-4 offset-4">
+                    {{ form_row(form.submit) }}
+                    <a href="{{ path('room_calendar_show', {"id": app.request.get('id')}) }}">back to list</a>
+                </div>
+                {{ form_end(form) }}
+            </div>
 
-    {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('reservation_index') }}">back to list</a>
+            <a href="{{ path('reservation_index') }}">back to list</a>
+        </div>
+    </div>
 {% endblock %}

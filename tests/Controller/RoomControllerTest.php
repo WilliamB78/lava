@@ -196,9 +196,9 @@ class RoomControllerTest extends WebTestCase
 
     public function testDeleteRoom()
     {
-        $this->logIn('Secretaire');
-        $crawler = $this->client->request('GET', '/room/1/edit');
-        $form = $crawler->filter('form')->last();
+        $this->logIn('Admin');
+        $crawler = $this->client->request('GET', '/room/hors_service');
+        $form = $crawler->filter('form')->first();
         $this->client->submit($form->form());
         $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());

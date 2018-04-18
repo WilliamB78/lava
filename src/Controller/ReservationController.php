@@ -156,7 +156,12 @@ class ReservationController extends Controller
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")
-     *  @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
+     * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
+     *
+     * @param Request $request
+     * @param Reservation $reservation
+     *
+     * @return Response
      */
     public function delete(Request $request, Reservation $reservation): Response
     {
