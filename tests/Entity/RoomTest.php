@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 07/04/2018
- * Time: 20:36
+ * Time: 20:36.
  */
 
 namespace App\Tests\Entity;
-
 
 use App\Entity\Reservation;
 use App\Entity\Room;
@@ -15,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class RoomTest extends TestCase
 {
-
     public function testRoomCanBeCreate()
     {
         $this->assertInstanceOf(
@@ -65,5 +63,4 @@ class RoomTest extends TestCase
 
         $this->assertContains($reservation, $room->getReservations());
     }
-
 }

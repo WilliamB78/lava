@@ -3,26 +3,19 @@
  * Created by PhpStorm.
  * User: bmnk
  * Date: 09/04/18
- * Time: 18:55
+ * Time: 18:55.
  */
 
 namespace App\Tests\Config;
-
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 abstract class AbstractDbSetUp extends KernelTestCase
 {
-
-    /**
-     *
-     */
     public static function prime()
     {
         self::bootKernel();
@@ -49,11 +42,10 @@ abstract class AbstractDbSetUp extends KernelTestCase
         $purger = new ORMPurger();
         $executor = new ORMExecutor($entityManager, $purger);
         $executor->execute($loader->getFixtures());
-
     }
 
     /**
-     * Returns the doctrine orm entity manager
+     * Returns the doctrine orm entity manager.
      *
      * @return object
      */

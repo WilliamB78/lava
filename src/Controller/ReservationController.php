@@ -9,7 +9,6 @@ use App\Repository\ReservationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +53,7 @@ class ReservationController extends Controller
     /**
      * @Route("/{id}/new/{date}", name="new", methods="GET|POST")
      * @IsGranted("ROLE_CAN_DO_BOOKING" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     *
      * @param Request  $request
      * @param Registry $workflows
      * @param Room     $room
@@ -74,8 +74,8 @@ class ReservationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dateFormated = new \DateTime($reservation->getDate());
-            $startFormated = new \DateTime($reservation->getDate() . $reservation->getStart());
-            $endFormated = new \DateTime($reservation->getDate() . $reservation->getEnd());
+            $startFormated = new \DateTime($reservation->getDate().$reservation->getStart());
+            $endFormated = new \DateTime($reservation->getDate().$reservation->getEnd());
 
             $reservation->setDate($dateFormated);
             $reservation->setRoom($room);
@@ -101,6 +101,7 @@ class ReservationController extends Controller
     /**
      * @Route("/{id}", name="show", methods="GET")
      * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
+     *
      * @param Reservation $reservation
      *
      * @return Response
@@ -126,7 +127,6 @@ class ReservationController extends Controller
 
         $reservation->setStart($start->format('Y-m-d H:i'));
         $reservation->setEnd($end->format('Y-m-d H:i'));
-
 
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->add('date', HiddenType::class, array(
@@ -158,7 +158,7 @@ class ReservationController extends Controller
      * @Route("/{id}", name="delete", methods="DELETE")
      * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
      *
-     * @param Request $request
+     * @param Request     $request
      * @param Reservation $reservation
      *
      * @return Response

@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: coubardalexis
  * Date: 17/04/2018
- * Time: 16:44
+ * Time: 16:44.
  */
 
 namespace App\Tests\Controller;
-
 
 use App\Entity\Parametrage;
 use App\Tests\Traits\UserLogger;
@@ -18,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class ParametrageControllerTest extends WebTestCase
 {
     use UserLogger;
-    /** @var Client $client  */
+    /** @var Client $client */
     private $client = null;
     /** @var EntityManager $repository */
     private $repository;
@@ -35,7 +34,7 @@ class ParametrageControllerTest extends WebTestCase
         $this->logIn('Admin');
 
         $crawler = $this->client->request('GET', '/parametrage/index');
-        
+
         $form = $crawler->filter('form')->first()->form();
         $form['value'] = 100;
         $this->client->submit($form);
