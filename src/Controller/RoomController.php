@@ -87,7 +87,7 @@ class RoomController extends Controller
                 'form' => $form->createView(),
             ]);
         } else {
-            $this->addFlash('error', 'Vous ne avez atteins le nombre maximal de salle');
+            $this->addFlash('danger', 'Vous ne avez atteins le nombre maximal de salle');
 
             return $this->redirectToRoute('room_index');
         }
@@ -148,7 +148,7 @@ class RoomController extends Controller
                 $this->addFlash('success', 'Salle ['.$room->getName(). '] à été supprimée');
                 return $this->redirectToRoute('room_index');
             } else {
-                $this->addFlash('error', 'Vous ne pouvez pas supprimer une salle qui a des réservations');
+                $this->addFlash('danger', 'Vous ne pouvez pas supprimer une salle qui a des réservations');
 
                 return $this->redirectToRoute('room_index');
             }
