@@ -66,5 +66,11 @@ class ReservationWorkflowController extends Controller
             $workflow->apply($reservation, $state);
             $this->getDoctrine()->getManager()->flush();
         }
+        if ($state == 'cancel_booking') {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($reservation);
+            $em->flush();
+            $this->addFlash('success', 'La réservation à bien été annulée.');
+        }
     }
 }

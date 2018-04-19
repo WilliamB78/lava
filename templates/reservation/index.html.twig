@@ -5,55 +5,230 @@
 {% block body %}
 <div class="flex">
     <div class="col-10 offset-1">
+        {% for label, messages in app.flashes %}
+            {% for message in messages  %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
         <h1 class="text-center">Liste des réservations</h1>
 
-        <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Horaire</th>
-                <th>State</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.start ? reservation.date|date('Y/m/d') }}</td>
-                <td>
-                    De
-                    {{ reservation.start ? reservation.start|date('H:i') : '' }}
-                    a
-                    {{ reservation.end ? reservation.end|date('H:i') : '' }}
-                </td>
-                <td>
-                    {{ reservation_state(reservation.state) }}
-                </td>
-                <td>
-                    <a class="btn btn-info"
-                       href="{{ url('reservation_show', {
-                           'id': reservation.id
-                       }) }}">
-                        Voir
-                    </a>
-                    {% if workflow_can(reservation, 'demand_validation') %}
-                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
-                    {% endif %}
-                    {% if workflow_can(reservation, 'demand_refused') %}
-                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_refused', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser</a>
-                    {% endif %}
-                    {% if workflow_can(reservation, 'cancel_booking') %}
-                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <ul class="nav nav-tabs m-5">
+            <li class="nav-item">
+                <a class="nav-link active show" data-toggle="tab" href="#home">Demandes de reservations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#demande_accepte">Reservations Acceptées</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " data-toggle="tab" href="#demande_refuse" >Reservation Refusées</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#demande_annulation">Demandes d'annulation</a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active show" id="home">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Horaire</th>
+                        <th>State</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.start ? reservation.date|date('Y/m/d') }}</td>
+                            <td>
+                                De
+                                {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                                a
+                                {{ reservation.end ? reservation.end|date('H:i') : '' }}
+                            </td>
+                            <td>
+                                {{ reservation_state(reservation.state) }}
+                            </td>
+                            <td>
+                                <a class="btn btn-info"
+                                   href="{{ url('reservation_show', {
+                                       'id': reservation.id
+                                   }) }}">
+                                    Voir
+                                </a>
+                                {% if workflow_can(reservation, 'demand_validation') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
+                                {% endif %}
+                                {% if workflow_can(reservation, 'demand_refused') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_refused', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser</a>
+                                {% endif %}
+                                {% if workflow_can(reservation, 'cancel_booking') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Aucune demande trouvée</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="demande_accepte">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Horaire</th>
+                        <th>State</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in demande_accepte %}
+                        <tr>
+                            <td>{{ reservation.start ? reservation.date|date('Y/m/d') }}</td>
+                            <td>
+                                De
+                                {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                                a
+                                {{ reservation.end ? reservation.end|date('H:i') : '' }}
+                            </td>
+                            <td>
+                                {{ reservation_state(reservation.state) }}
+                            </td>
+                            <td>
+                                <a class="btn btn-info"
+                                   href="{{ url('reservation_show', {
+                                       'id': reservation.id
+                                   }) }}">
+                                    Voir
+                                </a>
+                                {% if workflow_can(reservation, 'demand_validation') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
+                                {% endif %}
+                                {% if workflow_can(reservation, 'demand_refused') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_refused', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser</a>
+                                {% endif %}
+                                {% if workflow_can(reservation, 'cancel_booking') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Aucune demande acceptée </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="demande_refuse">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Horaire</th>
+                        <th>State</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for reservation in demande_refuse %}
+                        <tr>
+                            <td>{{ reservation.start ? reservation.date|date('Y/m/d') }}</td>
+                            <td>
+                                De
+                                {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                                a
+                                {{ reservation.end ? reservation.end|date('H:i') : '' }}
+                            </td>
+                            <td>
+                                {{ reservation_state(reservation.state) }}
+                            </td>
+                            <td>
+                                <a class="btn btn-info"
+                                   href="{{ url('reservation_show', {
+                                       'id': reservation.id
+                                   }) }}">
+                                    Voir
+                                </a>
+                                {% if workflow_can(reservation, 'demand_validation') %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
+                                {% endif %}
+                                    <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Aucune demande d'annulation trouvée</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="demande_annulation">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Horaire</th>
+                        <th>State</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in demande_annulation %}
+                            <tr>
+                                <td>{{ reservation.start ? reservation.date|date('Y/m/d') }}</td>
+                                <td>
+                                    De
+                                    {{ reservation.start ? reservation.start|date('H:i') : '' }}
+                                    a
+                                    {{ reservation.end ? reservation.end|date('H:i') : '' }}
+                                </td>
+                                <td>
+                                    {{ reservation_state(reservation.state) }}
+                                </td>
+                                <td>
+                                    <a class="btn btn-info"
+                                       href="{{ url('reservation_show', {
+                                           'id': reservation.id
+                                       }) }}">
+                                        Voir
+                                    </a>
+                                    {% if workflow_can(reservation, 'demand_validation') %}
+                                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
+                                    {% endif %}
+                                    {% if workflow_can(reservation, 'demand_refused') %}
+                                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_refused', 'id': reservation.id}) }}" class="btn btn-secondary">Refuser</a>
+                                    {% endif %}
+                                    {% if workflow_can(reservation, 'cancel_booking') %}
+                                        <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'cancel_booking', 'id': reservation.id}) }}" class="btn btn-secondary">Cloturer</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">Aucune demande d'annulation trouvée</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -93,10 +93,15 @@ class IndexController extends Controller
      */
     public function IndexContentSecretary()
     {
-        $demandeReservation = $this->getDoctrine()
+        $reservationRequest = $this->getDoctrine()
             ->getManager()
             ->getRepository(Reservation::class)
-            ->findInProgress();
+            ->findCreatedReservations();
+
+        $cancelRequest = $this->getDoctrine()
+            ->getManager()
+            ->getRepository(Reservation::class)
+            ->findCancelRequest();
 
         $openedRooms = $this->getDoctrine()
             ->getManager()
@@ -109,7 +114,8 @@ class IndexController extends Controller
             ->findTotalRoomClosed();
 
         return $this->render('index/content/secretary.html.twig', [
-            'demandeReservation' => $demandeReservation,
+            'reservationRequest' => $reservationRequest,
+            'cancelRequest' => $cancelRequest,
             'openedRooms' => $openedRooms,
             'closedRooms' => $closedRooms,
         ]);
