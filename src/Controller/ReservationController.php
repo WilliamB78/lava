@@ -30,7 +30,12 @@ class ReservationController extends Controller
      */
     public function index(ReservationRepository $reservationRepository): Response
     {
-        return $this->render('reservation/index.html.twig', ['reservations' => $reservationRepository->findInProgress()]);
+        return $this->render('reservation/index.html.twig', [
+            'reservations' => $reservationRepository->findCreatedReservations(),
+            'demande_accepte' => $reservationRepository->findAcceptedRequest(),
+            'demande_refuse' => $reservationRepository->findRefusedRequest(),
+            'demande_annulation' => $reservationRepository->findCancelRequest(),
+        ]);
     }
 
     /**

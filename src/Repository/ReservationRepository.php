@@ -111,6 +111,60 @@ class ReservationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function findCreatedReservations()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :created')
+            ->setParameter('created', '%created%')
+            ->orderBy('r.start', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findAcceptedRequest()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :accepted')
+            ->setParameter('accepted', '%accepted%')
+            ->orderBy('r.start', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findRefusedRequest()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :refused')
+            ->setParameter('refused', '%refused%')
+            ->orderBy('r.start', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function findCancelRequest()
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :cancelled')
+            ->setParameter('cancelled', '%cancelled%')
+            ->orderBy('r.start', 'desc')
+            ->getQuery()
+            ->getResult();
+    }
+
+
     /**
      * @return mixed
      */
