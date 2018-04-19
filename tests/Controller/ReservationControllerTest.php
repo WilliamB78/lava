@@ -62,29 +62,20 @@ class ReservationControllerTest extends WebTestCase
         $this->assertEquals(1, $form->count());
     }
 
-    // TODO refaire ce test
-//    public function testReservationNewFailed()
-//    {
-//        $this->logIn('User');
-//        $crawler = $this->client->request('GET', '/reservation/5/new/2018-04-05');
-//        $form = $crawler->filter('.reservation_new')->form();
-//        // start
-//        $form['reservation[start]'] = "2018-04-11 08:00";
-//        // end
-//        $form['reservation[end]'] = "2018-04-19 08:00";
-//        dump($form);
-//        $crawler = $this->client->submit($form);
-//        $errorEnd = explode(' ',$crawler->filter('#reservation_end')->attr('class'));
-//        $this->assertEquals(true, in_array('is-invalid', $errorEnd));
-//    }
+    public function testReservationNewFailed()
+    {
+        $this->logIn('Admin');
+        $crawler = $this->client->request('GET', '/reservation/5/new/2018-04-05');
+        $this->assertEquals(403, $this->client->getResponse()->getStatusCode());
+    }
 
     public function testReservationSuccess()
     {
         $this->logIn('User');
-        $crawler = $this->client->request('GET', '/reservation/1/new/2018-04-05');
+        $crawler = $this->client->request('GET', '/reservation/1/new/2018-04-18');
         $form = $crawler->filter('form')->form();
         // date
-        $form['reservation[date]'] = '2018-04-18';
+        $form['reservation[date]'] = '2018-04-30';
         // start
         $form['reservation[start]'] = '08:00';
         // end
@@ -107,10 +98,11 @@ class ReservationControllerTest extends WebTestCase
 
     public function testReservationEdit()
     {
-        $user = $this->repository->getRepository(Reservation::class)->findOneBy(['user' => 1])->getUser();
+        $reservation = $this->repository->getRepository(Reservation::class)->findOneBy(['user' => 1]);
+        $user = $reservation->getUser();
         $this->logIn(null, $user->getId());
 
-        $crawler = $this->client->request('GET', '/reservation/5/edit');
+        $crawler = $this->client->request('GET', '/reservation/'.$reservation->getId().'/edit');
 
         $titre = $crawler->filter('title');
         $this->assertEquals('Edition réservation', $titre->text());
@@ -121,7 +113,7 @@ class ReservationControllerTest extends WebTestCase
         $form = $form->first()->form();
 
         // date
-        $form['reservation[date]'] = '2018-04-18';
+        $form['reservation[date]'] = '2018-04-30';
         // start
         $form['reservation[start]'] = '08:00';
         // end
@@ -132,17 +124,16 @@ class ReservationControllerTest extends WebTestCase
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
-    // TODO refaire ce test
-    /*public function testDeleteReservation()
+
+    public function testDeleteReservation()
     {
-        $this->logIn('Admin');
-        $crawler = $this->client->request('DELETE', '/reservation/5/delete');
-        $form = $crawler->filter('form')->form();
-        dump($form);
-        $this->client->submit($form);
-        $crawler = $this->client->followRedirect();
+        $reservation = $this->repository->getRepository(Reservation::class)->findOneBy(['user' => 1]);
+        $user = $reservation->getUser();
+        $this->logIn(null, $user->getId());
+        $this->client->request('DELETE', '/reservation/'.$reservation->getId());
+        $this->client->followRedirect();
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-    }*/
+    }
 
     public function setUp()
     {
