@@ -48,16 +48,30 @@ class ReservationRepository extends ServiceEntityRepository
      *
      * @return int|mixed
      */
-    public function findByState($state)
+    public function countByState($state)
     {
         try {
-            return $this->byState($state)
+            return $this->createQueryBuilder('r')
+                ->select('COUNT(r)')
+                ->where('r.state LIKE :state')
+                ->setParameter('state', "%$state%")
                 ->orderBy('r.start', 'DESC')
                 ->getQuery()
                 ->getSingleScalarResult();
-        } catch (NonUniqueResultException $e) {
-            return 0;
-        }
+            } catch (NonUniqueResultException $e) {
+                return 0;
+            }
+    }
+
+    public function findByState($state)
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r')
+            ->where('r.state LIKE :state')
+            ->setParameter('state', "%$state%")
+            ->orderBy('r.start', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     /**
