@@ -3,36 +3,17 @@
 {% block title %}Salle {{ room.name }}{% endblock %}
 
 {% block body %}
-    <h1>Room</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ room.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ room.name }}</td>
-            </tr>
-            <tr>
-                <th>NbPlaces</th>
-                <td>{{ room.nbPlaces }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ room.state ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>CommentState</th>
-                <td>{{ room.commentState }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('room_index') }}">back to list</a>
-
-    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
-
-    {{ include('room/_delete_form.html.twig') }}
+    <div class="flex">
+        <div class="col-6 offset-3">
+            <div class="card bg-light mb-3 text-center" style="max-width: 30rem;margin: 50px;">
+                <div class="card-header">{{ room.name}}</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Nombre de places : <b>{{ room.nbPlaces }}</b><br>
+                        Etat : <b>{{ room.commentState }}</b>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
