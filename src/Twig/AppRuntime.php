@@ -116,16 +116,11 @@ class AppRuntime
     {
         $user = $this->tokenStorage->getToken()->getUser();
         $roles = $user->getRoles();
-        $return = null;
-        foreach ($roles as $role) {
-            if ('ROLE_CAN_DO_BOOKING' !== $role) {
-                $return = false;
-            } else {
-                $return = true;
-            }
+        if ('ROLE_CAN_DO_BOOKING' == $roles[1]) {
+            return true;
+        } else {
+            return false;
         }
-
-        return $return;
     }
 
     public function getRoomName($roomId)

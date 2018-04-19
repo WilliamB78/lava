@@ -204,6 +204,63 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
     /**
+     * Retourne la liste des réservations d'un utilisateur.
+     *
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function findCreatedByUser($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :created')
+            ->setParameter('created', '%created%')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.start', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Retourne la liste des réservations d'un utilisateur.
+     *
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function findAcceptedRequestByUser($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :accepted')
+            ->setParameter('accepted', '%accepted%')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.start', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Retourne la liste des réservations d'un utilisateur.
+     *
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function findCancelRequestByUser($user)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.state LIKE :cancelled')
+            ->setParameter('cancelled', '%cancelled%')
+            ->andWhere('r.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.start', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * Retourne la liste des reservations qui sont a l'état de création 36h avant la date d'écheance.
      */
     public function findWarningReservation()
