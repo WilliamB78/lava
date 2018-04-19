@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -38,13 +40,20 @@ class UserType extends AbstractType
                     'placeholder' => 'Saisissez l\'email',
                 ],
             ])
-            ->add('password', PasswordType::class, [
-                'required' => true,
-                'attr' => [
-                    'class' => 'input',
-                    'placeholder' => '***********',
-                ],
-            ])
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event){
+                $user = $event->getData();
+                $form = $event->getForm();
+
+                if ($user->getEmail() == null) {
+                   $form->add('password', PasswordType::class, [
+                       'required' => true,
+                       'attr' => [
+                           'class' => 'input',
+                           'placeholder' => '***********',
+                       ],
+                   ]);
+                }
+            })
         ;
     }
 
