@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-center">
         <div class="align-self-center">
             {% if userReservation is not empty  %}
-            <div class="col">
+                <div class="col">
                 <h3>Derniers Reservations</h3>
                 <table class="table">
                     <thead>
@@ -40,10 +40,15 @@
                                 {% endif %}
                             </td>
                         </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Aucune reservation trouvée</td>
+                        </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
+
             {% endif %}
             {% if userReservationAccepted is not empty  %}
             <div class="col">
@@ -78,6 +83,10 @@
                                 <a class="btn btn-danger"
                                    href="#">Annuler</a>
                             </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">Aucune reservation trouvée</td>
                         </tr>
                     {% endfor %}
                     </tbody>

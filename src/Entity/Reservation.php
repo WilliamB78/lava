@@ -160,21 +160,17 @@ class Reservation
      * @param ExecutionContextInterface $context
      * @param $payload
      */
-    public function validate(ExecutionContextInterface $context, $payload)
+    public function validate(ExecutionContextInterface $context)
     {
-        $currentDay = new \DateTime('now');
-        $startDay = new \DateTime($this->getDate());
-        $endDay = new \DateTime($this->getEnd());
-
-//        if ($endDay->format("Y-m-d") < $startDay->format("Y-m-d")) {
-//            $context->buildViolation('Vous ne pouvez pas entrer une date de fin supérieur à la date de début de réservation')
-//               ->atPath('end')
-//               ->addViolation();
-//        }
-
-        if ($startDay->format('Y-m-d') < $currentDay->format('Y-m-d')) {
-            dump($this->getStart());
-            $context->buildViolation('Vous ne pouvez pas entrer une date de debut de réservation, antérieur à la date du jour')
+        $start = new \DateTime($this->getStart());
+        $end = new \DateTime($this->getEnd());
+        if ($start->format('H:i') > $end->format('H:i')) {
+            $context->buildViolation('Vous ne pouvez pas entrer une heure de fin , antérieur au début')
+                ->atPath('end')
+                ->addViolation();
+        }
+        if ($end->format('H:i') < $start->format('H:i')) {
+            $context->buildViolation('Vous ne pouvez pas entrer une heure de debut , postérieur à l\'heure de fin')
                 ->atPath('start')
                 ->addViolation();
         }

@@ -132,10 +132,10 @@ class IndexController extends Controller
             ->getManager()
             ->getRepository(Reservation::class);
 
-        $userReservation = $reservationRepository->findInProgressUser($this->getUser());
-        $userReservationAccepted = $reservationRepository->findByState('accepted');
+        $userReservation = $reservationRepository->findCreatedByUser($this->getUser());
+        $userReservationAccepted = $reservationRepository->findAcceptedRequestByUser($this->getUser());
 
-        dump($userReservationAccepted);
+        dump($this->getUser());
 
         return $this->render('index/content/user.html.twig', [
             'userReservation' => $userReservation,

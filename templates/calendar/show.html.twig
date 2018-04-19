@@ -44,7 +44,7 @@
                                 }) }}" class="">
                             {% endif %}
                                 <div class="calendar__day {% if equal_today(dateDay | date("Y-m-d")) %}text-primary calendar__day__current__day {% endif %}">{{ dateDay|date("d")  }}</div>
-                            {% if not can_book() %}
+                            {% if can_book() %}
                                 </a>
                             {% endif %}
                             {% for key, reservation in day_reservations(monthReservationsByDay, dateDay|date('Y-m-d')) %}

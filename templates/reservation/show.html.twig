@@ -27,7 +27,7 @@
                         {% endif %}
 
                         {% if (is_granted("ROLE_SECRETARY")) %}
-                            <a href="{{ url('reservation_index') }}" class="btn btn-info">Retour</a>
+                            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-info">Retour</a>
                             {% if workflow_can(reservation, 'demand_validation') %}
                                 <a href="{{ path('reservation_workflow_secretary_approve', {'state': 'demand_validation', 'id': reservation.id}) }}" class="btn btn-primary">Valider</a>
                             {% endif %}
