@@ -96,7 +96,7 @@ class ReservationRepository extends ServiceEntityRepository
      *
      * @return mixed
      */
-    public function findBetween($start, $end, $roomId)
+    public function findReservationBetweenDate($start, $end, $roomId)
     {
         return $this->createQueryBuilder('r')
             ->where('r.date > :start')
@@ -107,6 +107,67 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('end', $end->format('Y-m-d 23:59:59'))
             ->setParameter('roomId', $roomId)
             ->setParameter('state', '%accepted%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findReservationBetweenTime($start, $end, $roomId, $date)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.date = :date')
+            ->andWhere('r.start < :end')
+           ->andWhere('r.end > :start')
+            ->andWhere('r.room = :roomId')
+            ->andWhere('r.state LIKE :state')
+            ->setParameter('date', $date)
+            ->setParameter('start', $start)
+           ->setParameter('end', $end)
+            ->setParameter('roomId', $roomId)
+            ->setParameter('state', '%accepted%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @param $roomId
+     * @param $date
+     * @return mixed
+     */
+    public function findReservationStartTimeAtDate($start, $roomId, $date)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.date = :date')
+            ->andWhere('r.start = :start')
+            ->andWhere('r.room = :roomId')
+            ->andWhere('r.state LIKE :accepted')
+            ->setParameter('date', $date)
+            ->setParameter('start', $start)
+            ->setParameter('roomId', $roomId)
+            ->setParameter('accepted', '%accepted%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $start
+     * @param $end
+     * @param $roomId
+     * @param $date
+     * @return mixed
+     */
+    public function findReservationEndTimeAtDate($end, $roomId, $date)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.date = :date')
+            ->andWhere('r.end = :end')
+            ->andWhere('r.room = :roomId')
+            ->andWhere('r.state LIKE :accepted')
+            ->setParameter('date', $date)
+            ->setParameter('end', $end)
+            ->setParameter('roomId', $roomId)
+            ->setParameter('accepted', '%accepted%')
             ->getQuery()
             ->getResult();
     }

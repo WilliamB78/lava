@@ -44,3 +44,10 @@ services:
                 - "@security.token_storage"
             tags:
                 - { name: twig.runtime }
+
+    check_availability:
+        class: App\Validator\CheckAvailabilityValidator
+        tags:
+          -
+            name: validator.constraint_validator
+            alias: check_availability

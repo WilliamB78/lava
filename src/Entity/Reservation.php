@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Validator\CheckAvailability;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
+ * @CheckAvailability()
  */
 class Reservation
 {
@@ -31,7 +33,7 @@ class Reservation
     private $user;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="text")
      */
     private $date;
 
