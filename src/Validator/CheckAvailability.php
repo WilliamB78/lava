@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 20/04/2018
- * Time: 11:29
+ * Time: 11:29.
  */
 
 namespace App\Validator;
-
 
 use Symfony\Component\Validator\Constraint;
 

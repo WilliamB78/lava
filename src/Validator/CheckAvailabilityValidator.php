@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: hello
  * Date: 20/04/2018
- * Time: 11:40
+ * Time: 11:40.
  */
 
 namespace App\Validator;
-
 
 use App\Entity\Reservation;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,12 +15,12 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class CheckAvailabilityValidator extends ConstraintValidator
 {
-
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
 
     /**
      * CheckAvailabilityValidator constructor.
+     *
      * @param $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
@@ -29,11 +28,10 @@ class CheckAvailabilityValidator extends ConstraintValidator
         $this->entityManager = $entityManager;
     }
 
-
     /**
      * Checks if the passed value is valid.
      *
-     * @param mixed $value The value that should be validated
+     * @param mixed      $value      The value that should be validated
      * @param Constraint $constraint The constraint for the validation
      */
     public function validate($value, Constraint $constraint)
@@ -46,7 +44,6 @@ class CheckAvailabilityValidator extends ConstraintValidator
         $end = new \DateTime($date.$value->getEnd());
         $end = $end->format('Y-m-d H:i:s');
         $roomId = $value->getRoom()->getId();
-
 
         $starIsAvailable = $reservationRepository->findReservationStartTimeAtDate($start, $roomId, $date);
         $endIsAvailable = $reservationRepository->findReservationEndTimeAtDate($end, $roomId, $date);
@@ -69,13 +66,11 @@ class CheckAvailabilityValidator extends ConstraintValidator
                 ->addViolation();
         }
         if (count($endIsAvailable) > 0) {
-
             $this->context->buildViolation('La salle n\'est pas disponible a cette heure')
                 ->atPath('end')
                 ->addViolation();
         }
 
         //dump($starIsAvailable, $endIsAvailable);
-
     }
 }

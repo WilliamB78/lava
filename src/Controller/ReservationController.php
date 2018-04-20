@@ -7,7 +7,6 @@ use App\Entity\Room;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use App\Repository\RoomRepository;
-use Doctrine\ORM\EntityRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -50,7 +49,7 @@ class ReservationController extends Controller
         return $this->render('reservation/mes-reservations.html.twig', [
             'reservations' => $reservationRepository->findCreatedByUser($this->getUser()),
             'accepte' => $reservationRepository->findAcceptedRequestByUser($this->getUser()),
-            'annulation' => $reservationRepository->findCancelRequestByUser($this->getUser())
+            'annulation' => $reservationRepository->findCancelRequestByUser($this->getUser()),
         ]);
     }
 
@@ -65,7 +64,7 @@ class ReservationController extends Controller
      *
      * @return Response
      */
-    public function new(Request $request, Registry $workflows, Room $room,  $date): Response
+    public function new(Request $request, Registry $workflows, Room $room, $date): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -74,7 +73,7 @@ class ReservationController extends Controller
         ))
         ->add('room', EntityType::class, array(
             'class' => Room::class,
-            'query_builder' => function (RoomRepository $roomRepository) use($room) {
+            'query_builder' => function (RoomRepository $roomRepository) use ($room) {
                 return $roomRepository->createQueryBuilder('r')
                     ->where('r.id = :roomId')
                     ->setParameter('roomId', $room->getId());
@@ -124,7 +123,6 @@ class ReservationController extends Controller
     }
 
     /**
-     *
      * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
      *
      * @param Request     $request
@@ -132,7 +130,7 @@ class ReservationController extends Controller
      *
      * @return Response
      */
-//@Route("/{id}/edit", name="edit", methods="GET|POST")
+    //@Route("/{id}/edit", name="edit", methods="GET|POST")
 //    public function edit(Request $request, Reservation $reservation): Response
 //    {
 //        $start = $reservation->getStart();
@@ -186,5 +184,4 @@ class ReservationController extends Controller
 
         return $this->redirectToRoute('reservation_index');
     }
-
 }

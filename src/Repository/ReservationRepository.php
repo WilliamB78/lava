@@ -58,9 +58,9 @@ class ReservationRepository extends ServiceEntityRepository
                 ->orderBy('r.start', 'DESC')
                 ->getQuery()
                 ->getSingleScalarResult();
-            } catch (NonUniqueResultException $e) {
-                return 0;
-            }
+        } catch (NonUniqueResultException $e) {
+            return 0;
+        }
     }
 
     public function findByState($state)
@@ -133,6 +133,7 @@ class ReservationRepository extends ServiceEntityRepository
      * @param $end
      * @param $roomId
      * @param $date
+     *
      * @return mixed
      */
     public function findReservationStartTimeAtDate($start, $roomId, $date)
@@ -155,6 +156,7 @@ class ReservationRepository extends ServiceEntityRepository
      * @param $end
      * @param $roomId
      * @param $date
+     *
      * @return mixed
      */
     public function findReservationEndTimeAtDate($end, $roomId, $date)
@@ -171,7 +173,6 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
     /**
      * @return mixed
@@ -224,7 +225,6 @@ class ReservationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
     /**
      * @return mixed
