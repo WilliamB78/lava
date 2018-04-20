@@ -95,7 +95,6 @@ class ReservationControllerTest extends WebTestCase
         $this->assertEquals(1, $card->count());
     }
 
-
 //    public function testReservationEdit()
 //    {
 //        $reservation = $this->repository->getRepository(Reservation::class)->findOneBy(['user' => 1]);
@@ -123,7 +122,6 @@ class ReservationControllerTest extends WebTestCase
 //        $this->client->followRedirect();
 //        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 //    }
-
 
     public function testDeleteReservation()
     {
