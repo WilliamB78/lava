@@ -66,7 +66,7 @@ class ReservationWorkflowController extends Controller
             $workflow->apply($reservation, $state);
             $this->getDoctrine()->getManager()->flush();
         }
-        if ($state == 'cancel_booking') {
+        if ('cancel_booking' == $state) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($reservation);
             $em->flush();

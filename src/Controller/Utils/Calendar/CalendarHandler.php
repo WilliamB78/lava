@@ -84,7 +84,7 @@ class CalendarHandler
         $end = $this->getLastDay();
 
         /** @var Calendar $reservations */
-        $reservations = $reservationRepository->findBetween($firstDay, $end, $room->getId());
+        $reservations = $reservationRepository->findReservationBetweenDate($firstDay, $end, $room->getId());
 
         $monthReservationsByDay = [];
 

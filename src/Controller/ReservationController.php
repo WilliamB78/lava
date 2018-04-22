@@ -6,8 +6,10 @@ use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use App\Repository\RoomRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,16 +44,12 @@ class ReservationController extends Controller
      * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
      * @IsGranted("ROLE_UTILISATEUR" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
      */
-    public function mesReservations()
+    public function mesReservations(ReservationRepository $reservationRepository)
     {
-        $reservations = $this
-            ->getDoctrine()
-            ->getRepository(Reservation::class);
-
         return $this->render('reservation/mes-reservations.html.twig', [
-            'reservations' => $reservations->findCreatedByUser($this->getUser()),
-            'accepte' => $reservations->findAcceptedRequestByUser($this->getUser()),
-            'annulation' => $reservations->findCancelRequestByUser($this->getUser())
+            'reservations' => $reservationRepository->findCreatedByUser($this->getUser()),
+            'accepte' => $reservationRepository->findAcceptedRequestByUser($this->getUser()),
+            'annulation' => $reservationRepository->findCancelRequestByUser($this->getUser()),
         ]);
     }
 
@@ -72,17 +70,25 @@ class ReservationController extends Controller
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->add('date', HiddenType::class, array(
             'data' => $date,
+        ))
+        ->add('room', EntityType::class, array(
+            'class' => Room::class,
+            'query_builder' => function (RoomRepository $roomRepository) use ($room) {
+                return $roomRepository->createQueryBuilder('r')
+                    ->where('r.id = :roomId')
+                    ->setParameter('roomId', $room->getId());
+            },
+            'choice_label' => 'name',
         ));
         $form->handleRequest($request);
 
         $workflow = $workflows->get($reservation);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dateFormated = new \DateTime($reservation->getDate());
             $startFormated = new \DateTime($reservation->getDate().$reservation->getStart());
             $endFormated = new \DateTime($reservation->getDate().$reservation->getEnd());
 
-            $reservation->setDate($dateFormated);
+            $reservation->setDate($reservation->getDate());
             $reservation->setRoom($room);
             $reservation->setUser($this->getUser());
             $reservation->setState('created');
@@ -117,7 +123,6 @@ class ReservationController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods="GET|POST")
      * @Security("is_granted('view', reservation) or has_role('ROLE_SECRETARY')")
      *
      * @param Request     $request
@@ -125,39 +130,40 @@ class ReservationController extends Controller
      *
      * @return Response
      */
-    public function edit(Request $request, Reservation $reservation): Response
-    {
-        $start = $reservation->getStart();
-        $end = $reservation->getEnd();
-
-        $reservation->setStart($start->format('Y-m-d H:i'));
-        $reservation->setEnd($end->format('Y-m-d H:i'));
-
-        $form = $this->createForm(ReservationType::class, $reservation);
-        $form->add('date', HiddenType::class, array(
-            'data' => $reservation->getDate()->format('Y-m-d'),
-        ));
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $dateFormated = new \DateTime($reservation->getDate());
-            $startFormated = new \DateTime($reservation->getStart());
-            $endFormated = new \DateTime($reservation->getEnd());
-
-            $reservation->setStart($startFormated);
-            $reservation->setEnd($endFormated);
-            $reservation->setDate($dateFormated);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('reservation_edit', ['id' => $reservation->getId()]);
-        }
-
-        return $this->render('reservation/edit.html.twig', [
-            'reservation' => $reservation,
-            'form' => $form->createView(),
-        ]);
-    }
+    //@Route("/{id}/edit", name="edit", methods="GET|POST")
+//    public function edit(Request $request, Reservation $reservation): Response
+//    {
+//        $start = $reservation->getStart();
+//        $end = $reservation->getEnd();
+//
+//        $reservation->setStart($start->format('Y-m-d H:i'));
+//        $reservation->setEnd($end->format('Y-m-d H:i'));
+//
+//        $form = $this->createForm(ReservationType::class, $reservation);
+//        $form->add('date', HiddenType::class, array(
+//            'data' => $reservation->getDate(),
+//        ));
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $dateFormated = new \DateTime($reservation->getDate());
+//            $startFormated = new \DateTime($reservation->getStart());
+//            $endFormated = new \DateTime($reservation->getEnd());
+//
+//            $reservation->setStart($startFormated);
+//            $reservation->setEnd($endFormated);
+//            $reservation->setDate($dateFormated);
+//
+//            $this->getDoctrine()->getManager()->flush();
+//
+//            return $this->redirectToRoute('reservation_edit', ['id' => $reservation->getId()]);
+//        }
+//
+//        return $this->render('reservation/edit.html.twig', [
+//            'reservation' => $reservation,
+//            'form' => $form->createView(),
+//        ]);
+//    }
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")

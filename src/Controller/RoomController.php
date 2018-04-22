@@ -145,7 +145,8 @@ class RoomController extends Controller
                 $em->remove($room);
                 $em->flush();
 
-                $this->addFlash('success', 'Salle ['.$room->getName(). '] à été supprimée');
+                $this->addFlash('success', 'Salle ['.$room->getName().'] à été supprimée');
+
                 return $this->redirectToRoute('room_index');
             } else {
                 $this->addFlash('danger', 'Vous ne pouvez pas supprimer une salle qui a des réservations');

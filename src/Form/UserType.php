@@ -40,12 +40,12 @@ class UserType extends AbstractType
                     'placeholder' => 'Saisissez l\'email',
                 ],
             ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event){
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $user = $event->getData();
                 $form = $event->getForm();
 
-                if ($user->getEmail() == null) {
-                   $form->add('password', PasswordType::class, [
+                if (null == $user->getEmail()) {
+                    $form->add('password', PasswordType::class, [
                        'required' => true,
                        'attr' => [
                            'class' => 'input',
