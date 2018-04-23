@@ -55,3 +55,10 @@ services:
           -
             name: validator.constraint_validator
             alias: check_availability
+
+    app.doctrine.encrypted_password:
+            class: App\EvenSuscriber\EncryptedPasswordSuscriber
+            arguments:
+              - "@security.password_encoder"
+            tags:
+                - { name: doctrine.event_subscriber }
