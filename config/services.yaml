@@ -48,3 +48,10 @@ services:
     App\DoctrineListener\RoomSubscriber:
         tags:
           - { name: doctrine.event_subscriber, connection: default }
+          
+    check_availability:
+        class: App\Validator\CheckAvailabilityValidator
+        tags:
+          -
+            name: validator.constraint_validator
+            alias: check_availability
