@@ -30,6 +30,7 @@ yarn-error.log
 
 ###> database volume persistence ###
 /.db/
+/db/
 ###> database volume persistence ###
 
 ###> symfony fixer cache ###

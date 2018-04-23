@@ -33,8 +33,6 @@ class NewUserHandler
     /** @var EventDispatcherInterface $dispatcher */
     private $dispatcher;
 
-    /** @var UserPasswordEncoderInterface $passwordEncoder */
-    private $passwordEncoder;
 
     /**
      * NewUserHandler constructor.
@@ -43,20 +41,17 @@ class NewUserHandler
      * @param EventDispatcherInterface     $dispatcher
      * @param EntityManagerInterface       $entityManager
      * @param FormFactoryInterface         $formFactory
-     * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
         UserMail $userMail,
         EventDispatcherInterface $dispatcher,
         EntityManagerInterface $entityManager,
-        FormFactoryInterface $formFactory,
-        UserPasswordEncoderInterface $passwordEncoder
+        FormFactoryInterface $formFactory
     ) {
         $this->em = $entityManager;
         $this->formFactory = $formFactory;
         $this->userMailer = $userMail;
         $this->dispatcher = $dispatcher;
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -99,8 +94,6 @@ class NewUserHandler
     {
         // gestion du mot de passe
         $plainPassword = $user->getPassword();
-        $password = $this->passwordEncoder->encodePassword($user, $user->getPassword());
-        $user->setPassword($password);
 
         $this->em->persist($user);
         $this->em->flush();
