@@ -44,3 +44,7 @@ services:
                 - "@security.token_storage"
             tags:
                 - { name: twig.runtime }
+
+    App\DoctrineListener\RoomSubscriber:
+        tags:
+          - { name: doctrine.event_subscriber, connection: default }

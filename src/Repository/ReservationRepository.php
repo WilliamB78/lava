@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use App\Entity\Room;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -291,6 +292,43 @@ class ReservationRepository extends ServiceEntityRepository
             ->andWhere('r.state LIKE :state')
             ->setParameter('start', $echeance->format('Y-m-d H:m:s'))
             ->setParameter('state', '%created%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Retourne toutes les reservations d'une salle a partir d'une date
+     *
+     * @param Room $room
+     * @param $start
+     * @return mixed
+     */
+    public function findRoomReservationWithDate(Room $room, $start)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.room = :room')
+            ->andWhere('r.start >= :start')
+            ->setParameter('room', $room)
+            ->setParameter('start', $start)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $user
+     * @param $date
+     * @param $room
+     * @return mixed
+     */
+    public function findUserReservationsInDate($user ,$date, $room)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.user = :user')
+            ->setParameter('user', $user)
+            ->andWhere('r.start >= :date')
+            ->setParameter('date', $date)
+            ->andWhere('r.room = :room')
+            ->setParameter('room', $room)
             ->getQuery()
             ->getResult();
     }

@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Controller\Utils\Room\RoomIsFullHandler;
+use App\DoctrineListener\RoomSubscriber;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -122,7 +124,6 @@ class RoomController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             //return $this->redirectToRoute('room_edit', ['id' => $room->getId()]);
             return $this->redirectToRoute('room_index');
         }
