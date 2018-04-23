@@ -18,7 +18,7 @@ class ReservationType extends AbstractType
             ->add('date', HiddenType::class)
             ->add('start', TextType::class)
             ->add('end', TextType::class)
-            ->add('submit', SubmitType::class)
+            //->add('submit', SubmitType::class)
 //            ->add('room', EntityType::class, array(
 //                // looks for choices from this entity
 //                'class' => Room::class,
