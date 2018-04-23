@@ -22,7 +22,8 @@
                         {{ form_row(form.end)}}
                     </div>
                     <div class="col-4 offset-4">
-                        {{ form_row(form.submit) }}
+                        <button type="submit" class="btn btn-success">Envoyer</button>
+                        <br>
                         <a href="{{ path('room_calendar_show', {"id": app.request.get('id')}) }}">back to list</a>
                     </div>
                 {{ form_end(form) }}
