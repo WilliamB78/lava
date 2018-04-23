@@ -367,6 +367,7 @@ class ReservationRepository extends ServiceEntityRepository
     public function findRoomReservationWithDate(Room $room, $start)
     {
         return $this->createQueryBuilder('r')
+            ->select('distinct(r.user)')
             ->where('r.room = :room')
             ->andWhere('r.start >= :start')
             ->setParameter('room', $room)
