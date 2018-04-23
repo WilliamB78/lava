@@ -36,7 +36,7 @@ class EncryptedPasswordSuscriber implements EventSubscriber
         $this->encodeUserPassword($entity);
 
         if ($entity->getRoles()[0] == "ROLE_UTILISATEUR") {
-            $this->addRole($entity);
+            $this->addUserRole($entity);
         }
         if ($entity->getRoles()[0] == "ROLE_SECRETARY") {
             $this->addSecretaryRole($entity);
