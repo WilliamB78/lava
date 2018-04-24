@@ -391,8 +391,9 @@ class ReservationRepository extends ServiceEntityRepository
             ->setParameter('date', $date)
             ->andWhere('r.room = :room')
             ->setParameter('room', $room)
-            ->andWhere('r.state LIKE :accepted')
+            ->andWhere('(r.state LIKE :accepted or r.state LIKE :created )')
             ->setParameter('accepted' , '%accepted%')
+            ->setParameter('created', '%created%')
             ->getQuery()
             ->getResult();
     }
