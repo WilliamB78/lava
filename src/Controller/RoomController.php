@@ -137,6 +137,10 @@ class RoomController extends Controller
     /**
      * @Route("/{id}", name="room_delete", methods="DELETE")
      * @IsGranted("ROLE_CAN_REMOVE_ROOM" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     *
+     * @param Request $request
+     * @param Room $room
+     * @return Response
      */
     public function delete(Request $request, Room $room): Response
     {

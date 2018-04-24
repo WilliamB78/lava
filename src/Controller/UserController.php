@@ -30,10 +30,8 @@ class UserController extends Controller
     /**
      * @Route("/new", name="new", methods="GET|POST")
      *
-     * @param Request                      $request
-     * @param NewUserHandler               $handler
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     *
+     * @param Request $request
+     * @param NewUserHandler $handler
      * @return Response
      */
     public function new(Request $request, NewUserHandler $handler): Response
@@ -55,6 +53,9 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="show", methods="GET")
+     *
+     * @param User $user
+     * @return Response
      */
     public function show(User $user): Response
     {
@@ -88,6 +89,10 @@ class UserController extends Controller
 
     /**
      * @Route("/{id}", name="delete", methods="DELETE")
+     *
+     * @param Request $request
+     * @param User $user
+     * @return Response
      */
     public function delete(Request $request, User $user): Response
     {
