@@ -27,12 +27,12 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     new_user_subscriber:
-      class: App\EvenSuscriber\NewUserSuscriber
+      class: App\EvenSubscriber\NewUserSubscriber
       tags:
           - { name: kernel.event_listener, event: custom.event.new_user_event, method: onNewUser }
 
     forgot_password_subscriber:
-          class: App\EvenSuscriber\ForgotPasswordSuscriber
+          class: App\EvenSubscriber\ForgotPasswordSubscriber
           tags:
               - { name: kernel.event_listener, event: custom.event.forgot_password_event, method: onForgotPassword }
 
@@ -45,7 +45,8 @@ services:
             tags:
                 - { name: twig.runtime }
 
-    App\DoctrineListener\RoomSubscriber:
+    app.doctrine.room_suscriber:
+        class: App\DoctrineListener\RoomSubscriber
         tags:
           - { name: doctrine.event_subscriber, connection: default }
           
@@ -57,7 +58,7 @@ services:
             alias: check_availability
 
     app.doctrine.encrypted_password:
-            class: App\EvenSuscriber\EncryptedPasswordSuscriber
+            class: App\EvenSubscriber\EncryptedPasswordSubscriber
             arguments:
               - "@security.password_encoder"
             tags:

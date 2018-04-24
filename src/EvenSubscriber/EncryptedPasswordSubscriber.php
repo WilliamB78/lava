@@ -6,7 +6,7 @@
  * Time: 14:22
  */
 
-namespace App\EvenSuscriber;
+namespace App\EvenSubscriber;
 
 
 use App\Entity\User;
@@ -14,7 +14,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
-class EncryptedPasswordSuscriber implements EventSubscriber
+class EncryptedPasswordSubscriber implements EventSubscriber
 {
     /** @var UserPasswordEncoder $passwordEncoder */
     private $passwordEncoder;

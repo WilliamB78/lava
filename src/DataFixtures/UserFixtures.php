@@ -35,12 +35,10 @@ class UserFixtures extends Fixture
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setEmail($faker->email);
-            $password = $this->encoder->encodePassword($user, 'test');
-            $user->setPassword($password);
+            //$password = $this->encoder->encodePassword($user, 'test');
+            $user->setPassword('test');
             $user->setIsBlocked(false);
             $user->addRole('ROLE_ADMIN');
-            $user->addRole('ROLE_CAN_ADD_ROOM');
-            $user->addRole('ROLE_CAN_REMOVE_ROOM');
             $manager->persist($user);
         }
 
@@ -50,12 +48,10 @@ class UserFixtures extends Fixture
             $user->setFirstname($faker->firstName);
             $user->setLastname($faker->lastName);
             $user->setEmail($faker->email);
-            $password = $this->encoder->encodePassword($user, 'test');
-            $user->setPassword($password);
+            //$password = $this->encoder->encodePassword($user, 'test');
+            $user->setPassword('test');
             $user->setIsBlocked(false);
             $user->addRole('ROLE_SECRETARY');
-            $user->addRole('ROLE_CAN_EDIT_ROOM');
-            $user->addRole('ROLE_CAN_SEE_CALENDAR');
             $manager->persist($user);
         }
         for ($i = 0; $i < 4; ++$i) {
@@ -64,12 +60,10 @@ class UserFixtures extends Fixture
             $user1->setFirstname($faker->firstName);
             $user1->setLastname($faker->lastName);
             $user1->setEmail($faker->email);
-            $password = $this->encoder->encodePassword($user, 'test');
-            $user1->setPassword($password);
+            //$password = $this->encoder->encodePassword($user, 'test');
+            $user1->setPassword('test');
             $user1->setIsBlocked(false);
             $user1->addRole('ROLE_UTILISATEUR');
-            $user1->addRole('ROLE_CAN_DO_BOOKING');
-            $user1->addRole('ROLE_CAN_SEE_CALENDAR');
             $manager->persist($user1);
         }
         $manager->flush();
