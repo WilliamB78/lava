@@ -18,7 +18,6 @@ class ResetPasswordHandler
 {
     private $em;
     private $formFactory;
-    private $passwordEncoder;
 
     /**
      * ResetPasswordHandler constructor.
@@ -27,11 +26,10 @@ class ResetPasswordHandler
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param FormFactoryInterface         $formFactory
      */
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, FormFactoryInterface $formFactory)
+    public function __construct(EntityManagerInterface $em, FormFactoryInterface $formFactory)
     {
         $this->em = $em;
         $this->formFactory = $formFactory;
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -60,10 +58,8 @@ class ResetPasswordHandler
 
     public function success($user)
     {
-        $password = $this->passwordEncoder->encodePassword($user, $user->getPassword());
-
         /* @var User $user */
-        $user->setPassword($password);
+        $user->setPassword($user->getPassword());
 
         // Pur eviter qu'il est a repasser par ici
         $user->setTokenResetPassword(null);
