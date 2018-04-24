@@ -43,6 +43,9 @@ class ReservationController extends Controller
     /**
      * @Route("/mes-reservations", name="mes_reservations", methods={"GET"})
      * @IsGranted("ROLE_UTILISATEUR" , statusCode=403, message="Accès Refusé! Vos droits ne sont pas suffisant !")
+     *
+     * @param ReservationRepository $reservationRepository
+     * @return Response
      */
     public function mesReservations(ReservationRepository $reservationRepository)
     {
