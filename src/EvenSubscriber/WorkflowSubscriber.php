@@ -2,21 +2,22 @@
 /**
  * Created by PhpStorm.
  * User: bmnk
- * Date: 04/04/18
- * Time: 10:27.
+ * Date: 03/04/18
+ * Time: 11:07.
  */
 
-namespace App\EvenSuscriber;
+namespace App\EvenSubscriber;
 
-use App\Event\ForgotPasswordEvent;
-use App\Service\UserMail;
+use App\Service\WorkflowMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Workflow\Event\Event;
 
-class ForgotPasswordSuscriber implements EventSubscriberInterface
+class WorkflowSubscriber implements EventSubscriberInterface
 {
+    /** @var WorkflowMail $mailer */
     protected $mailer;
 
-    public function __construct(UserMail $mailer)
+    public function __construct(WorkflowMail $mailer)
     {
         $this->mailer = $mailer;
     }
@@ -41,23 +42,20 @@ class ForgotPasswordSuscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
-            ForgotPasswordEvent::NAME => 'onForgotPassword',
-        );
+        return [
+            'workflow.reservation.completed' => 'onStatuChange',
+        ];
     }
 
     /**
-     * @param ForgotPasswordEvent $event
+     * @param Event $event
      *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function onForgotPassword(ForgotPasswordEvent $event)
+    public function onStatuChange(Event $event)
     {
-        /*
-         * Using UserMail Service to send Welcome Email to new User
-         */
-        $this->mailer->sendResetPassword($event->getUser(), $event->getLink());
+        $this->mailer->statuChangeMessage($event->getSubject(), $event->getSubject()->getUser());
     }
 }

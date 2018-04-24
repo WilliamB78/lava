@@ -6,13 +6,13 @@
  * Time: 20:02.
  */
 
-namespace App\EvenSuscriber;
+namespace App\EvenSubscriber;
 
 use App\Event\NewUserEvent;
 use App\Service\UserMail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class NewUserSuscriber implements EventSubscriberInterface
+class NewUserSubscriber implements EventSubscriberInterface
 {
     protected $mailer;
 
