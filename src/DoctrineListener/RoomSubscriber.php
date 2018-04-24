@@ -75,13 +75,14 @@ class RoomSubscriber implements EventSubscriber
     {
         /** @var ReservationRepository $userRoom */
         $reservationRepository = $args->getEntityManager()->getRepository(Reservation::class);
-        // Va chercher toutes les reservations d'une salle a partir d'une date
-        $reservations = $reservationRepository->findRoomReservationWithDate($args->getEntity(), new \DateTime());
+        // Va chercher tous les utilisateurs
+        $users = $reservationRepository->findRoomReservationWithDate($args->getEntity() , new \DateTime());
         /** @var Reservation $reservation */
-        foreach ($reservations as $reservation) {
+        foreach ($users as $user) {
             /** @var User $userReservations */
-            $userReservations = $reservationRepository->findUserReservationsInDate($reservation->getUser(),new \DateTime(), $args->getEntity());
-            $this->roomMailer->roomEnabled($reservation->getUser(), $args->getEntity(), $userReservations);
+            $userReservations = $reservationRepository->findUserReservationsInDate($user,new \DateTime(), $args->getEntity());
+            $user = $args->getEntityManager()->getRepository(User::class)->find($user[1]);
+            $this->roomMailer->roomEnabled($user, $args->getEntity(), $userReservations);
         }
     }
 
@@ -95,7 +96,6 @@ class RoomSubscriber implements EventSubscriber
     {
         /** @var ReservationRepository $userRoom */
         $reservationRepository = $args->getEntityManager()->getRepository(Reservation::class);
-        // Va chercher toutes les reservations d'une salle a partir d'une date
         // Va chercher tous les utilisateurs
         $users = $reservationRepository->findRoomReservationWithDate($args->getEntity() , new \DateTime());
         /** @var Reservation $reservation */
